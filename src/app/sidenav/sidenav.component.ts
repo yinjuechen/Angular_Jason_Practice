@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {Component} from '@angular/core';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Observable} from 'rxjs';
+import {map, shareReplay} from 'rxjs/operators';
+import {AuthService} from '../shared/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -16,6 +18,15 @@ export class SidenavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService, private router: Router) {
+  }
 
+  logout() {
+    this.auth.logout().subscribe((value: { success: boolean }) => {
+      if (value.success) {
+        this.auth.user = null;
+        this.router.navigate(['/login']).then();
+      }
+    });
+  }
 }

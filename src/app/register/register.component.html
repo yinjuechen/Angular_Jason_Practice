@@ -1,23 +1,60 @@
 <main class="container" style="margin-top: 8%">
   <mat-card fxFlex="80%" fxFlex.gt-xs="60%" fxFlexOffset.gt-sm="20%">
     <mat-card-title>Register</mat-card-title>
-    <!--  ngForm will be auto added to form element. It will automatically call event.preventDefault()  -->
-    <!--  # is declare a variable in html  -->
-    <form ngForm fxLayout="column" #f="ngForm" (ngSubmit)="submit(f)">
-      <mat-form-field>
-        <!--   name + ngModel     -->
-        <input matInput type="email" placeholder="Email" name="email" ngModel required>
-        <!--          <p *ngIf="auth.usernameTaken">Username Existed!!!!</p>-->
-        <mat-error>Username can't be empty</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="Password" minlength="6" required name="password" ngModel>
-        <mat-error>Password has to be no less than 6 characters long</mat-error>
-      </mat-form-field>
+    <form fxLayout="column" [formGroup]="registerFormGroup" (ngSubmit)="register() ">
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>FirstName</mat-placeholder>
+          <input type="text" matInput formControlName="firstname">
+          <mat-error *ngIf="registerFormGroup.get('firstname').getError('required')">
+            FirstName can't be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>LastName</mat-placeholder>
+          <input type="text" matInput formControlName="lastname">
+          <mat-error *ngIf="registerFormGroup.get('lastname').getError('required')">
+            LastName can't be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>Email</mat-placeholder>
+          <input type="email" matInput formControlName="email">
+          <mat-error *ngIf="registerFormGroup.get('email').getError('pattern')">Email is not valid.</mat-error>
+          <mat-error *ngIf="registerFormGroup.get('email').getError('required')">Email can't be empty.</mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Department</mat-placeholder>
+          <mat-select formControlName="department">
+            <mat-option *ngFor="let department of departments" value="{{department.id}}">
+              {{department.type}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registerFormGroup.get('department').getError('required')">Department can't be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" formGroupName="passwords">
+        <mat-form-field>
+          <mat-placeholder>Password</mat-placeholder>
+          <input type="password" matInput formControlName="password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-placeholder>Confirm Password</mat-placeholder>
+          <input type="password" matInput formControlName="confirmPassword">
+        </mat-form-field>
+        <mat-error *ngIf="registerFormGroup.get('passwords').getError('passwordsNotMatch')">
+          {{registerFormGroup.get('passwords').getError('passwordsNotMatch')}}
+        </mat-error>
+      </div>
       <div>
-        <button mat-raised-button color="primary" type="submit">Login</button> &nbsp;
-        <button mat-raised-button color="primary" type="submit" routerLink="/register">Register</button>
+        <button mat-raised-button color="primary" [disabled]="!registerFormGroup.valid">Register</button>
       </div>
     </form>
   </mat-card>
 </main>
+
+
+

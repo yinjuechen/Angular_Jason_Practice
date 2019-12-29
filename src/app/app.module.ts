@@ -9,7 +9,7 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
 } from '@angular/material';
@@ -20,7 +20,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MessageComponent } from './message/message.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -51,7 +51,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatListModule,
     MatInputModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
