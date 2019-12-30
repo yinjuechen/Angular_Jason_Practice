@@ -1,0 +1,10 @@
+<app-products-header></app-products-header>
+<ng-container *ngIf="ps.products">
+  <div class="card-deck ml-1">
+    <app-product-overview *ngFor="let product of ps.products" [product]="product"></app-product-overview>
+  </div>
+</ng-container>
+
+
+
+

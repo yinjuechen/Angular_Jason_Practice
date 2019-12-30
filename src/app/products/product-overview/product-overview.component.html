@@ -1,0 +1,12 @@
+<div class="card border-dark shadow">
+  <img style="width: 300px; height: 200px" src="{{product.image}}" class="card-img-top m-1 shadow">
+  <div class="card-body">
+    <h5 class="card-title">{{product.brand}} {{product.model}} {{product.year}}</h5>
+    <p class="card-subtitle">{{product.category.type}}</p>
+    <p class="card-subtitle">Only {{product.stock}} in stock</p>
+    <a href="#" class="card-link btn btn-outline-success">Apply</a>
+    <a href="/products/{{product.id}}" class="card-link btn btn-outline-info">Detail</a>
+  </div>
+</div>
+
+

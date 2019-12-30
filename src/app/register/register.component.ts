@@ -3,6 +3,8 @@ import {RegisterService} from '../shared/services/register.service';
 import {DepartmentService} from '../shared/services/department.service';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../shared/models/user';
+import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -12,14 +14,17 @@ import {User} from '../shared/models/user';
 export class RegisterComponent implements OnInit {
   departments = null;
   registerFormGroup: FormGroup;
-  private email: FormControl;
+
 
   static validatePasswords(passwords: FormGroup): null | {} {
     const {password: p, confirmPassword: cp} = passwords.value;
     return p === cp ? null : {passwordsNotMatch: 'Passwords has to match!'};
   }
 
-  constructor(private rs: RegisterService, private ds: DepartmentService, private fb: FormBuilder) {
+  constructor(private rs: RegisterService,
+              private ds: DepartmentService,
+              private fb: FormBuilder,
+              private router: Router) {
   }
 
 
@@ -36,10 +41,8 @@ export class RegisterComponent implements OnInit {
         }, {validator: [RegisterComponent.validatePasswords]})
       }
     );
-    console.log(this.registerFormGroup);
     // Get departments
     this.ds.getDepartments().subscribe((value) => {
-      console.log('**********', value);
       this.departments = value;
       this.ds.departments = value;
     }, () => {
@@ -59,7 +62,10 @@ export class RegisterComponent implements OnInit {
     const department = this.ds.departments[departmentId - 1];
     const user = {firstname, lastname, email, password, department};
     this.rs.register(user).subscribe((value) => {
-
+      console.log(value);
+      if (value.success) {
+        this.router.navigate([`/login`]);
+      }
     }, (error) => {
     });
   }

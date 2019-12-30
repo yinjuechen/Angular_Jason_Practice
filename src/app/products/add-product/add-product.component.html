@@ -1,0 +1,60 @@
+<main class="container" style="margin-top: 8%">
+  <mat-card fxFlex="80%" fxFlex.gt-xs="60%" fxFlexOffset.gt-sm="20%">
+    <mat-card-title>Add New Truck</mat-card-title>
+    <form fxLayout="column" [formGroup]="addProductFormGroup" (ngSubmit)="addProduct()">
+      <mat-form-field>
+        <mat-placeholder>Brand</mat-placeholder>
+        <input type="text" matInput formControlName="brand">
+        <mat-error *ngIf="addProductFormGroup.get('brand').getError('required')">
+          Brand can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Model</mat-placeholder>
+        <input type="text" matInput formControlName="model">
+        <mat-error *ngIf="addProductFormGroup.get('model').getError('required')">
+          Model can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Year</mat-placeholder>
+        <mat-select formControlName="year">
+          <mat-option *ngFor="let year of years" value="{{year}}">
+            {{year}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addProductFormGroup.get('year').getError('required')">
+          Year can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Category</mat-placeholder>
+        <mat-select formControlName="category">
+          <mat-option *ngFor="let category of categories" value="{{category.id}}">
+            {{category.type}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="addProductFormGroup.get('year').getError('required')">
+          Year can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Stock</mat-placeholder>
+        <input type="number" matInput formControlName="stock">
+        <mat-error *ngIf="addProductFormGroup.get('model').getError('required')">
+          Stock can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Image</mat-placeholder>
+        <input type="text" matInput formControlName="image">
+        <mat-error *ngIf="addProductFormGroup.get('image').getError('required')">
+          Model can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button color="primary" [disabled]="!addProductFormGroup.valid">Add</button>
+      </div>
+    </form>
+  </mat-card>
+</main>

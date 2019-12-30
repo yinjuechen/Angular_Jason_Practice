@@ -23,6 +23,11 @@ import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import { ProductsComponent } from './products/products.component';
+import { ProductsHeaderComponent } from './products/products-header/products-header.component';
+import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
+import { ProductsDetailComponent } from './products/product-detail/products-detail.component';
+import { AddProductComponent } from './products/add-product/add-product.component';
 
 
 
@@ -35,7 +40,12 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     SidenavComponent,
     MessageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProductsComponent,
+    ProductsHeaderComponent,
+    ProductOverviewComponent,
+    ProductsDetailComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
