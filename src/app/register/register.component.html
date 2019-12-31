@@ -25,16 +25,6 @@
           <mat-error *ngIf="registerFormGroup.get('email').getError('pattern')">Email is not valid.</mat-error>
           <mat-error *ngIf="registerFormGroup.get('email').getError('required')">Email can't be empty.</mat-error>
         </mat-form-field>
-        <mat-form-field class="col">
-          <mat-placeholder>Department</mat-placeholder>
-          <mat-select formControlName="department">
-            <mat-option *ngFor="let department of departments" value="{{department.id}}">
-              {{department.type}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="registerFormGroup.get('department').getError('required')">Department can't be empty
-          </mat-error>
-        </mat-form-field>
       </div>
       <div fxLayout="column" formGroupName="passwords">
         <mat-form-field>

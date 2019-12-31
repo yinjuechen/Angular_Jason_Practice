@@ -12,7 +12,6 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  departments = null;
   registerFormGroup: FormGroup;
 
 
@@ -34,22 +33,12 @@ export class RegisterComponent implements OnInit {
         firstname: ['', [Validators.required]],
         lastname: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-        department: ['', [Validators.required]],
         passwords: this.fb.group({
           password: [''],
           confirmPassword: ['']
         }, {validator: [RegisterComponent.validatePasswords]})
       }
     );
-    // Get departments
-    this.ds.getDepartments().subscribe((value) => {
-      this.departments = value;
-      this.ds.departments = value;
-    }, () => {
-
-    }, () => {
-
-    });
   }
 
   register() {
@@ -59,8 +48,7 @@ export class RegisterComponent implements OnInit {
     const lastname = this.registerFormGroup.value.lastname;
     const email = this.registerFormGroup.value.email;
     const password = this.registerFormGroup.value.passwords.password;
-    const department = this.ds.departments[departmentId - 1];
-    const user = {firstname, lastname, email, password, department};
+    const user = {firstname, lastname, email, password};
     this.rs.register(user).subscribe((value) => {
       console.log(value);
       if (value.success) {

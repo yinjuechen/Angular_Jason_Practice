@@ -19,8 +19,7 @@ export class ApplicationComponent implements OnInit {
               private router: Router,
               private  applicationService: ApplicationService,
               private  auth: AuthService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (this.auth.user) {
@@ -31,9 +30,8 @@ export class ApplicationComponent implements OnInit {
     this.applicationFormGroup = this.fb.group({
       firstname: [`${this.user.firstname}`],
       lastname: [`${this.user.lastname}`],
-      department: [`${this.user.department.type}`],
-      product: [''],
-      productQty: [''],
+      email: [`${this.user.email}`],
+      cellphone: ['']
     });
   }
 

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../shared/services/product.service';
 import {CategoryService} from '../../shared/services/category.service';
 import {YearsService} from '../../shared/services/years.service';
 import {Router} from '@angular/router';
+import {TruckInfoComponent} from '../truck-info/truck-info.component';
 
 @Component({
   selector: 'app-add-product',
@@ -14,6 +15,24 @@ export class AddProductComponent implements OnInit {
   addProductFormGroup: FormGroup;
   categories;
   years;
+  arr = null;
+
+  get truckinfos() {
+    return this.addProductFormGroup.get('truckinfos') as FormArray;
+  }
+
+  addtruckinfo() {
+    this.truckinfos.push(this.createTruckInfoGroup());
+  }
+
+  createTruckInfoGroup(): FormGroup {
+    return this.fb.group({
+      plate: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      vin: ['', [Validators.required]],
+      mileage: ['', [Validators.required]]
+    });
+  }
 
   constructor(private ps: ProductService,
               private fb: FormBuilder,
@@ -40,7 +59,9 @@ export class AddProductComponent implements OnInit {
       year: ['', [Validators.required]],
       category: ['', [Validators.required]],
       stock: ['', [Validators.required]],
-      image: ['']
+      image: [''],
+      price: ['',[Validators.required]],
+      truckinfos: this.fb.array([])
     });
 
     // Initialize years
@@ -64,13 +85,24 @@ export class AddProductComponent implements OnInit {
       year: this.addProductFormGroup.value.year,
       category: this.categories[this.addProductFormGroup.value.category - 1],
       stock: this.addProductFormGroup.value.stock,
-      image: this.addProductFormGroup.value.image
+      image: this.addProductFormGroup.value.image,
+      price: this.addProductFormGroup.value.price
     };
     console.log(truck);
+    console.log(this.addProductFormGroup.value);
     this.ps.AddProduct(truck).subscribe((value) => {
       if (value.success) {
-        this.router.navigate(['/products']);
+        this.router.navigate(['/trucks']);
       }
     });
+  }
+
+  setTruckInfoArry(event) {
+    this.arr = new Array(+event.target.value);
+    console.log(this.arr.length);
+    for (let i = 0; i < event.target.value; i++) {
+      this.addtruckinfo();
+    }
+    console.log(this.addProductFormGroup.value);
   }
 }

@@ -8,6 +8,7 @@ import {LoginComponent} from './login/login.component';
 import {ProductsComponent} from './products/products.component';
 import {ProductsDetailComponent} from './products/product-detail/products-detail.component';
 import {AddProductComponent} from './products/add-product/add-product.component';
+import {TruckInfoComponent} from './products/truck-info/truck-info.component';
 
 
 const routes: Routes = [
@@ -28,16 +29,20 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'products',
+    path: 'trucks',
     component: ProductsComponent
   },
   {
-    path: 'products/:id',
+    path: 'trucks/:id',
     component: ProductsDetailComponent
   },
   {
-    path: 'add-product',
+    path: 'add-truck',
     component: AddProductComponent
+  },
+  {
+    path: 'truckinfo',
+    component: TruckInfoComponent
   },
   {
     path: 'login',

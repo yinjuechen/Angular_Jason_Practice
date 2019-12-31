@@ -14,12 +14,11 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.ps.products) {
-      this.ps.getAllProduct().subscribe((value) => {
-        this.ps.products = value;
-        this.products = value;
-        console.log(value);
-      });
-    }
+    this.ps.getAllProduct().subscribe((value) => {
+      this.ps.products = value;
+      this.products = value;
+      console.log(value);
+    });
+
   }
 }

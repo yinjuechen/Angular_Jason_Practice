@@ -14,10 +14,10 @@ export class ProductService {
   }
 
   getAllProduct(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${environment.API_URL}/myproducts`);
+    return this.httpClient.get<Product[]>(`${environment.API_URL}/trucks`);
   }
 
   AddProduct(product): Observable<{ success: boolean }> {
-    return this.httpClient.post<{ success: boolean }>(`${environment.API_URL}/myproducts`, product);
+    return this.httpClient.post<{ success: boolean }>(`${environment.API_URL}/trucks`, product);
   }
 }

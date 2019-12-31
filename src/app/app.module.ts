@@ -28,6 +28,7 @@ import { ProductsHeaderComponent } from './products/products-header/products-hea
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { ProductsDetailComponent } from './products/product-detail/products-detail.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
+import { TruckInfoComponent } from './products/truck-info/truck-info.component';
 
 
 
@@ -46,6 +47,7 @@ import { AddProductComponent } from './products/add-product/add-product.componen
     ProductOverviewComponent,
     ProductsDetailComponent,
     AddProductComponent,
+    TruckInfoComponent,
   ],
   imports: [
     BrowserModule,

@@ -39,19 +39,29 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <mat-placeholder>Stock</mat-placeholder>
-        <input type="number" matInput formControlName="stock">
-        <mat-error *ngIf="addProductFormGroup.get('model').getError('required')">
-          Stock can't be empty.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
         <mat-placeholder>Image</mat-placeholder>
         <input type="text" matInput formControlName="image">
         <mat-error *ngIf="addProductFormGroup.get('image').getError('required')">
           Model can't be empty.
         </mat-error>
       </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Rental Price (Day)</mat-placeholder>
+        <input type="number" matInput formControlName="price">
+        <mat-error *ngIf="addProductFormGroup.get('price').getError('required')">
+          Model can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Stock</mat-placeholder>
+        <input type="number" matInput formControlName="stock" (input)="setTruckInfoArry($event)">
+        <mat-error *ngIf="addProductFormGroup.get('model').getError('required')">
+          Stock can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <div class="form-row" formArrayName="truckinfos" *ngFor="let item of addProductFormGroup.get('truckinfos').controls">
+        <app-truck-info class="col-6" [truckInfoFormGroup]="item"></app-truck-info>
+      </div>
       <div>
         <button mat-raised-button color="primary" [disabled]="!addProductFormGroup.valid">Add</button>
       </div>
