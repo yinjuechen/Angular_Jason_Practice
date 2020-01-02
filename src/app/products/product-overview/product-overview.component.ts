@@ -11,7 +11,6 @@ export class ProductOverviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.product);
   }
 
 }

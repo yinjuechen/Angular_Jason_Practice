@@ -11,7 +11,11 @@
       </mat-form-field>
       <mat-form-field class="col">
         <mat-placeholder>State</mat-placeholder>
-        <input type="text" matInput formControlName="state">
+        <mat-select formControlName="state">
+          <mat-option *ngFor="let state of statesService.usStates" value="{{state}}">
+            {{state}}
+          </mat-option>
+        </mat-select>
         <mat-error *ngIf="truckInfoFormGroup.get('state').getError('required')">
           State can't be empty
         </mat-error>

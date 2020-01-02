@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UsStatesService} from '../../shared/services/us-states.service';
 
 @Component({
   selector: 'app-truck-info',
@@ -8,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class TruckInfoComponent implements OnInit {
   @Input() truckInfoFormGroup: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(public statesService: UsStatesService) { }
 
   ngOnInit() {
     // this.truckInfoFormGroup = this.fb.group({

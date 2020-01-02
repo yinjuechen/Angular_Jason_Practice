@@ -2,8 +2,7 @@
   <img style="width: 300px; height: 200px" src="{{product.image}}" class="card-img-top m-1 shadow">
   <div class="card-body">
     <h5 class="card-title">{{product.brand}} {{product.model}} {{product.year}}</h5>
-    <p class="card-subtitle">{{product.category.type}}</p>
-    <p class="card-subtitle">Only {{product.stock}} in stock</p>
+    <p class="card-subtitle">Start with ${{product.price}}.00/day </p>
     <a href="#" class="card-link btn btn-outline-success">Apply</a>
     <a href="/trucks/{{product.id}}" class="card-link btn btn-outline-info">Detail</a>
   </div>

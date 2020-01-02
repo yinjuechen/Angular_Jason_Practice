@@ -17,7 +17,12 @@ export class ProductService {
     return this.httpClient.get<Product[]>(`${environment.API_URL}/trucks`);
   }
 
-  AddProduct(product): Observable<{ success: boolean }> {
-    return this.httpClient.post<{ success: boolean }>(`${environment.API_URL}/trucks`, product);
+  AddProduct(product): Observable<Product> {
+    return this.httpClient.post<Product>(`${environment.API_URL}/trucks`, product);
   }
+
+  AddTruckDetail(truckDetail) {
+    return this.httpClient.post(`${environment.API_URL}/truckdetails`, truckDetail);
+  }
+
 }

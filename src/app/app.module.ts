@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatCardModule,
+  MatCardModule, MatDatepickerModule,
   MatFormFieldModule,
   MatInputModule,
-  MatListModule, MatSelectModule,
+  MatListModule, MatNativeDateModule, MatSelectModule,
   MatSidenavModule,
   MatToolbarModule
 } from '@angular/material';
@@ -65,7 +65,9 @@ import { TruckInfoComponent } from './products/truck-info/truck-info.component';
     MatButtonModule,
     FlexLayoutModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

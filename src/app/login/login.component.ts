@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
       console.log(value);
       if (value.success) {
         this.auth.user = value.user;
-        this.router.navigate(['/profile']).then();
+        this.router.navigate(['/trucks']).then();
       }
     }, (err) => {
       console.log(err);

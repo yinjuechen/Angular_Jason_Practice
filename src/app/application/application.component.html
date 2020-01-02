@@ -1,1 +1,113 @@
-<p>application works!</p>
+<div class="container" style="margin-top: 8%">
+  <mat-card>
+    <mat-card-title>Application</mat-card-title>
+    <form fxLayout="column" [formGroup]="applicationFormGroup" (ngSubmit)="nextProcess()">
+      <h6 class="card-subtitle text-muted mt-1">Personal Info</h6>
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>Firstname</mat-placeholder>
+          <input type="text" matInput formControlName="firstname">
+          <mat-error *ngIf="applicationFormGroup.get('firstname').getError('required')">
+            FirstName can't be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Last Name</mat-placeholder>
+          <input type="text" matInput formControlName="lastname">
+          <mat-error *ngIf="applicationFormGroup.get('lastname').getError('required')">
+            LastName can't be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>Email</mat-placeholder>
+          <input type="text" matInput formControlName="email">
+          <mat-error *ngIf="applicationFormGroup.get('email').getError('required')">
+            Email can't be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Phone</mat-placeholder>
+          <input type="number" matInput formControlName="phone">
+          <mat-error *ngIf="applicationFormGroup.get('phone').getError('required')">
+            Phone number can't be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <mat-placeholder>Address 1</mat-placeholder>
+        <input type="text" matInput formControlName="address1">
+        <mat-error *ngIf="applicationFormGroup.get('address1').getError('required')">
+          Address 1 can't be empty
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-placeholder>Address 2</mat-placeholder>
+        <input type="text" matInput formControlName="address2">
+      </mat-form-field>
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>City</mat-placeholder>
+          <input type="text" matInput formControlName="city">
+          <mat-error *ngIf="applicationFormGroup.get('city').getError('required')">
+            City can't be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>State</mat-placeholder>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+              {{state}}
+            </mat-option>
+            <mat-error *ngIf="applicationFormGroup.get('state').getError('required')">
+              State can't be empty
+            </mat-error>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Zip</mat-placeholder>
+          <input type="text" matInput formControlName="zip">
+          <mat-error *ngIf="applicationFormGroup.get('zip').getError('required')">
+            Zip can't be empty
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h6 class="card-subtitle text-muted mt-1">Driver License Info</h6>
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>Driver License No.</mat-placeholder>
+          <input type="text" matInput formControlName="driver_license">
+          <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">
+            Driver license can't be empty
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>State</mat-placeholder>
+          <mat-select formControlName="driver_license_state">
+            <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+              {{state}}
+            </mat-option>
+            <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">
+              State can't be empty
+            </mat-error>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col" color="accent">
+          <mat-placeholder>Expired Date</mat-placeholder>
+<!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
+          <input matInput type="text"  [matDatepicker]="picker" [min]="mindate" formControlName="driver_license_expired_date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+          <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">
+            Expired date format is not right. (MM/DD/YYYY)
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" >Next</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+

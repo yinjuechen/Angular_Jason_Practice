@@ -5,6 +5,7 @@ import {CategoryService} from '../../shared/services/category.service';
 import {YearsService} from '../../shared/services/years.service';
 import {Router} from '@angular/router';
 import {TruckInfoComponent} from '../truck-info/truck-info.component';
+import {UsStatesService} from '../../shared/services/us-states.service';
 
 @Component({
   selector: 'app-add-product',
@@ -17,6 +18,7 @@ export class AddProductComponent implements OnInit {
   years;
   arr = null;
 
+  // @TODO: AddTrucksForm Validation
   get truckinfos() {
     return this.addProductFormGroup.get('truckinfos') as FormArray;
   }
@@ -60,7 +62,10 @@ export class AddProductComponent implements OnInit {
       category: ['', [Validators.required]],
       stock: ['', [Validators.required]],
       image: [''],
-      price: ['',[Validators.required]],
+      price: ['', [Validators.required]],
+      minseat: ['', [Validators.required]],
+      maxseat: ['', [Validators.required]],
+      mpg: ['', [Validators.required]],
       truckinfos: this.fb.array([])
     });
 
@@ -88,21 +93,37 @@ export class AddProductComponent implements OnInit {
       image: this.addProductFormGroup.value.image,
       price: this.addProductFormGroup.value.price
     };
-    console.log(truck);
-    console.log(this.addProductFormGroup.value);
     this.ps.AddProduct(truck).subscribe((value) => {
-      if (value.success) {
+      if (value) {
+        const truckModelId = value.id;
+        console.log(value.id);
+        for (const truckInfoGroup of this.truckinfos.controls) {
+          console.log(truckInfoGroup);
+          const plate = truckInfoGroup.value.plate;
+          const state = truckInfoGroup.value.state;
+          const vin = truckInfoGroup.value.vin;
+          const mileage = truckInfoGroup.value.mileage;
+          const truckModel = {id: truckModelId};
+          const truckDetail = {
+            plate,
+            state,
+            vin,
+            mileage,
+            truckModel
+          };
+          console.log(truckDetail);
+          this.ps.AddTruckDetail(truckDetail).subscribe();
+        }
         this.router.navigate(['/trucks']);
       }
     });
   }
 
   setTruckInfoArry(event) {
+    this.truckinfos.clear();
     this.arr = new Array(+event.target.value);
-    console.log(this.arr.length);
     for (let i = 0; i < event.target.value; i++) {
       this.addtruckinfo();
     }
-    console.log(this.addProductFormGroup.value);
   }
 }
