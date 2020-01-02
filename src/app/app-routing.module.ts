@@ -11,6 +11,7 @@ import {AddProductComponent} from './products/add-product/add-product.component'
 import {TruckInfoComponent} from './products/truck-info/truck-info.component';
 
 
+
 const routes: Routes = [
   {
     path: 'profile',

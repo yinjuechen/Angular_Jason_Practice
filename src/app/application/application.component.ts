@@ -4,6 +4,9 @@ import {Router} from '@angular/router';
 import {ApplicationService} from '../shared/services/application.service';
 import {AuthService} from '../shared/services/auth.service';
 import {UsStatesService} from '../shared/services/us-states.service';
+import html2canvas from 'html2canvas';
+import * as jsPDF from 'jsPDF';
+import {ReadVarExpr} from '@angular/compiler';
 
 
 @Component({
@@ -15,7 +18,12 @@ export class ApplicationComponent implements OnInit {
   user = null;
   applicationFormGroup: FormGroup;
   mindate = new Date();
-
+  showApplicationForm: boolean;
+  showCheckoutForm: boolean;
+  applicationFormImg;
+  checkoutFormGroup: FormGroup;
+  checkoutFormImg;
+  orderSummaryImg;
   // static validateDateFormat(dateInfo: FormControl): null | {} {
   //
   // }
@@ -35,6 +43,8 @@ export class ApplicationComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+    this.showApplicationForm = true;
+    this.showCheckoutForm = false;
     this.applicationFormGroup = this.fb.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
@@ -50,16 +60,75 @@ export class ApplicationComponent implements OnInit {
       // TODO: validate date input
       driver_license_expired_date: ['', [Validators.required]]
     });
-
+    // TODO: checkout form validation
+    this.checkoutFormGroup = this.fb.group({
+      creditCardName: ['', [Validators.required]],
+      creditCardNumber: ['', [Validators.required]],
+      creditCardExpiration: ['', [Validators.required]],
+      creditCardCvv: ['', [Validators.required]],
+      billingFirstName: ['', [Validators.required]],
+      billingLastName: ['', [Validators.required]],
+      billingAddress1: ['', [Validators.required]],
+      billingAddress2: ['', [Validators.required]],
+      billingCity: ['', [Validators.required]],
+      billingState: ['', [Validators.required]],
+      billingZip: ['', [Validators.required]]
+    });
   }
 
   nextProcess() {
     console.log(this.applicationFormGroup.value);
     const application = this.applicationFormGroup.value;
     application.user = {id: this.auth.user.id};
-    application.phone = '' + application.phone ;
+    application.phone = '' + application.phone;
     application.order_date = new Date();
     console.log(application);
-    this.applicationService.addApplication(application).subscribe();
+    const applicationContent = document.getElementById('applicationForm');
+    html2canvas(applicationContent).then((canvas) => {
+      this.applicationFormImg = canvas.toDataURL('image/png');
+      this.showApplicationForm = false;
+      this.showCheckoutForm = true;
+      // console.log(this.applicataionFormImg);
+    });
+    //TODO: remember to send post request to server.
+
+    // this.applicationService.addApplication(application).subscribe();
+  }
+
+  generateApplicationFormPdf() {
+    const doc = new jsPDF();
+    const todayDate = new Date();
+    doc.setFontSize(15);
+    doc.text(todayDate.toDateString(), 5, 8);
+    doc.text('Person Info: ', 5, 14);
+    doc.setLineWidth(0.2);
+    doc.line(5, 16, 200, 16);
+    doc.addImage(this.applicationFormImg, 'JPEG', 5, 23, 190, 90);
+    // doc.output('dataurlnewwindow');
+    doc.text('Payment Info', 5, 119)
+    doc.line(5, 124, 200, 124);
+    doc.addImage(this.checkoutFormImg, 'JPEG', 5, 126, 190, 100);
+    doc.addPage();
+    doc.text('Oder Summary', 5, 13);
+    doc.line(5, 15, 200, 15);
+    doc.addImage(this.orderSummaryImg, 'JPEG', 5, 18)
+    doc.save('test.pdf');
+  }
+
+  back() {
+    this.showApplicationForm = true;
+    this.showCheckoutForm = false;
+  }
+
+  submitOrder() {
+    console.log('submit Order');
+    const checkoutContent = document.getElementById('checkoutForm');
+    html2canvas(checkoutContent).then((canvas) => {
+      this.checkoutFormImg = canvas.toDataURL('image/png');
+    });
+    const orderSummaryContent = document.getElementById('orderSummary');
+    html2canvas(orderSummaryContent).then((canvas) => {
+      this.orderSummaryImg = canvas.toDataURL('image/png');
+    });
   }
 }

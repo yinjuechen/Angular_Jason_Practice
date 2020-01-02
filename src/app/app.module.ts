@@ -5,13 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatCardModule, MatDatepickerModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatListModule, MatNativeDateModule, MatSelectModule,
-  MatSidenavModule,
-  MatToolbarModule
+    MatButtonModule,
+    MatCardModule, MatDatepickerModule,
+    MatFormFieldModule, MatGridListModule,
+    MatInputModule,
+    MatListModule, MatNativeDateModule, MatSelectModule,
+    MatSidenavModule,
+    MatToolbarModule
 } from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
 import { ApplicationComponent } from './application/application.component';
@@ -33,6 +33,7 @@ import { TruckInfoComponent } from './products/truck-info/truck-info.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,28 +48,29 @@ import { TruckInfoComponent } from './products/truck-info/truck-info.component';
     ProductOverviewComponent,
     ProductsDetailComponent,
     AddProductComponent,
-    TruckInfoComponent,
+    TruckInfoComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    LayoutModule,
-    FormsModule,
-    MatCardModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatInputModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        LayoutModule,
+        FormsModule,
+        MatCardModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatListModule,
+        MatInputModule,
+        MatButtonModule,
+        FlexLayoutModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatGridListModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
