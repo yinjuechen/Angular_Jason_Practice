@@ -1,4 +1,24 @@
 <app-products-header></app-products-header>
+<div class="container">
+  <form class="form-inline" [formGroup]="productsFromGroup" (ngSubmit)="getAvailableTrucksByDate()">
+    <mat-form-field class="col-3" style="max-width: fit-content">
+      <mat-placeholder>Picke Up Date</mat-placeholder>
+      <input type="text" matInput [matDatepicker]="pickUpPicker" formControlName="pickUpDate" [min]="minPickUpDate"
+             (dateInput)="setMinDate()">
+      <mat-datepicker-toggle matSuffix [for]="pickUpPicker"></mat-datepicker-toggle>
+      <mat-datepicker #pickUpPicker disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-3" style="max-width: fit-content">
+      <mat-placeholder>Return Date</mat-placeholder>
+      <input type="text" matInput [matDatepicker]="returnPikcer" formControlName="returnDate" [min]="minReturnDate">
+      <mat-datepicker-toggle matSuffix [for]="returnPikcer"></mat-datepicker-toggle>
+      <mat-datepicker #returnPikcer disabled="false"></mat-datepicker>
+    </mat-form-field>
+    <div class="d-flex justify-content-end float-right">
+      <button mat-raised-button color="primary">Search</button>
+    </div>
+  </form>
+</div>
 <ng-container *ngIf="ps.products">
   <div class="card-deck ml-1">
     <app-product-overview *ngFor="let product of ps.products" [product]="product"></app-product-overview>

@@ -10,6 +10,7 @@ import {environment} from '../../../environments/environment';
 export class ProductService {
   products: Product[] = null;
   currentProduct: Product;
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -23,6 +24,10 @@ export class ProductService {
 
   AddTruckDetail(truckDetail) {
     return this.httpClient.post(`${environment.API_URL}/truckdetails`, truckDetail);
+  }
+
+  getAvailableTrucksByDate(startdate: string, enddate: string): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${environment.API_URL}/truckdetails/date/${startdate}/${enddate}`);
   }
 
 }
