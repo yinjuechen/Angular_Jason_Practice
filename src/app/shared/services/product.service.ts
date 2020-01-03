@@ -9,7 +9,7 @@ import {environment} from '../../../environments/environment';
 })
 export class ProductService {
   products: Product[] = null;
-
+  currentProduct: Product;
   constructor(private httpClient: HttpClient) {
   }
 

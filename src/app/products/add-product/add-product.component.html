@@ -91,7 +91,7 @@
         </mat-form-field>
       </div>
       <div class="form-row" formArrayName="truckinfos"
-           *ngFor="let item of addProductFormGroup.get('truckinfos').controls">
+           *ngFor="let item of addProductFormGroup.get('truckinfos')['controls']">
         <app-truck-info class="col-6" [truckInfoFormGroup]="item"></app-truck-info>
       </div>
       <div>

@@ -93,6 +93,7 @@ export class AddProductComponent implements OnInit {
       image: this.addProductFormGroup.value.image,
       price: this.addProductFormGroup.value.price
     };
+    console.log(this.addProductFormGroup.get('truckinfos'));
     this.ps.AddProduct(truck).subscribe((value) => {
       if (value) {
         const truckModelId = value.id;

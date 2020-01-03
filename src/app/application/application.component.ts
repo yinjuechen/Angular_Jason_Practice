@@ -7,6 +7,8 @@ import {UsStatesService} from '../shared/services/us-states.service';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jsPDF';
 import {ReadVarExpr} from '@angular/compiler';
+import {ProductService} from '../shared/services/product.service';
+import {Product} from '../shared/models/product';
 
 
 @Component({
@@ -24,6 +26,10 @@ export class ApplicationComponent implements OnInit {
   checkoutFormGroup: FormGroup;
   checkoutFormImg;
   orderSummaryImg;
+  pickUpDate = new Date();
+  returnedDate = new Date();
+  selectedTruck: Product;
+  totalPrice: number;
   // static validateDateFormat(dateInfo: FormControl): null | {} {
   //
   // }
@@ -33,11 +39,15 @@ export class ApplicationComponent implements OnInit {
               private router: Router,
               private  applicationService: ApplicationService,
               public usStatesService: UsStatesService,
+              private ps: ProductService,
               private  auth: AuthService
   ) {
   }
 
   ngOnInit() {
+    // console.log(this.ps.currentProduct);
+    this.selectedTruck = this.ps.currentProduct;
+    this.totalPrice = 120;
     if (this.auth.user) {
       this.user = this.auth.user;
     } else {
@@ -69,20 +79,22 @@ export class ApplicationComponent implements OnInit {
       billingFirstName: ['', [Validators.required]],
       billingLastName: ['', [Validators.required]],
       billingAddress1: ['', [Validators.required]],
-      billingAddress2: ['', [Validators.required]],
+      billingAddress2: [''],
       billingCity: ['', [Validators.required]],
       billingState: ['', [Validators.required]],
       billingZip: ['', [Validators.required]]
     });
+
+
   }
 
   nextProcess() {
     console.log(this.applicationFormGroup.value);
-    const application = this.applicationFormGroup.value;
-    application.user = {id: this.auth.user.id};
-    application.phone = '' + application.phone;
-    application.order_date = new Date();
-    console.log(application);
+    // const application = this.applicationFormGroup.value;
+    // application.user = {id: this.auth.user.id};
+    // application.phone = '' + application.phone;
+    // application.order_date = new Date();
+    // console.log(this.applicationFormGroup.value.driver_license_expired_date.getDate() - application.order_date.getDate());
     const applicationContent = document.getElementById('applicationForm');
     html2canvas(applicationContent).then((canvas) => {
       this.applicationFormImg = canvas.toDataURL('image/png');
@@ -90,9 +102,6 @@ export class ApplicationComponent implements OnInit {
       this.showCheckoutForm = true;
       // console.log(this.applicataionFormImg);
     });
-    //TODO: remember to send post request to server.
-
-    // this.applicationService.addApplication(application).subscribe();
   }
 
   generateApplicationFormPdf() {
@@ -105,13 +114,13 @@ export class ApplicationComponent implements OnInit {
     doc.line(5, 16, 200, 16);
     doc.addImage(this.applicationFormImg, 'JPEG', 5, 23, 190, 90);
     // doc.output('dataurlnewwindow');
-    doc.text('Payment Info', 5, 119)
+    doc.text('Payment Info', 5, 119);
     doc.line(5, 124, 200, 124);
     doc.addImage(this.checkoutFormImg, 'JPEG', 5, 126, 190, 100);
     doc.addPage();
     doc.text('Oder Summary', 5, 13);
     doc.line(5, 15, 200, 15);
-    doc.addImage(this.orderSummaryImg, 'JPEG', 5, 18)
+    doc.addImage(this.orderSummaryImg, 'JPEG', 5, 18);
     doc.save('test.pdf');
   }
 
@@ -130,5 +139,22 @@ export class ApplicationComponent implements OnInit {
     html2canvas(orderSummaryContent).then((canvas) => {
       this.orderSummaryImg = canvas.toDataURL('image/png');
     });
+    const application = this.applicationFormGroup.value;
+    application.user = {id: this.auth.user.id};
+    application.phone = '' + application.phone;
+    application.order_date = new Date();
+    application.creditcardnumber = this.checkoutFormGroup.value.creditCardNumber;
+    application.billingfirstname = this.checkoutFormGroup.value.billingFirstName;
+    application.billinglastname = this.checkoutFormGroup.value.billingLastName;
+    application.billingaddress1 = this.checkoutFormGroup.value.billingAddress1;
+    application.billingaddress2 = this.checkoutFormGroup.value.billingAddress2;
+    application.billingcity = this.checkoutFormGroup.value.billingCity;
+    application.billingstate = this.checkoutFormGroup.value.billingState;
+    application.billingzip = this.checkoutFormGroup.value.billingZip;
+    application.totalprice = this.totalPrice;
+    application.pickupdate = this.pickUpDate;
+    application.returndate = this.returnedDate;
+    // console.log(application.totalprice, application.pickupdate, application.returndate);
+    this.applicationService.addApplication(application).subscribe();
   }
 }
