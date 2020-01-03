@@ -41,8 +41,25 @@ export class ProductsComponent implements OnInit {
     const startdate = '' + pickUpDate.getFullYear() + '-' + (pickUpDate.getMonth() + 1) + '-' + pickUpDate.getDate();
     const enddate = `${returnDate.getFullYear()}-${returnDate.getMonth() + 1}-${returnDate.getDate()}`;
     // console.log(startdate, enddate);
-    this.ps.getAvailableTrucksByDate(startdate, enddate).subscribe((value) => {
+    this.ps.getAlltrucksTimeSlot().subscribe((value) => {
       console.log(value);
+      let available = false;
+      if (new Date(value[0].startdate) > returnDate) {
+        available = true;
+      }
+      if ((!available) && value[value.length - 1].enddate < pickUpDate) {
+        available = true;
+      }
+      if (!available) {
+        for (let i = 0; i < value.length - 1; i++) {
+          const date1 = new Date(value[i].enddate);
+          const date2 = new Date(value[i + 1].startdate);
+          if (date1 < pickUpDate && returnDate < date2) {
+            console.log('available');
+          }
+        }
+      }
+      console.log(available);
     });
   }
 }
