@@ -77,4 +77,23 @@ export class ProductsComponent implements OnInit {
   setReturnDate() {
     this.ds.returnDate = this.productsFromGroup.value.returnDate;
   }
+
+  filterProducts($event) {
+    switch ($event.value) {
+      case '1':
+        this.products.sort((p1, p2) => p1.price - p2.price);
+        break;
+      case '2':
+        this.products.sort((p1, p2) => p2.price - p1.price);
+        break;
+      case '3':
+        this.products.sort((p1, p2) => p1.mpg - p2.mpg);
+        break;
+      case '4':
+        this.products.sort((p1, p2) => p2.mpg - p1.mpg);
+        break;
+      case '5':
+        this.products.sort((p1, p2) => p1.brand.localeCompare(p2.brand));
+    }
+  }
 }

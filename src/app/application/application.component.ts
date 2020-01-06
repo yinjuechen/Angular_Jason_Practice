@@ -170,6 +170,7 @@ export class ApplicationComponent implements OnInit {
         this.router.navigate(['/trucks']);
       }, error => {
         // TODO: handle error (i.e. toast)
+        console.log('add application failed');
       });
     });
   }

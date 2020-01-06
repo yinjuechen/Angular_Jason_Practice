@@ -5,13 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    MatButtonModule,
-    MatCardModule, MatDatepickerModule,
-    MatFormFieldModule, MatGridListModule,
-    MatInputModule,
-    MatListModule, MatNativeDateModule, MatSelectModule,
-    MatSidenavModule,
-    MatToolbarModule
+  MatButtonModule,
+  MatCardModule, MatCheckboxModule, MatDatepickerModule,
+  MatFormFieldModule, MatGridListModule,
+  MatInputModule,
+  MatListModule, MatNativeDateModule, MatPaginatorModule, MatSelectModule,
+  MatSidenavModule, MatSortModule, MatTableModule,
+  MatToolbarModule
 } from '@angular/material';
 import { ProfileComponent } from './profile/profile.component';
 import { ApplicationComponent } from './application/application.component';
@@ -29,6 +29,9 @@ import { ProductOverviewComponent } from './products/product-overview/product-ov
 import { ProductsDetailComponent } from './products/product-detail/products-detail.component';
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { TruckInfoComponent } from './products/truck-info/truck-info.component';
+import { OrderAgentComponent } from './order-agent/order-agent.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+
 
 
 
@@ -48,29 +51,35 @@ import { TruckInfoComponent } from './products/truck-info/truck-info.component';
     ProductOverviewComponent,
     ProductsDetailComponent,
     AddProductComponent,
-    TruckInfoComponent
+    TruckInfoComponent,
+    OrderAgentComponent,
+    OrderDetailComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        LayoutModule,
-        FormsModule,
-        MatCardModule,
-        HttpClientModule,
-        MatFormFieldModule,
-        MatListModule,
-        MatInputModule,
-        MatButtonModule,
-        FlexLayoutModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    LayoutModule,
+    FormsModule,
+    MatCardModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatInputModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

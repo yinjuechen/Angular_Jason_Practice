@@ -9,6 +9,8 @@ import {ProductsComponent} from './products/products.component';
 import {ProductsDetailComponent} from './products/product-detail/products-detail.component';
 import {AddProductComponent} from './products/add-product/add-product.component';
 import {TruckInfoComponent} from './products/truck-info/truck-info.component';
+import {OrderAgentComponent} from './order-agent/order-agent.component';
+import {OrderDetailComponent} from './order-detail/order-detail.component';
 
 
 
@@ -44,6 +46,14 @@ const routes: Routes = [
   {
     path: 'truckinfo',
     component: TruckInfoComponent
+  },
+  {
+    path: 'orders',
+    component: OrderAgentComponent
+  },
+  {
+    path: 'orders/:id',
+    component: OrderDetailComponent
   },
   {
     path: 'login',
