@@ -9,6 +9,8 @@ import * as jsPDF from 'jsPDF';
 import {ReadVarExpr} from '@angular/compiler';
 import {ProductService} from '../shared/services/product.service';
 import {Product} from '../shared/models/product';
+import {TimeslotService} from '../shared/services/timeslot.service';
+import {DateService} from '../shared/services/date.service';
 
 
 @Component({
@@ -26,8 +28,8 @@ export class ApplicationComponent implements OnInit {
   checkoutFormGroup: FormGroup;
   checkoutFormImg;
   orderSummaryImg;
-  pickUpDate = new Date();
-  returnedDate = new Date();
+  pickUpDate;
+  returnedDate;
   selectedTruck: Product;
   totalPrice: number;
   // static validateDateFormat(dateInfo: FormControl): null | {} {
@@ -40,14 +42,18 @@ export class ApplicationComponent implements OnInit {
               private  applicationService: ApplicationService,
               public usStatesService: UsStatesService,
               private ps: ProductService,
+              private ts: TimeslotService,
+              private ds: DateService,
               private  auth: AuthService
   ) {
   }
 
   ngOnInit() {
     // console.log(this.ps.currentProduct);
+    this.pickUpDate = this.ds.pickUpDate;
+    this.returnedDate = this.ds.returnDate;
     this.selectedTruck = this.ps.currentProduct;
-    this.totalPrice = 120;
+    this.totalPrice = this.ps.currentProduct.price * Math.ceil((this.returnedDate - this.pickUpDate) / (1000 * 60 * 60 * 24) + 1);
     if (this.auth.user) {
       this.user = this.auth.user;
     } else {
@@ -90,11 +96,6 @@ export class ApplicationComponent implements OnInit {
 
   nextProcess() {
     console.log(this.applicationFormGroup.value);
-    // const application = this.applicationFormGroup.value;
-    // application.user = {id: this.auth.user.id};
-    // application.phone = '' + application.phone;
-    // application.order_date = new Date();
-    // console.log(this.applicationFormGroup.value.driver_license_expired_date.getDate() - application.order_date.getDate());
     const applicationContent = document.getElementById('applicationForm');
     html2canvas(applicationContent).then((canvas) => {
       this.applicationFormImg = canvas.toDataURL('image/png');
@@ -155,6 +156,21 @@ export class ApplicationComponent implements OnInit {
     application.pickupdate = this.pickUpDate;
     application.returndate = this.returnedDate;
     // console.log(application.totalprice, application.pickupdate, application.returndate);
-    this.applicationService.addApplication(application).subscribe();
+    // this.applicationService.addApplication(application).subscribe();
+    const timeSlot = {
+      startdate: this.pickUpDate,
+      enddate: this.returnedDate,
+      truckmodelid: this.ps.currentProduct.id
+    };
+    this.ts.addATimeSlot(timeSlot).subscribe((value) => {
+      console.log(value);
+      application.reservedid = value.id;
+      this.applicationService.addApplication(application).subscribe((applicationValue) => {
+        console.log(applicationValue);
+        this.router.navigate(['/trucks']);
+      }, error => {
+        // TODO: handle error (i.e. toast)
+      });
+    });
   }
 }

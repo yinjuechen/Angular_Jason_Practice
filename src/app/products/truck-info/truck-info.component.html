@@ -30,6 +30,13 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field class="col">
+        <mat-placeholder>Auto Insurance No.</mat-placeholder>
+        <input type="text" matInput formControlName="autoinsurance">
+        <mat-error *ngIf="truckInfoFormGroup.get('autoinsurance').getError('required')">
+          Auto Insurance can't be empty.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
         <mat-placeholder>Mileage</mat-placeholder>
         <input type="number" matInput formControlName="mileage">
         <mat-error *ngIf="truckInfoFormGroup.get('mileage').getError('required')">

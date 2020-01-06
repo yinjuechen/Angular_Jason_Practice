@@ -32,6 +32,7 @@ export class AddProductComponent implements OnInit {
       plate: ['', [Validators.required]],
       state: ['', [Validators.required]],
       vin: ['', [Validators.required]],
+      autoinsurance:['', [Validators.required]],
       mileage: ['', [Validators.required]]
     });
   }
@@ -91,7 +92,10 @@ export class AddProductComponent implements OnInit {
       category: this.categories[this.addProductFormGroup.value.category - 1],
       stock: this.addProductFormGroup.value.stock,
       image: this.addProductFormGroup.value.image,
-      price: this.addProductFormGroup.value.price
+      price: this.addProductFormGroup.value.price,
+      minseat: this.addProductFormGroup.value.minseat,
+      maxseat: this.addProductFormGroup.value.maxseat,
+      mpg: this.addProductFormGroup.value.mpg
     };
     console.log(this.addProductFormGroup.get('truckinfos'));
     this.ps.AddProduct(truck).subscribe((value) => {
@@ -103,6 +107,7 @@ export class AddProductComponent implements OnInit {
           const plate = truckInfoGroup.value.plate;
           const state = truckInfoGroup.value.state;
           const vin = truckInfoGroup.value.vin;
+          const autoinsurance = truckInfoGroup.value.autoinsurance;
           const mileage = truckInfoGroup.value.mileage;
           const truckModel = {id: truckModelId};
           const truckDetail = {
@@ -110,6 +115,7 @@ export class AddProductComponent implements OnInit {
             state,
             vin,
             mileage,
+            autoinsurance,
             truckModel
           };
           console.log(truckDetail);
