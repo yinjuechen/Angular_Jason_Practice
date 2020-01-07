@@ -1,7 +1,7 @@
 <div class="container" style="margin-top: 8%">
   <mat-card class="m-1" *ngIf="showApplicationForm">
     <mat-card-title>Application</mat-card-title>
-    <form fxLayout="column" [formGroup]="applicationFormGroup" (ngSubmit)="nextProcess()">
+    <form fxLayout="column" [formGroup]="applicationFormGroup" (ngSubmit)="goToProtection()">
       <div id="applicationForm">
         <h6 class="card-subtitle text-muted mt-1">Personal Info</h6>
         <div class="form-row">
@@ -110,12 +110,50 @@
             </mat-error>
           </mat-form-field>
         </div>
+
       </div>
       <div class="d-flex justify-content-end">
-        <button mat-raised-button color="primary" style="width: 20%" [disabled]="!applicationFormGroup.valid">Next</button>
+        <button mat-raised-button color="primary" style="width: 20%" [disabled]="!applicationFormGroup.valid">Next
+        </button>
       </div>
     </form>
   </mat-card>
+  <div *ngIf="insurances && showProtectionForm">
+    <mat-card>
+      <mat-card-title>Protection Package</mat-card-title>
+      <form fxLayout="column" [formGroup]="insuranceForm">
+        <div id="insuranceForm">
+          <div class="mb-1" style="margin-top: 1.9rem">
+            <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{insurances[0].price}}/day </span></h6>
+            <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck
+              or towing equipment except if the vehicle or equipment is used in any manner that violates the
+              terms of the rental agreement.
+            </p>
+            <mat-checkbox class="float-right" formControlName="ldw"> Add to Rental</mat-checkbox>
+          </div>
+          <div class="mb-1" style="margin-top: 3.9rem">
+            <h6>Supplemental Liability Insurance (SLI)*<span class="float-right mr-4"> ${{insurances[1].price}}
+              /day </span>
+            </h6>
+            <p>SLI protects the renter and any listed authorized drivers against claims made by a
+              third party for bodily and/or property damage sustained as a result of an accident while
+              you are operating your Penske truck. This coverage is excess over
+              the underlying insurance specified within your signed rental agreement up to $1,000,000.
+            </p>
+            <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
+            <mat-checkbox class="float-right" formControlName="sli"> Add to Rental</mat-checkbox>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button mat-raised-button color="primary" style="width: 15%" (click)="backToPersonInfo()">Personal Info
+          </button>
+          <button mat-raised-button color="primary" class="mr-3 ml-3" style="width: 15%" (click)="goToPayment()">
+            Payment
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
   <div class="container" *ngIf="showCheckoutForm">
     <div class="row">
       <mat-card class="col-8">
@@ -219,8 +257,11 @@
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <button mat-raised-button color="primary" class="mr-3" (click)="back()" style="width: 15%">Back</button>
-            <button mat-raised-button color="primary"  style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit</button>
+            <button mat-raised-button color="primary" class="mr-3" (click)="backToProtection()" style="width: 15%">
+              Protection
+            </button>
+            <button mat-raised-button color="primary" style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit
+            </button>
           </div>
         </form>
       </mat-card>
@@ -250,16 +291,28 @@
               <h6 class="my-0">Return Date:</h6>
             </div>
             <span class="text-muted">
-              {{returnedDate.getMonth()+1}}/
+              {{returnedDate.getMonth() + 1}}/
               {{returnedDate.getDate()}}/
               {{returnedDate.getFullYear()}}
             </span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <div>
+              <h6 class="my-0">Trucks: </h6>
+            </div>
+            <span class="text-muted">${{truckTotalPrice}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <div>
+              <h6 class="my-0">Protection Coverage: </h6>
+            </div>
+            <span class="text-muted">${{coverageTotalPrice}}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <div>
               <h6 class="my-0">Today's Due:</h6>
             </div>
-            <span class="text-muted">${{totalPrice}}</span>
+            <span class="text-muted">${{coverageTotalPrice + truckTotalPrice}}</span>
           </li>
         </ul>
       </mat-card>

@@ -1,4 +1,5 @@
 import {User} from './user';
+import {Insurance} from './insurance';
 
 export class Application {
   id: number;
@@ -10,4 +11,6 @@ export class Application {
   pickupdate: Date;
   returndate: Date;
   reservedid: number;
+  insurance: Insurance;
+  insurances: Insurance[];
 }

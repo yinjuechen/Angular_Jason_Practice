@@ -12,11 +12,11 @@
       <td mat-cell *matCellDef="let element">{{element.user.id}}</td>
     </ng-container>
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
       <td mat-cell *matCellDef="let element">{{element.email}}</td>
     </ng-container>
     <ng-container matColumnDef="phone">
-      <th mat-header-cell *matHeaderCellDef>Phone</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone</th>
       <td mat-cell *matCellDef="let element">{{element.phone}}</td>
     </ng-container>
     <ng-container matColumnDef="pickupdate">
@@ -27,7 +27,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Return Date</th>
       <td mat-cell *matCellDef="let element">{{element.returndate | date :'MM-dd-yyyy'}}</td>
     </ng-container>
-    <ng-container matColumnDef="orderdate">
+    <ng-container matColumnDef="order_date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
       <td mat-cell *matCellDef="let element">{{element.order_date | date :'MM-dd-yyyy'}}</td>
     </ng-container>

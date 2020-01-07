@@ -9,7 +9,7 @@ import {Application} from '../shared/models/application';
   styleUrls: ['./order-agent.component.scss']
 })
 export class OrderAgentComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'userid', 'email', 'phone', 'pickupdate', 'returndate', 'orderdate', 'detail'];
+  displayedColumns: string[] = ['id', 'userid', 'email', 'phone', 'pickupdate', 'returndate', 'order_date', 'detail'];
   orders;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -19,19 +19,6 @@ export class OrderAgentComponent implements OnInit {
 
   ngOnInit() {
     this.as.getAllApplication().subscribe(value => {
-      // let tmp = value.map(e => {
-      //   return {
-      //     id: e.id,
-      //     userid: e.user.id,
-      //     email: e.email,
-      //     phone: e.phone,
-      //     pickupdate: e.pickupdate,
-      //     returndate: e.returndate,
-      //     order_date: e.order_date,
-      //     resesrvedid: e.reservedid
-      //   };
-      // });
-      // console.log(tmp);
       this.orders = new MatTableDataSource(value);
       this.orders.paginator = this.paginator;
       this.orders.sort = this.sort;
