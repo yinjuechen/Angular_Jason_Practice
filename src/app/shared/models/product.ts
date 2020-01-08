@@ -11,5 +11,6 @@ export class Product {
   price: number;
   minseat: number;
   maxseat: number;
-  mpg:number;
+  mpg: number;
+  mileprice: number;
 }

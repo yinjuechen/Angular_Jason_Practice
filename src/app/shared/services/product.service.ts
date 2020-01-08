@@ -27,6 +27,7 @@ export class ProductService {
   getAllTruckDetail(): Observable<TruckInfo[]> {
     return this.httpClient.get<TruckInfo[]>(`${environment.API_URL}/truckdetails`);
   }
+
   AddTruckDetail(truckDetail) {
     return this.httpClient.post(`${environment.API_URL}/truckdetails`, truckDetail);
   }
@@ -34,11 +35,16 @@ export class ProductService {
   getAvailableTruckModelsByDate(startdate: string, enddate: string): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${environment.API_URL}/trucks/${startdate}/${enddate}`);
   }
+
   // getAlltrucksTimeSlot(): Observable<TruckTimeSlot[]> {
   //   return this.httpClient.get<TruckTimeSlot[]>(`${environment.API_URL}/truckreserved`);
   // }
 
-  getReservedTimeSlot(pickUpDate: string, returnDate: string): Observable<TruckTimeSlot[]>{
+  getReservedTimeSlot(pickUpDate: string, returnDate: string): Observable<TruckTimeSlot[]> {
     return this.httpClient.get<TruckTimeSlot[]>(`${environment.API_URL}/truckreserved/date/reserved/${pickUpDate}/${returnDate}`);
+  }
+
+  updateTruckDetail(truckInfo): Observable<TruckInfo> {
+    return this.httpClient.put<TruckInfo>(`${environment.API_URL}/truckdetails/${truckInfo.id}`, truckInfo);
   }
 }

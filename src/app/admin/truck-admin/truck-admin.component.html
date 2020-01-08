@@ -1,0 +1,40 @@
+<div class="container">
+  <mat-form-field>
+    <input type="text" matInput placeholder="Filter" (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <table mat-table [dataSource]="trucks" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="plate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Plate</th>
+      <td mat-cell *matCellDef="let element">{{element.plate}}</td>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+      <td mat-cell *matCellDef="let element">{{element.state}}</td>
+    </ng-container>
+    <ng-container matColumnDef="vin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>VIN</th>
+      <td mat-cell *matCellDef="let element">{{element.vin}}</td>
+    </ng-container>
+    <ng-container matColumnDef="mileage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Mileage</th>
+      <td mat-cell *matCellDef="let element">{{element.mileage}}</td>
+    </ng-container>
+    <ng-container matColumnDef="autoinsurance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Insurance</th>
+      <td mat-cell *matCellDef="let element">{{element.autoinsurance}}</td>
+    </ng-container>
+    <ng-container matColumnDef="model">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.truckModel.brand + '/' + element.truckModel.model + '/' + element.truckModel.year}}
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

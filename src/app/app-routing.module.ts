@@ -11,6 +11,9 @@ import {AddProductComponent} from './products/add-product/add-product.component'
 import {TruckInfoComponent} from './products/truck-info/truck-info.component';
 import {OrderAgentComponent} from './order-agent/order-agent.component';
 import {OrderDetailComponent} from './order-detail/order-detail.component';
+import {AdminComponent} from './admin/admin.component';
+import {TruckAdminComponent} from './admin/truck-admin/truck-admin.component';
+
 
 
 
@@ -54,6 +57,14 @@ const routes: Routes = [
   {
     path: 'orders/:id',
     component: OrderDetailComponent
+  },
+  {
+    path: 'admin',
+    component: AdminComponent
+  },
+  {
+    path: 'admin/trucks',
+    component: TruckAdminComponent
   },
   {
     path: 'login',

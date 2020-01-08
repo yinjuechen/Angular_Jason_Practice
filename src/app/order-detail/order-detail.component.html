@@ -1,179 +1,185 @@
 <div class="container" style="margin-top: 8%" *ngIf="application">
   <mat-card class="m-1">
     <mat-card-title>Order No: {{application.id}}</mat-card-title>
-    <form fxLayout="column" [formGroup]="orderSummaryInfoForm" id="orderSummary">
-      <div>
-        <h6 class="card-subtitle mt-1 font-weight-bolder mb-2">Person Info</h6>
-        <div style="border: 1px solid black" class="p-2">
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Firstname</mat-placeholder>
-              <input type="text" matInput formControlName="firstname">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>Last Name</mat-placeholder>
-              <input type="text" matInput formControlName="lastname">
-            </mat-form-field>
+    <form fxLayout="column" [formGroup]="orderSummaryInfoForm" (ngSubmit)="saveOrder()">
+      <div id="orderSummary" >
+        <div>
+          <h6 class="card-subtitle mt-1 font-weight-bolder mb-2">Person Info</h6>
+          <div style="border: 1px solid black" class="p-2">
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Firstname</mat-placeholder>
+                <input type="text" matInput formControlName="firstname">
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>Last Name</mat-placeholder>
+                <input type="text" matInput formControlName="lastname">
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Email</mat-placeholder>
+                <input type="text" matInput formControlName="email">
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>Phone</mat-placeholder>
+                <input type="number" matInput formControlName="phone">
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Address 1</mat-placeholder>
+                <input type="text" matInput formControlName="address1">
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>Address 2</mat-placeholder>
+                <input type="text" matInput formControlName="address2">
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>City</mat-placeholder>
+                <input type="text" matInput formControlName="city">
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>State</mat-placeholder>
+                <mat-select formControlName="state">
+                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                    {{state}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>Zip</mat-placeholder>
+                <input type="text" matInput formControlName="zip">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Email</mat-placeholder>
-              <input type="text" matInput formControlName="email">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>Phone</mat-placeholder>
-              <input type="number" matInput formControlName="phone">
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Address 1</mat-placeholder>
-              <input type="text" matInput formControlName="address1">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>Address 2</mat-placeholder>
-              <input type="text" matInput formControlName="address2">
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>City</mat-placeholder>
-              <input type="text" matInput formControlName="city">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>State</mat-placeholder>
-              <mat-select formControlName="state">
-                <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
-                  {{state}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>Zip</mat-placeholder>
-              <input type="text" matInput formControlName="zip">
-            </mat-form-field>
-          </div>
-        </div>
 
-        <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Driver License Info</h6>
-        <div style="border: 1px solid black" class="p-2">
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Driver License No.</mat-placeholder>
-              <input type="text" matInput formControlName="driver_license">
-              <!--          <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">-->
-              <!--            Driver license can't be empty-->
-              <!--          </mat-error>-->
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>State</mat-placeholder>
-              <mat-select formControlName="driver_license_state">
-                <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
-                  {{state}}
-                </mat-option>
-                <!--            <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">-->
-                <!--              State can't be empty-->
-                <!--            </mat-error>-->
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col" color="accent">
-              <mat-placeholder>Expired Date</mat-placeholder>
-              <!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
-              <input matInput type="text" [matDatepicker]="picker"
-                     formControlName="driver_license_expired_date">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker disabled="false"></mat-datepicker>
-              <!--          <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">-->
-              <!--            Expired date format is not right. (MM/DD/YYYY)-->
-              <!--          </mat-error>-->
-            </mat-form-field>
+          <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Driver License Info</h6>
+          <div style="border: 1px solid black" class="p-2">
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Driver License No.</mat-placeholder>
+                <input type="text" matInput formControlName="driver_license">
+                <!--          <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">-->
+                <!--            Driver license can't be empty-->
+                <!--          </mat-error>-->
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>State</mat-placeholder>
+                <mat-select formControlName="driver_license_state">
+                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                    {{state}}
+                  </mat-option>
+                  <!--            <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">-->
+                  <!--              State can't be empty-->
+                  <!--            </mat-error>-->
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col" color="accent">
+                <mat-placeholder>Expired Date</mat-placeholder>
+                <!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
+                <input matInput type="text" [matDatepicker]="picker"
+                       formControlName="driver_license_expired_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <!--          <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">-->
+                <!--            Expired date format is not right. (MM/DD/YYYY)-->
+                <!--          </mat-error>-->
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Truck Rental Info</h6>
-        <div style="border: 1px solid black" class="p-2">
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Model</mat-placeholder>
-              <input type="text" matInput formControlName="model">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>VIN</mat-placeholder>
-              <input type="text" matInput formControlName="vin">
-            </mat-form-field>
+          <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Truck Rental Info</h6>
+          <div style="border: 1px solid black" class="p-2">
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Model</mat-placeholder>
+                <input type="text" style="color:black" matInput formControlName="model">
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>VIN</mat-placeholder>
+                <input type="text" style="color:black" matInput formControlName="vin" >
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Plate</mat-placeholder>
+                <input type="text" style="color:black" matInput formControlName="plate" >
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>State</mat-placeholder>
+                <input type="text" style="color:black"  matInput formControlName="plateState" >
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col" color="accent">
+                <mat-placeholder>Pick Up Date</mat-placeholder>
+                <input matInput type="text" [matDatepicker]="pickUpDatePicker"
+                       formControlName="pickupdate" style="color:black" >
+                <mat-datepicker-toggle matSuffix [for]="pickUpDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #pickUpDatePicker disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="col" color="accent">
+                <mat-placeholder>Return Date</mat-placeholder>
+                <input matInput type="text" [matDatepicker]="returnDatePicker"
+                       formControlName="returndate" style="color:black" >
+                <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #returnDatePicker disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="form-row">
+              <mat-form-field class="col">
+                <mat-placeholder>Odometer In:</mat-placeholder>
+                <input type="number" matInput formControlName="odometerin" style="color:black" >
+              </mat-form-field>
+              <mat-form-field class="col">
+                <mat-placeholder>Odometer Out:</mat-placeholder>
+                <input type="number" matInput formControlName="odometerout" (change)="calculateMilePrice()">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Plate</mat-placeholder>
-              <input type="text" matInput formControlName="plate">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>State</mat-placeholder>
-              <input type="text" matInput formControlName="plateState">
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="col" color="accent">
-              <mat-placeholder>Pick Up Date</mat-placeholder>
-              <input matInput type="text" [matDatepicker]="pickUpDatePicker"
-                     formControlName="pickupdate">
-              <mat-datepicker-toggle matSuffix [for]="pickUpDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #pickUpDatePicker disabled="false"></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="col" color="accent">
-              <mat-placeholder>Return Date</mat-placeholder>
-              <input matInput type="text" [matDatepicker]="returnDatePicker"
-                     formControlName="returndate">
-              <mat-datepicker-toggle matSuffix [for]="returnDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #returnDatePicker disabled="false"></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="form-row">
-            <mat-form-field class="col">
-              <mat-placeholder>Odometer In:</mat-placeholder>
-              <input type="text" matInput formControlName="odometerin">
-            </mat-form-field>
-            <mat-form-field class="col">
-              <mat-placeholder>Odometer Out:</mat-placeholder>
-              <input type="text" matInput formControlName="odometerout">
-            </mat-form-field>
-          </div>
-        </div>
-        <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Insurance Info</h6>
-        <div style="border: 1px solid black; height: 366px" class="p-2">
-          <div class="mb-1" style="margin-top: 1.9rem">
-            <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{is.insurances[0].price}}/day </span></h6>
-            <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck
-              or towing equipment except if the vehicle or equipment is used in any manner that violates the
-              terms of the rental agreement.
-            </p>
-            <mat-checkbox class="float-right" formControlName="ldw" (change)="selectLDW()"> Add to Rental</mat-checkbox>
-          </div>
-          <div class="mb-1" style="margin-top: 3.9rem">
-            <h6>Supplemental Liability Insurance (SLI)*
-              <span class="float-right mr-4">
+          <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Insurance Info</h6>
+          <div style="border: 1px solid black; height: 366px" class="p-2">
+            <div class="mb-1" style="margin-top: 1.9rem">
+              <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{is.insurances[0].price}}/day </span></h6>
+              <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck
+                or towing equipment except if the vehicle or equipment is used in any manner that violates the
+                terms of the rental agreement.
+              </p>
+              <mat-checkbox class="float-right" formControlName="ldw" (change)="selectLDW()"> Add to Rental</mat-checkbox>
+            </div>
+            <div class="mb-1" style="margin-top: 3.9rem">
+              <h6>Supplemental Liability Insurance (SLI)*
+                <span class="float-right mr-4">
                 ${{is.insurances[1].price}}/day
               </span>
-            </h6>
-            <p>SLI protects the renter and any listed authorized drivers against claims made by a
-              third party for bodily and/or property damage sustained as a result of an accident while
-              you are operating your Penske truck. This coverage is excess over
-              the underlying insurance specified within your signed rental agreement up to $1,000,000.
-            </p>
-            <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
-            <mat-checkbox class="float-right" formControlName="sli" (change)="selectSLI()"> Add to Rental</mat-checkbox>
+              </h6>
+              <p>SLI protects the renter and any listed authorized drivers against claims made by a
+                third party for bodily and/or property damage sustained as a result of an accident while
+                you are operating your Penske truck. This coverage is excess over
+                the underlying insurance specified within your signed rental agreement up to $1,000,000.
+              </p>
+              <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
+              <mat-checkbox class="float-right" formControlName="sli" (change)="selectSLI()"> Add to Rental</mat-checkbox>
+            </div>
+          </div>
+          <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Order Summary</h6>
+          <div style="border: 1px solid black" class="p-2 mat-background-accent container">
+            <div class="row">
+              <p class="col">Truck Total Price: <span>${{application.truckprice}}</span></p>
+              <p class="col">Mileages Total Price: <span>${{application.mileageprice}}</span></p>
+              <p class="col">Insurance Total Price: <span>${{application.insuranceprice}}</span></p>
+            </div>
+            <div class="row">
+              <p class="col">Total Price: <span>${{application.totalprice}}</span></p>
+            </div>
           </div>
         </div>
-        <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Order Summary</h6>
-        <div style="border: 1px solid black" class="p-2 mat-background-accent container">
-          <div class="row">
-            <p class="col">Truck Total Price: <span>${{application.truckprice}}</span></p>
-            <p class="col">Mileages Total Price: <span>${{application.mileageprice}}</span></p>
-            <p class="col">Insurance Total Price: <span>${{application.insuranceprice}}</span></p>
-          </div>
-          <div class="row">
-            <p class="col">Total Price: <span>${{application.totalprice}}</span></p>
-          </div>
-        </div>
+      </div>
+      <div class="mt-2">
+        <button mat-raised-button color="primary" class="float-right mr-3">Save</button>
+        <button mat-raised-button color="primary" class="float-right mr-3" (click)="generatePDF()">Print</button>
       </div>
     </form>
   </mat-card>

@@ -3,6 +3,7 @@
   <div class="card-body">
     <h5 class="card-title">{{product.brand}} {{product.model}} {{product.year}}</h5>
     <p class="card-subtitle">Start with ${{product.price}}.00/day </p>
+    <p mat-card-subtitle>plus ${{product.mileprice}}/mile</p>
     <a class="card-link btn btn-outline-success" (click)="goToApplication()">Apply</a>
     <a href="/trucks/{{product.id}}" class="card-link btn btn-outline-info">Detail</a>
   </div>

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ApplicationService} from '../shared/services/application.service';
 import {TimeslotService} from '../shared/services/timeslot.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsStatesService} from '../shared/services/us-states.service';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jsPDF';
 import {InsuranceService} from '../shared/services/insurance.service';
+import {ProductService} from '../shared/services/product.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -19,17 +20,17 @@ export class OrderDetailComponent implements OnInit {
   timeSlot;
   id;
   orderSummaryInfoForm: FormGroup;
-  truckInfoForm: FormGroup;
-  truckTotalPrice = 0;
-  mileageTotalPrice = 0;
-  insuranceTotalPrice = 0;
+  truckInfo;
   days: number;
+  mileprice: number;
 
   constructor(public aps: ApplicationService,
               private ts: TimeslotService,
               private fb: FormBuilder,
               public usStatesService: UsStatesService,
               public is: InsuranceService,
+              private router: Router,
+              private ps: ProductService,
               private ar: ActivatedRoute) {
   }
 
@@ -48,13 +49,13 @@ export class OrderDetailComponent implements OnInit {
       driver_license_state: ['', [Validators.required]],
       // TODO: validate date input
       driver_license_expired_date: ['', [Validators.required]],
-      model: ['', [Validators.required]],
-      plate: ['', [Validators.required]],
-      vin: ['', [Validators.required]],
-      plateState: ['', [Validators.required]],
-      pickupdate: ['', [Validators.required]],
-      returndate: ['', [Validators.required]],
-      odometerin: ['', [Validators.required]],
+      model: [{value: '', disabled: true}, [Validators.required]],
+      plate: [{value: '', disabled: true}, [Validators.required]],
+      vin: [{value: '', disabled: true}, [Validators.required]],
+      plateState: [{value: '', disabled: true}, [Validators.required]],
+      pickupdate: [{value: '', disabled: true}, [Validators.required]],
+      returndate: [{value: '', disabled: true}, [Validators.required]],
+      odometerin: [{value: '', disabled: true}, [Validators.required]],
       odometerout: [''],
       ldw: [''],
       sli: ['']
@@ -72,7 +73,9 @@ export class OrderDetailComponent implements OnInit {
       this.days = (d2 - d1) / (1000 * 60 * 60 * 24) + 1;
       this.ts.getTimeSlotById(value.reservedid).subscribe(value1 => {
         console.log(value1);
+        this.mileprice = value1.truckDetail.truckModel.mileprice;
         this.timeSlot = value1;
+        this.truckInfo = value1.truckDetail;
         for (const key in this.application) {
           if (this.orderSummaryInfoForm.controls.hasOwnProperty(key)) {
             this.orderSummaryInfoForm.controls[key].setValue(this.application[key]);
@@ -87,17 +90,26 @@ export class OrderDetailComponent implements OnInit {
         this.orderSummaryInfoForm.controls.plateState.setValue(this.timeSlot.truckDetail.state);
         this.orderSummaryInfoForm.controls.pickupdate.setValue(new Date(this.timeSlot.startdate));
         this.orderSummaryInfoForm.controls.returndate.setValue(new Date(this.timeSlot.enddate));
-        this.orderSummaryInfoForm.controls.odometerin.setValue(this.timeSlot.truckDetail.mileage);
+        if (!this.application.odometerin) {
+          this.orderSummaryInfoForm.controls.odometerin.setValue(this.timeSlot.truckDetail.mileage);
+        } else {
+          this.orderSummaryInfoForm.controls.odometerin.setValue(this.application.odometerin);
+        }
       });
     });
   }
 
   generatePDF() {
-    const doc = new jsPDF();
     html2canvas(document.getElementById('orderSummary')).then((canvas) => {
+      const doc = new jsPDF();
       const formImg = canvas.toDataURL('image/png');
-      doc.addImage(formImg, 'JPEG', 5, 20, 200, 240);
-      doc.save('test.pdf');
+      const width = doc.internal.pageSize.getWidth();
+      const height = doc.internal.pageSize.getHeight();
+      doc.addImage(formImg, 'JPEG', 5, 10, width - 10, height - 20);
+      // doc.autoPrint();
+      // doc.output('pdfobjectnewwindow', 'order_summary.pdf');
+      doc.addPage();
+      doc.save('order_summary.pdf');
     });
   }
 
@@ -105,7 +117,7 @@ export class OrderDetailComponent implements OnInit {
     if (this.orderSummaryInfoForm.value.sli) {
       this.application.insuranceprice += this.is.insurances[1].price * this.days;
       this.application.totalprice += this.is.insurances[1].price * this.days;
-      this.application.insurance2 = {id: 2};
+      this.application.insurance2 = this.is.insurances[1];
     } else {
       this.application.insuranceprice -= this.is.insurances[1].price * this.days;
       this.application.totalprice -= this.is.insurances[1].price * this.days;
@@ -117,11 +129,42 @@ export class OrderDetailComponent implements OnInit {
     if (this.orderSummaryInfoForm.value.ldw) {
       this.application.insuranceprice += this.is.insurances[0].price * this.days;
       this.application.totalprice += this.is.insurances[0].price * this.days;
-      this.application.insurance1 = {id: 1};
+      this.application.insurance1 = this.is.insurances[0];
     } else {
       this.application.insuranceprice -= this.is.insurances[0].price * this.days;
       this.application.totalprice -= this.is.insurances[0].price * this.days;
-      this.application.insurance2 = {id: 2};
+      this.application.insurance2 = null;
+    }
+  }
+
+  saveOrder() {
+    for (const key in this.orderSummaryInfoForm.value) {
+      if (this.application.hasOwnProperty(key)) {
+        this.application[key] = this.orderSummaryInfoForm.value[key];
+      }
+    }
+    this.application.odometerin = this.truckInfo.mileage;
+    this.application.odometerout = this.orderSummaryInfoForm.value.odometerout ? this.orderSummaryInfoForm.value.odometerout : 0;
+    console.log(this.application);
+    if (this.orderSummaryInfoForm.value.odometerout) {
+      this.truckInfo.mileage = this.orderSummaryInfoForm.value.odometerout;
+    }
+    console.log(this.truckInfo);
+    this.aps.updateApplicaction(this.application).subscribe(value => {
+      this.ps.updateTruckDetail(this.truckInfo).subscribe(value1 => {
+        console.log(value1);
+        this.router.navigate(['/orders']);
+      });
+    });
+  }
+
+  calculateMilePrice() {
+    const miles = this.orderSummaryInfoForm.value.odometerout - this.truckInfo.mileage;
+    this.application.totalprice = this.application.insuranceprice + this.application.truckprice;
+    console.log(miles);
+    if (miles > 0) {
+      this.application.mileageprice = this.mileprice * miles;
+      this.application.totalprice += this.application.mileageprice;
     }
   }
 }

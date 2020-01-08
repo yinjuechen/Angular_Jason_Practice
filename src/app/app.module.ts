@@ -31,6 +31,9 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { TruckInfoComponent } from './products/truck-info/truck-info.component';
 import { OrderAgentComponent } from './order-agent/order-agent.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { AdminComponent } from './admin/admin.component';
+import { TruckAdminComponent } from './admin/truck-admin/truck-admin.component';
+
 
 
 
@@ -53,7 +56,9 @@ import { OrderDetailComponent } from './order-detail/order-detail.component';
     AddProductComponent,
     TruckInfoComponent,
     OrderAgentComponent,
-    OrderDetailComponent
+    OrderDetailComponent,
+    AdminComponent,
+    TruckAdminComponent
   ],
   imports: [
     BrowserModule,

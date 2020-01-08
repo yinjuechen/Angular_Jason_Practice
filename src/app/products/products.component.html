@@ -23,8 +23,8 @@
 </div>
 <section class="d-flex  justify-content-end align-items-start" style="margin-left: 19px">
   <h6 class="mr-2">Sort By: </h6>
-  <mat-select style="max-width: 19%" placeholder="------------------------------------"  (selectionChange)="filterProducts($event)">
-    <mat-option value="0" class="justify-content-center align-items-center">Brand</mat-option>
+  <mat-select style="max-width: 17%" (selectionChange)="filterProducts($event)" class="border border-dark">
+<!--    <mat-option value="0" class="justify-content-center align-items-center">Brand</mat-option>-->
     <mat-option value="1">Price: low to high</mat-option>
     <mat-option value="2">Price: high to low</mat-option>
     <mat-option value="3">MPG: low to high</mat-option>
@@ -33,7 +33,7 @@
   </mat-select>
 </section>
 <ng-container *ngIf="ps.products">
-  <div class="card-deck ml-1">
+  <div class="card-deck m-2">
     <app-product-overview *ngFor="let product of products" [product]="product"></app-product-overview>
   </div>
 </ng-container>

@@ -23,4 +23,8 @@ export class ApplicationService {
   getApplicationById(id): Observable<Application> {
     return this.httpClient.get<Application>(`${environment.API_URL}/applications/${id}`);
   }
+
+  updateApplicaction(application): Observable<Application>{
+    return this.httpClient.put<Application>(`${environment.API_URL}/applications/${application.id}`, application);
+  }
 }

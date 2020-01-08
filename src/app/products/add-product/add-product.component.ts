@@ -32,7 +32,7 @@ export class AddProductComponent implements OnInit {
       plate: ['', [Validators.required]],
       state: ['', [Validators.required]],
       vin: ['', [Validators.required]],
-      autoinsurance:['', [Validators.required]],
+      autoinsurance: ['', [Validators.required]],
       mileage: ['', [Validators.required]]
     });
   }
@@ -67,6 +67,7 @@ export class AddProductComponent implements OnInit {
       minseat: ['', [Validators.required]],
       maxseat: ['', [Validators.required]],
       mpg: ['', [Validators.required]],
+      mileprice: ['', [Validators.required]],
       truckinfos: this.fb.array([])
     });
 
@@ -95,8 +96,10 @@ export class AddProductComponent implements OnInit {
       price: this.addProductFormGroup.value.price,
       minseat: this.addProductFormGroup.value.minseat,
       maxseat: this.addProductFormGroup.value.maxseat,
-      mpg: this.addProductFormGroup.value.mpg
-    };
+      mpg: this.addProductFormGroup.value.mpg,
+      mileprice: this.addProductFormGroup.value.mileprice
+  }
+    ;
     console.log(this.addProductFormGroup.get('truckinfos'));
     this.ps.AddProduct(truck).subscribe((value) => {
       if (value) {

@@ -37,8 +37,8 @@
               {{category.type}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="addProductFormGroup.get('year').getError('required')">
-            Year can't be empty.
+          <mat-error *ngIf="addProductFormGroup.get('category').getError('required')">
+            Category can't be empty.
           </mat-error>
         </mat-form-field>
       </div>
@@ -47,14 +47,23 @@
           <mat-placeholder>Image</mat-placeholder>
           <input type="text" matInput formControlName="image">
           <mat-error *ngIf="addProductFormGroup.get('image').getError('required')">
-            Model can't be empty.
+            Image can't be empty.
           </mat-error>
         </mat-form-field>
+      </div>
+      <div class="form-row">
         <mat-form-field class="col">
           <mat-placeholder>Rental Price (Day)</mat-placeholder>
           <input type="number" matInput formControlName="price">
           <mat-error *ngIf="addProductFormGroup.get('price').getError('required')">
-            Model can't be empty.
+            Daily Price can't be empty.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Rental Price (Mile)</mat-placeholder>
+          <input type="number" matInput formControlName="mileprice">
+          <mat-error *ngIf="addProductFormGroup.get('mileprice').getError('required')">
+            Mile Price Can't be empty.
           </mat-error>
         </mat-form-field>
       </div>
