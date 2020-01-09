@@ -22,12 +22,15 @@ export class OrderAgentComponent implements OnInit {
       this.orders = new MatTableDataSource(value);
       this.orders.paginator = this.paginator;
       this.orders.sort = this.sort;
+      this.orders.filterPredicate = (data, filter) => {
+        const dataStr = JSON.stringify(data).toLowerCase();
+        return dataStr.indexOf(filter) > -1;
+      };
       console.log(this.orders);
     });
   }
 
   applyFilter($event) {
     this.orders.filter = $event.target.value.trim().toLowerCase();
-    console.log(this.orders);
   }
 }

@@ -5,7 +5,7 @@
   <table mat-table [dataSource]="trucks" matSort>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      <td mat-cell *matCellDef="let element"><a routerLink= "/admin/trucks/truckdetai/{{element.id}}">{{element.id}}</a></td>
     </ng-container>
     <ng-container matColumnDef="plate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Plate</th>
@@ -30,7 +30,9 @@
     <ng-container matColumnDef="model">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
       <td mat-cell *matCellDef="let element">
-        {{element.truckModel.brand + '/' + element.truckModel.model + '/' + element.truckModel.year}}
+        <a routerLink="/admin/trucks/truckmodel/{{element.id}}">
+          {{element.truckModel.brand + '/' + element.truckModel.model + '/' + element.truckModel.year}}
+        </a>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -13,8 +13,8 @@ import {OrderAgentComponent} from './order-agent/order-agent.component';
 import {OrderDetailComponent} from './order-detail/order-detail.component';
 import {AdminComponent} from './admin/admin.component';
 import {TruckAdminComponent} from './admin/truck-admin/truck-admin.component';
-
-
+import {TruckdetailAdminComponent} from './admin/truck-admin/truckdetail-admin/truckdetail-admin.component';
+import {TruckmodelAdminComponent} from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
 
 
 const routes: Routes = [
@@ -65,6 +65,14 @@ const routes: Routes = [
   {
     path: 'admin/trucks',
     component: TruckAdminComponent
+  },
+  {
+    path: 'admin/trucks/truckdetai/:id',
+    component: TruckdetailAdminComponent
+  },
+  {
+    path: 'admin/trucks/truckmodel/:id',
+    component: TruckmodelAdminComponent
   },
   {
     path: 'login',

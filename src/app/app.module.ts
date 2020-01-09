@@ -33,6 +33,8 @@ import { OrderAgentComponent } from './order-agent/order-agent.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { AdminComponent } from './admin/admin.component';
 import { TruckAdminComponent } from './admin/truck-admin/truck-admin.component';
+import { TruckdetailAdminComponent } from './admin/truck-admin/truckdetail-admin/truckdetail-admin.component';
+import { TruckmodelAdminComponent } from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
 
 
 
@@ -58,7 +60,9 @@ import { TruckAdminComponent } from './admin/truck-admin/truck-admin.component';
     OrderAgentComponent,
     OrderDetailComponent,
     AdminComponent,
-    TruckAdminComponent
+    TruckAdminComponent,
+    TruckdetailAdminComponent,
+    TruckmodelAdminComponent
   ],
   imports: [
     BrowserModule,
