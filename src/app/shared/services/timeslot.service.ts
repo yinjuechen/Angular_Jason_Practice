@@ -19,4 +19,8 @@ export class TimeslotService {
   getTimeSlotById(id): Observable<TruckTimeSlot> {
     return this.httpClient.get<TruckTimeSlot>(`${environment.API_URL}/truckreserved/${id}`);
   }
+
+  getTimeSlotByTruckDetail(id): Observable<TruckTimeSlot[]> {
+    return this.httpClient.get<TruckTimeSlot[]>(`${environment.API_URL}/truckreserved/trucks/${id}`);
+  }
 }

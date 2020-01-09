@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ProductService} from '../../shared/services/product.service';
-import {Product} from '../../shared/models/product';
 import {TruckdetailAdminComponent} from './truckdetail-admin/truckdetail-admin.component';
 import {TruckmodelAdminComponent} from './truckmodel-admin/truckmodel-admin.component';
+import {TimeslotService} from '../../shared/services/timeslot.service';
+import {TruckreservationAdminComponent} from './truckreservation-admin/truckreservation-admin.component';
 
 @Component({
   selector: 'app-truck-admin',
@@ -12,12 +13,14 @@ import {TruckmodelAdminComponent} from './truckmodel-admin/truckmodel-admin.comp
 })
 export class TruckAdminComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'plate', 'state', 'vin', 'mileage', 'autoinsurance', 'model'];
+  displayedColumns: string[] = ['id', 'plate', 'state', 'vin', 'mileage', 'autoinsurance', 'model', 'reservations'];
   trucks;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private ps: ProductService, private dialog: MatDialog) {
+  constructor(private ps: ProductService,
+              private ts: TimeslotService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -56,5 +59,11 @@ export class TruckAdminComponent implements OnInit {
     this.ps.getTruckModelById(id).subscribe(value => {
       this.dialog.open(TruckmodelAdminComponent, {width: '70%', data: value});
     });
+  }
+
+  openReservationDialog(element) {
+    const id = element.id;
+    this.ts.getTimeSlotByTruckDetail(id).subscribe(value => {
+      this.dialog.open(TruckreservationAdminComponent, {width: '70%', data: value});    });
   }
 }

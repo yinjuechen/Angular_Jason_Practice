@@ -22,7 +22,6 @@ export class TruckdetailAdminComponent implements OnInit {
               private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) private data,
               private dialogRef: MatDialogRef<TruckdetailAdminComponent>,
-              private location: Location,
               public usStatesService: UsStatesService,
   ) {
   }
@@ -41,7 +40,7 @@ export class TruckdetailAdminComponent implements OnInit {
       model: [{value: '', disabled: true}],
       year: [{value: '', disabled: true}]
     });
-    console.log(this.data);
+    // console.log(this.data);
     for (const key in this.data) {
       if (this.truckDetailForm.controls.hasOwnProperty(key)) {
         this.truckDetailForm.controls[key].setValue(this.data[key]);
@@ -60,7 +59,7 @@ export class TruckdetailAdminComponent implements OnInit {
 
   submit() {
     this.data = {...this.data, ...this.truckDetailForm.value};
-    console.log(this.data);
+    // console.log(this.data);
     this.ps.updateTruckDetail(this.data).subscribe(value => {
       this.dialogRef.close();
     });

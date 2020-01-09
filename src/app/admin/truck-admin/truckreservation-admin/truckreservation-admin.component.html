@@ -1,0 +1,23 @@
+<div class="container">
+  <table style="max-width: 100%" class="p-3" mat-table [dataSource]="data" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="">Id</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="truckid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="">Truck Id</th>
+      <td mat-cell *matCellDef="let element">{{element.truckDetail.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="startdate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="">Pick Up Date</th>
+      <td mat-cell *matCellDef="let element">{{element.startdate | date: 'MM-dd-yyyy'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="enddate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="">Return Date</th>
+      <td mat-cell *matCellDef="let element">{{element.enddate | date:'MM-dd-yyyy'}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
