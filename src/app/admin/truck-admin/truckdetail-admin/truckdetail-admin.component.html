@@ -1,1 +1,57 @@
-<p>truckdetail-admin works!</p>
+<main class="container" style="margin-top: 8%">
+  <mat-card>
+    <mat-card-title>Truck Details</mat-card-title>
+    <form fxLayout="column" [formGroup]="truckDetailForm">
+      <div class="form-row">
+        <mat-form-field class="col">
+          <mat-placeholder>Id</mat-placeholder>
+          <input type="text" matInput formControlName="id">
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Plate</mat-placeholder>
+          <input type="text" matInput formControlName="plate">
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>State</mat-placeholder>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+              {{state}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col">
+          <mat-placeholder>VIN</mat-placeholder>
+          <input type="text" matInput formControlName="vin">
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Insurance No.</mat-placeholder>
+          <input type="text" matInput formControlName="autoinsurance">
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Mileage</mat-placeholder>
+          <input type="number" matInput formControlName="mileage">
+        </mat-form-field>
+      </div>
+      <div class="form-row" [formGroup]="truckModelForm">
+        <mat-form-field class="col">
+          <mat-placeholder>Brand</mat-placeholder>
+          <input type="text" matInput formControlName="brand" style="color: black">
+        </mat-form-field>
+        <mat-form-field class="col">
+          <mat-placeholder>Model</mat-placeholder>
+          <input type="text" matInput formControlName="model" style="color: black">
+        </mat-form-field>
+        <mat-form-field color="col">
+          <mat-placeholder>Year</mat-placeholder>
+          <input type="text" matInput formControlName="year" style="color: black">
+        </mat-form-field>
+      </div>
+      <div class="m-3 d-flex justify-content-end">
+        <button mat-raised-button color="primary" class="mr-3" (click)="back()">Back</button>
+        <button mat-raised-button color="primary"  (click)="submit()">Save</button>
+      </div>
+    </form>
+  </mat-card>
+</main>

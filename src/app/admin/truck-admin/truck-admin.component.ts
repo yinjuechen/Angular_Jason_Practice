@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ProductService} from '../../shared/services/product.service';
 import {Product} from '../../shared/models/product';
+import {TruckdetailAdminComponent} from './truckdetail-admin/truckdetail-admin.component';
+import {TruckmodelAdminComponent} from './truckmodel-admin/truckmodel-admin.component';
 
 @Component({
   selector: 'app-truck-admin',
@@ -15,7 +17,7 @@ export class TruckAdminComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private ps: ProductService) {
+  constructor(private ps: ProductService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -32,8 +34,8 @@ export class TruckAdminComponent implements OnInit {
         }
       };
       this.trucks.filterPredicate = (data, filter) => {
-          const dataStr = JSON.stringify(data).toLowerCase();
-          return dataStr.indexOf(filter) > -1;
+        const dataStr = JSON.stringify(data).toLowerCase();
+        return dataStr.indexOf(filter) > -1;
       };
     });
   }
@@ -41,5 +43,18 @@ export class TruckAdminComponent implements OnInit {
 
   applyFilter($event) {
     this.trucks.filter = $event.target.value.trim().toLowerCase();
+  }
+
+  openDetailDialog($event) {
+    this.ps.getTruckDetailById($event.target.innerText).subscribe(value => {
+      this.dialog.open(TruckdetailAdminComponent, {width: '70%', data: value});
+    });
+  }
+
+  openModelDialog(element) {
+    const id = element.truckModel.id;
+    this.ps.getTruckModelById(id).subscribe(value => {
+      this.dialog.open(TruckmodelAdminComponent, {width: '70%', data: value});
+    });
   }
 }

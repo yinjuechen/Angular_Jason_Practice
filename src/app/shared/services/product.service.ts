@@ -44,7 +44,15 @@ export class ProductService {
     return this.httpClient.get<TruckTimeSlot[]>(`${environment.API_URL}/truckreserved/date/reserved/${pickUpDate}/${returnDate}`);
   }
 
+  getTruckDetailById(id: number): Observable<TruckInfo> {
+    return this.httpClient.get<TruckInfo>(`${environment.API_URL}/truckdetails/${id}`);
+  }
+
   updateTruckDetail(truckInfo): Observable<TruckInfo> {
     return this.httpClient.put<TruckInfo>(`${environment.API_URL}/truckdetails/${truckInfo.id}`, truckInfo);
+  }
+
+  getTruckModelById(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(`${environment.API_URL}/trucks/${id}`);
   }
 }

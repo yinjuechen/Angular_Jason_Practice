@@ -6,10 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatCardModule, MatCheckboxModule, MatDatepickerModule,
+  MatCardModule, MatCheckboxModule, MatDatepickerModule, MatExpansionModule,
   MatFormFieldModule, MatGridListModule,
   MatInputModule,
-  MatListModule, MatNativeDateModule, MatPaginatorModule, MatSelectModule,
+  MatListModule, MatNativeDateModule, MatPaginatorModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSortModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -87,7 +87,9 @@ import { TruckmodelAdminComponent } from './admin/truck-admin/truckmodel-admin/t
     MatCheckboxModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
