@@ -55,7 +55,8 @@ export class TruckmodelAdminComponent implements OnInit {
 
   submit() {
     this.data = {...this.data, ...this.truckModelForm.value};
-    this.data.category = {id: this.data.category};
+    this.data.category = this.categoryService.categories[this.truckModelForm.value.category - 1];
+    console.log(this.data);
     this.ps.updateTruckModel(this.data).subscribe(value => {
       this.dialogRef.close();
     });
