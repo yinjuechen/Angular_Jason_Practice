@@ -36,6 +36,14 @@ import {TruckAdminComponent} from './admin/truck-admin/truck-admin.component';
 import {TruckdetailAdminComponent} from './admin/truck-admin/truckdetail-admin/truckdetail-admin.component';
 import {TruckmodelAdminComponent} from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
 import {TruckreservationAdminComponent} from './admin/truck-admin/truckreservation-admin/truckreservation-admin.component';
+import {FileUploadModule} from 'ng2-file-upload';
+import {CloudinaryModule, CloudinaryConfiguration} from '@cloudinary/angular-5.x';
+import {Cloudinary} from 'cloudinary-core';
+import { DataAdminComponent } from './admin/data-admin/data-admin.component';
+import {GoogleChartsModule} from 'angular-google-charts';
+import { DailyDataComponent } from './admin/data-admin/daily-data/daily-data.component';
+import { DailyModelComponent } from './admin/data-admin/daily-model/daily-model.component';
+import { DataIncomeComponent } from './admin/data-admin/data-income/data-income.component';
 
 
 @NgModule({
@@ -59,7 +67,11 @@ import {TruckreservationAdminComponent} from './admin/truck-admin/truckreservati
     TruckAdminComponent,
     TruckdetailAdminComponent,
     TruckmodelAdminComponent,
-    TruckreservationAdminComponent
+    TruckreservationAdminComponent,
+    DataAdminComponent,
+    DailyDataComponent,
+    DailyModelComponent,
+    DataIncomeComponent
   ],
   entryComponents: [
     TruckreservationAdminComponent
@@ -89,7 +101,10 @@ import {TruckreservationAdminComponent} from './admin/truck-admin/truckreservati
     MatSortModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatRippleModule
+    MatRippleModule,
+    FileUploadModule,
+    CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

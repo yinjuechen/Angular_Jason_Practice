@@ -1,11 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, NgZone, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../shared/services/product.service';
 import {CategoryService} from '../../shared/services/category.service';
 import {YearsService} from '../../shared/services/years.service';
 import {Router} from '@angular/router';
-import {TruckInfoComponent} from '../truck-info/truck-info.component';
-import {UsStatesService} from '../../shared/services/us-states.service';
+import {Cloudinary} from '@cloudinary/angular-5.x';
+import {FileUploader} from 'ng2-file-upload';
+import {FileUploaderOptions} from 'ng2-file-upload/file-upload/file-uploader.class';
+import {analyticsPackageSafelist} from '@angular/cli/models/analytics';
 
 @Component({
   selector: 'app-add-product',
@@ -17,8 +19,8 @@ export class AddProductComponent implements OnInit {
   categories;
   years;
   arr = null;
+  imageUrl;
 
-  // @TODO: AddTrucksForm Validation
   get truckinfos() {
     return this.addProductFormGroup.get('truckinfos') as FormArray;
   }
@@ -40,6 +42,7 @@ export class AddProductComponent implements OnInit {
   constructor(private ps: ProductService,
               private fb: FormBuilder,
               private router: Router,
+              private cloudinary: Cloudinary,
               private cs: CategoryService,
               private ys: YearsService) {
   }
@@ -87,18 +90,18 @@ export class AddProductComponent implements OnInit {
 
   addProduct() {
     const truck = {
-      brand: this.addProductFormGroup.value.brand,
-      model: this.addProductFormGroup.value.model,
-      year: this.addProductFormGroup.value.year,
-      category: this.categories[this.addProductFormGroup.value.category - 1],
-      stock: this.addProductFormGroup.value.stock,
-      image: this.addProductFormGroup.value.image,
-      price: this.addProductFormGroup.value.price,
-      minseat: this.addProductFormGroup.value.minseat,
-      maxseat: this.addProductFormGroup.value.maxseat,
-      mpg: this.addProductFormGroup.value.mpg,
-      mileprice: this.addProductFormGroup.value.mileprice
-  }
+        brand: this.addProductFormGroup.value.brand,
+        model: this.addProductFormGroup.value.model,
+        year: this.addProductFormGroup.value.year,
+        category: this.categories[this.addProductFormGroup.value.category - 1],
+        stock: this.addProductFormGroup.value.stock,
+        image: this.addProductFormGroup.value.image,
+        price: this.addProductFormGroup.value.price,
+        minseat: this.addProductFormGroup.value.minseat,
+        maxseat: this.addProductFormGroup.value.maxseat,
+        mpg: this.addProductFormGroup.value.mpg,
+        mileprice: this.addProductFormGroup.value.mileprice
+      }
     ;
     console.log(this.addProductFormGroup.get('truckinfos'));
     this.ps.AddProduct(truck).subscribe((value) => {
@@ -136,4 +139,5 @@ export class AddProductComponent implements OnInit {
       this.addtruckinfo();
     }
   }
+
 }

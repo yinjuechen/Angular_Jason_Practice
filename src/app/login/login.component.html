@@ -3,16 +3,17 @@
     <mat-card-title>Login</mat-card-title>
     <!--  ngForm will be auto added to form element. It will automatically call event.preventDefault()  -->
     <!--  # is declare a variable in html  -->
-    <form ngForm fxLayout="column" #f="ngForm" (ngSubmit)="submit(f)">
+    <form ngForm fxLayout="column" [formGroup]="loginForm" (ngSubmit)="submit()">
       <mat-form-field>
         <!--   name + ngModel     -->
-        <input matInput type="email" placeholder="Email" name="email" ngModel required>
-        <!--          <p *ngIf="auth.usernameTaken">Username Existed!!!!</p>-->
-        <mat-error>Username can't be empty</mat-error>
+        <mat-placeholder>Email</mat-placeholder>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="loginForm.get('email').getError('required')">Username can't be empty</mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" minlength="6" required name="password" ngModel>
-        <mat-error>Password has to be no less than 6 characters long</mat-error>
+        <mat-placeholder>Password</mat-placeholder>
+        <input matInput type="password"  formControlName="password">
+        <mat-error *ngIf="loginForm.get('password').getError('required')">Password has to be no less than 6 characters long</mat-error>
       </mat-form-field>
       <div>
         <button mat-raised-button color="primary" type="submit">Login</button> &nbsp;

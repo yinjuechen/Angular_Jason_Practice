@@ -15,6 +15,7 @@ import {AdminComponent} from './admin/admin.component';
 import {TruckAdminComponent} from './admin/truck-admin/truck-admin.component';
 import {TruckdetailAdminComponent} from './admin/truck-admin/truckdetail-admin/truckdetail-admin.component';
 import {TruckmodelAdminComponent} from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
+import {DataAdminComponent} from './admin/data-admin/data-admin.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,10 @@ const routes: Routes = [
   {
     path: 'admin/trucks/truckmodel/:id',
     component: TruckmodelAdminComponent
+  },
+  {
+    path: 'admin/data',
+    component: DataAdminComponent,
   },
   {
     path: 'login',

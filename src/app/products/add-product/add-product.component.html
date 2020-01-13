@@ -1,7 +1,7 @@
 <main class="container" style="margin-top: 8%">
   <mat-card fxFlex="80%" fxFlex.gt-xs="60%" fxFlexOffset.gt-sm="20%">
     <mat-card-title>Add New Truck</mat-card-title>
-    <form fxLayout="column" [formGroup]="addProductFormGroup" (ngSubmit)="addProduct()">
+    <form fxLayout="column" [formGroup]="addProductFormGroup" >
       <div class="form-row">
         <mat-form-field class="col">
           <mat-placeholder>Brand</mat-placeholder>
@@ -99,12 +99,16 @@
           </mat-error>
         </mat-form-field>
       </div>
+<!--      <div>-->
+<!--        <input type="file" (change)="fileChange($event)">-->
+<!--        <button mat-raised-button color="accent"(click)="upload($event)">Upload</button>-->
+<!--      </div>-->
       <div class="form-row" formArrayName="truckinfos"
            *ngFor="let item of addProductFormGroup.get('truckinfos')['controls']">
         <app-truck-info class="col-6" [truckInfoFormGroup]="item"></app-truck-info>
       </div>
       <div>
-        <button mat-raised-button color="primary" [disabled]="!addProductFormGroup.valid">Add</button>
+        <button mat-raised-button color="primary" [disabled]="!addProductFormGroup.valid" (click)="addProduct()">Add</button>
       </div>
     </form>
   </mat-card>
