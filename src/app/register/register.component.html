@@ -18,18 +18,22 @@
           </mat-error>
         </mat-form-field>
       </div>
-      <div class="form-row">
-        <mat-form-field class="col">
+      <div fxLayout="column">
+        <mat-form-field>
           <mat-placeholder>Email</mat-placeholder>
-          <input type="email" matInput formControlName="email">
+          <input type="email" matInput formControlName="email" (input)="userExistedCheck($event)">
           <mat-error *ngIf="registerFormGroup.get('email').getError('pattern')">Email is not valid.</mat-error>
           <mat-error *ngIf="registerFormGroup.get('email').getError('required')">Email can't be empty.</mat-error>
         </mat-form-field>
+        <mat-error *ngIf="userExisted">This email is already registered. </mat-error>
       </div>
       <div fxLayout="column" formGroupName="passwords">
         <mat-form-field>
           <mat-placeholder>Password</mat-placeholder>
           <input type="password" matInput formControlName="password">
+          <mat-error *ngIf="registerFormGroup.get('passwords').get('password').getError('minlength')">
+           Password min length is 8.
+          </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-placeholder>Confirm Password</mat-placeholder>
