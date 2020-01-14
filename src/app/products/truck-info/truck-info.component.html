@@ -28,6 +28,15 @@
         <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('required')">
           VIN Number can't be empty.
         </mat-error>
+        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('minlength')">
+          VIN Number must be 17 digits.
+        </mat-error>
+        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('maxlength')">
+          VIN Number must be 17 digits.
+        </mat-error>
+        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('invalidVIN')">
+
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="col">
         <mat-placeholder>Auto Insurance No.</mat-placeholder>

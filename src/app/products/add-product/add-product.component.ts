@@ -1,5 +1,5 @@
 import {Component, Input, NgZone, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ProductService} from '../../shared/services/product.service';
 import {CategoryService} from '../../shared/services/category.service';
 import {YearsService} from '../../shared/services/years.service';
@@ -37,10 +37,46 @@ export class AddProductComponent implements OnInit {
     return this.fb.group({
       plate: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      vin: ['', [Validators.required]],
+      vin: ['', [Validators.required,
+        Validators.minLength(17),
+        Validators.maxLength(17),
+        this.validateVin
+      ]],
       autoinsurance: ['', [Validators.required]],
       mileage: ['', [Validators.required]]
     });
+  }
+
+  validateVin(vinFormContrl: FormControl): null | {} {
+    const vin = vinFormContrl.value;
+    const invalidInfo = {invalidVIN: 'VIN is not valid'};
+    if (vin === '11111111111111111') {
+      return invalidInfo;
+    }
+    if (!vin.match('^([0-9a-hj-npr-zA-HJ-NPR-Z]{10,17})+$')) {
+      return invalidInfo;
+    }
+    const letters = [{k: 'A', v: 1}, {k: 'B', v: 2}, {k: 'C', v: 3},
+      {k: 'D', v: 4}, {k: 'E', v: 5}, {k: 'F', v: 6}, {k: 'G', v: 7},
+      {k: 'H', v: 8}, {k: 'J', v: 1}, {k: 'K', v: 2}, {k: 'L', v: 3},
+      {k: 'M', v: 4}, {k: 'N', v: 5}, {k: 'P', v: 7}, {k: 'R', v: 9},
+      {k: 'S', v: 2}, {k: 'T', v: 3}, {k: 'U', v: 4}, {k: 'V', v: 5},
+      {k: 'W', v: 6}, {k: 'X', v: 7}, {k: 'Y', v: 8}, {k: 'Z', v: 9}];
+    const weights = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
+    const exclude = ['I', 'O', 'Q'];
+    let val = 0;
+    for (let idx = 0; idx < vin.length; idx++) {
+      const item = vin.charAt(idx).toUpperCase();
+      if (exclude.includes(item)) {
+        return invalidInfo;
+      }
+      const pos = (item.match('^[0-9]+$') != null) ? parseInt(item) : letters.filter((letter) => {
+        return letter.k === item;
+      })[0].v;
+      val += (pos * weights[idx]);
+    }
+    const checksum = (val % 11);
+    return (vin.charAt(8) === (checksum < 10 ? checksum.toString() : 'X')) ? null : invalidInfo;
   }
 
   constructor(private ps: ProductService,
@@ -91,9 +127,6 @@ export class AddProductComponent implements OnInit {
     } else {
       this.categories = this.cs.categories;
     }
-
-    //Initialize cloudinary
-
   }
 
   addProduct() {
@@ -157,7 +190,7 @@ export class AddProductComponent implements OnInit {
     this.task.snapshotChanges().pipe(finalize(() => {
       this.ref.getDownloadURL().subscribe(value => {
         this.addProductFormGroup.controls.image.setValue(value);
-      })
+      });
       this.downloadURL = this.ref.getDownloadURL();
     })).subscribe();
   }
