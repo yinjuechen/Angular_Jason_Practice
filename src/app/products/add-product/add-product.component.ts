@@ -5,9 +5,9 @@ import {CategoryService} from '../../shared/services/category.service';
 import {YearsService} from '../../shared/services/years.service';
 import {Router} from '@angular/router';
 import {Cloudinary} from '@cloudinary/angular-5.x';
-import {FileUploader} from 'ng2-file-upload';
-import {FileUploaderOptions} from 'ng2-file-upload/file-upload/file-uploader.class';
-import {analyticsPackageSafelist} from '@angular/cli/models/analytics';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
+import {finalize, map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-add-product',
@@ -19,7 +19,11 @@ export class AddProductComponent implements OnInit {
   categories;
   years;
   arr = null;
-  imageUrl;
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  uploadProgress: Observable<number>;
+  downloadURL: Observable<string>;
+
 
   get truckinfos() {
     return this.addProductFormGroup.get('truckinfos') as FormArray;
@@ -44,6 +48,7 @@ export class AddProductComponent implements OnInit {
               private router: Router,
               private cloudinary: Cloudinary,
               private cs: CategoryService,
+              private afStorage: AngularFireStorage,
               private ys: YearsService) {
   }
 
@@ -86,6 +91,9 @@ export class AddProductComponent implements OnInit {
     } else {
       this.categories = this.cs.categories;
     }
+
+    //Initialize cloudinary
+
   }
 
   addProduct() {
@@ -138,6 +146,20 @@ export class AddProductComponent implements OnInit {
     for (let i = 0; i < event.target.value; i++) {
       this.addtruckinfo();
     }
+  }
+
+  upload($event) {
+    const id = Math.random().toString(36).substring(2);
+    this.ref = this.afStorage.ref(id);
+    this.task = this.ref.put($event.target.files[0]);
+    console.log(this.task);
+    this.uploadProgress = this.task.percentageChanges();
+    this.task.snapshotChanges().pipe(finalize(() => {
+      this.ref.getDownloadURL().subscribe(value => {
+        this.addProductFormGroup.controls.image.setValue(value);
+      })
+      this.downloadURL = this.ref.getDownloadURL();
+    })).subscribe();
   }
 
 }

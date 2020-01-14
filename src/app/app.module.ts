@@ -9,7 +9,7 @@ import {
   MatCardModule, MatCheckboxModule, MatDatepickerModule, MatExpansionModule,
   MatFormFieldModule, MatGridListModule,
   MatInputModule,
-  MatListModule, MatNativeDateModule, MatPaginatorModule, MatRippleModule, MatSelectModule,
+  MatListModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatRippleModule, MatSelectModule,
   MatSidenavModule, MatSortModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -39,14 +39,16 @@ import {TruckreservationAdminComponent} from './admin/truck-admin/truckreservati
 import {FileUploadModule} from 'ng2-file-upload';
 import {CloudinaryModule, CloudinaryConfiguration} from '@cloudinary/angular-5.x';
 import {Cloudinary} from 'cloudinary-core';
-import { DataAdminComponent } from './admin/data-admin/data-admin.component';
+import {DataAdminComponent} from './admin/data-admin/data-admin.component';
 import {GoogleChartsModule} from 'angular-google-charts';
-import { DailyDataComponent } from './admin/data-admin/daily-data/daily-data.component';
-import { DailyModelComponent } from './admin/data-admin/daily-model/daily-model.component';
-import { DataIncomeComponent } from './admin/data-admin/data-income/data-income.component';
+import {DailyDataComponent} from './admin/data-admin/daily-data/daily-data.component';
+import {DailyModelComponent} from './admin/data-admin/daily-model/daily-model.component';
+import {DataIncomeComponent} from './admin/data-admin/data-income/data-income.component';
 import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
 import {AgmCoreModule} from '@agm/core';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 
 
 @NgModule({
@@ -113,7 +115,19 @@ import {CreditCardDirectivesModule} from 'angular-cc-library';
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
-    CreditCardDirectivesModule
+    CreditCardDirectivesModule,
+    AngularFireModule.initializeApp({
+      apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
+      authDomain: 'truck-rental-265020.firebaseapp.com',
+      databaseURL: 'https://truck-rental-265020.firebasseio.com',
+      projectId: 'truck-rental-265020',
+      storageBucket: 'truck-rental-265020.appspot.com',
+      messagingSenderId: '421015451291',
+      appId: '1:421015451291:web:9def1485583d8c7113783e',
+      measurementId: 'G-335KZJZ0JP'
+    }),
+    AngularFireStorageModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
