@@ -1,57 +1,60 @@
-
-  <form fxLayout="column" [formGroup]="truckInfoFormGroup" class="border-dark m-2">
-    <mat-card-title>Truck Info</mat-card-title>
-    <div class="form-row">
-      <mat-form-field class="col">
-        <mat-placeholder>Plate Number</mat-placeholder>
-        <input type="text" matInput formControlName="plate">
-        <mat-error *ngIf="truckInfoFormGroup.get('plate').getError('required')">
-          Plate Number can't be empty.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="col">
-        <mat-placeholder>State</mat-placeholder>
-        <mat-select formControlName="state">
-          <mat-option *ngFor="let state of statesService.usStates" value="{{state}}">
-            {{state}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="truckInfoFormGroup.get('state').getError('required')">
-          State can't be empty
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-form-field class="col">
-        <mat-placeholder>VIN</mat-placeholder>
-        <input type="text" matInput formControlName="vin">
-        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('required')">
-          VIN Number can't be empty.
-        </mat-error>
-        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('minlength')">
-          VIN Number must be 17 digits.
-        </mat-error>
-        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('maxlength')">
-          VIN Number must be 17 digits.
-        </mat-error>
-        <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('invalidVIN')">
-
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="col">
-        <mat-placeholder>Auto Insurance No.</mat-placeholder>
-        <input type="text" matInput formControlName="autoinsurance">
-        <mat-error *ngIf="truckInfoFormGroup.get('autoinsurance').getError('required')">
-          Auto Insurance can't be empty.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="col">
-        <mat-placeholder>Mileage</mat-placeholder>
-        <input type="number" matInput formControlName="mileage">
-        <mat-error *ngIf="truckInfoFormGroup.get('mileage').getError('required')">
-          Mileage can't be empty
-        </mat-error>
-      </mat-form-field>
-    </div>
-  </form>
+<form fxLayout="column" [formGroup]="truckInfoFormGroup" class="border-dark m-2">
+  <mat-card-title>Truck Info</mat-card-title>
+  <div class="form-row">
+    <mat-form-field class="col">
+      <mat-placeholder>Plate Number</mat-placeholder>
+      <input type="text" matInput formControlName="plate">
+      <mat-error *ngIf="truckInfoFormGroup.get('plate').getError('required')">
+        Plate Number can't be empty.
+      </mat-error>
+      <mat-error
+        *ngIf="truckInfoFormGroup.get('plate').getError('minlength') || truckInfoFormGroup.get('plate').getError('maxlength')">
+        Plate number's length should be 6 digits.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col">
+      <mat-placeholder>State</mat-placeholder>
+      <mat-select formControlName="state">
+        <mat-option *ngFor="let state of statesService.usStates" value="{{state}}">
+          {{state}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="truckInfoFormGroup.get('state').getError('required')">
+        State can't be empty
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-row">
+    <mat-form-field class="col">
+      <mat-placeholder>VIN</mat-placeholder>
+      <input type="text" matInput formControlName="vin">
+      <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('required')">
+        VIN Number can't be empty.
+      </mat-error>
+      <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('minlength')">
+        VIN Number must be 17 digits.
+      </mat-error>
+      <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('maxlength')">
+        VIN Number must be 17 digits.
+      </mat-error>
+      <mat-error *ngIf="truckInfoFormGroup.get('vin').getError('invalidVIN')">
+        VIN Number is invalid.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col">
+      <mat-placeholder>Auto Insurance No.</mat-placeholder>
+      <input type="text" matInput formControlName="autoinsurance">
+      <mat-error *ngIf="truckInfoFormGroup.get('autoinsurance').getError('required')">
+        Auto Insurance can't be empty.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col">
+      <mat-placeholder>Mileage</mat-placeholder>
+      <input type="number" matInput formControlName="mileage">
+      <mat-error *ngIf="truckInfoFormGroup.get('mileage').getError('required')">
+        Mileage can't be empty
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>
 

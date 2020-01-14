@@ -35,7 +35,8 @@ export class AddProductComponent implements OnInit {
 
   createTruckInfoGroup(): FormGroup {
     return this.fb.group({
-      plate: ['', [Validators.required]],
+      plate: ['', [Validators.required, Validators.minLength(6),
+        Validators.maxLength(6)]],
       state: ['', [Validators.required]],
       vin: ['', [Validators.required,
         Validators.minLength(17),
@@ -106,7 +107,7 @@ export class AddProductComponent implements OnInit {
       year: ['', [Validators.required]],
       category: ['', [Validators.required]],
       stock: ['', [Validators.required]],
-      image: [''],
+      image: [{value: '', disabled: true}],
       price: ['', [Validators.required]],
       minseat: ['', [Validators.required]],
       maxseat: ['', [Validators.required]],
