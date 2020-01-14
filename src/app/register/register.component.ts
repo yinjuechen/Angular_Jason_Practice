@@ -72,7 +72,6 @@ export class RegisterComponent implements OnInit {
       this.userExisted = value.some((val) => {
         return val.email === $event.target.value;
       });
-      console.log(this.userExisted);
     });
   }
 

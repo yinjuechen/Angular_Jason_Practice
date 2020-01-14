@@ -27,19 +27,33 @@
             <mat-error *ngIf="applicationFormGroup.get('email').getError('required')">
               Email can't be empty
             </mat-error>
+            <mat-error *ngIf="applicationFormGroup.get('email').getError('pattern')">
+              Email format is not valid
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="col">
             <mat-placeholder>Phone</mat-placeholder>
-            <input type="number" matInput formControlName="phone">
+            <input type="text" matInput formControlName="phone">
             <mat-error *ngIf="applicationFormGroup.get('phone').getError('required')">
               Phone number can't be empty
+            </mat-error>
+            <mat-error *ngIf="applicationFormGroup.get('phone').getError('pattern')">
+              Phone format is not valid
+            </mat-error>
+            <mat-error *ngIf="applicationFormGroup.get('phone').getError('minlength')">
+              Phone length must be 10 digits.
+            </mat-error>
+            <mat-error *ngIf="applicationFormGroup.get('phone').getError('maxlength')">
+              Phone length must be 10 digits
             </mat-error>
           </mat-form-field>
         </div>
         <div class="form-row">
           <mat-form-field class="col">
             <mat-placeholder>Address 1</mat-placeholder>
-            <input type="text" matInput formControlName="address1">
+            <input type="text" matInput formControlName="address1"
+                   matGoogleMapsAutocomplete
+                   (onAutocompleteSelected)="locationSelected($event)">
             <mat-error *ngIf="applicationFormGroup.get('address1').getError('required')">
               Address 1 can't be empty
             </mat-error>
@@ -76,6 +90,10 @@
             <mat-error *ngIf="applicationFormGroup.get('zip').getError('required')">
               Zip can't be empty
             </mat-error>
+            <mat-error
+              *ngIf="applicationFormGroup.get('zip').getError('minlength') || applicationFormGroup.get('zip').getError('pattern')">
+              Zip must be 5 digits
+            </mat-error>
           </mat-form-field>
         </div>
         <h6 class="card-subtitle text-muted mt-1">Driver License Info</h6>
@@ -86,6 +104,9 @@
             <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">
               Driver license can't be empty
             </mat-error>
+            <mat-hint class="text-warning" *ngIf="applicationFormGroup.get('driver_license').touched">
+              You must has the same driver license when you pick up the truck.
+            </mat-hint>
           </mat-form-field>
           <mat-form-field class="col">
             <mat-placeholder>State</mat-placeholder>
@@ -101,7 +122,7 @@
           <mat-form-field class="col" color="accent">
             <mat-placeholder>Expired Date</mat-placeholder>
             <!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
-            <input matInput type="text" [matDatepicker]="picker" [min]="mindate"
+            <input matInput type="text" [matDatepicker]="picker" [min]="returnedDate"
                    formControlName="driver_license_expired_date">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker disabled="false"></mat-datepicker>
@@ -171,26 +192,31 @@
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Card Number</mat-placeholder>
-                <input type="text" matInput formControlName="creditCardNumber">
+                <input type="text" matInput formControlName="creditCardNumber" autocomplete="cc-number" ccNumber>
                 <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('required')">
                   Credit card number cannot be empty
+                </mat-error>
+                <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('ccNumber')">
+                  Credit card is invalid.
                 </mat-error>
               </mat-form-field>
             </div>
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Expiration</mat-placeholder>
-                <input matInput type="text" [matDatepicker]="picker" [min]="mindate"
-                       formControlName="creditCardExpiration">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <input matInput type="text" formControlName="creditCardExpiration" ccExp >
+                <!--                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+                <!--                <mat-datepicker #picker disabled="false" startView="year"></mat-datepicker>-->
                 <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('required')">
                   Credit card expiration cannot be empty
+                </mat-error>
+                <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('expDate')">
+                  Expiration format is invalid.
                 </mat-error>
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>CVV</mat-placeholder>
-                <input type="number" matInput formControlName="creditCardCvv">
+                <input type="type" matInput formControlName="creditCardCvv" ccCVC>
                 <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('required')">
                   Credit card CVV cannot be empty
                 </mat-error>
@@ -216,7 +242,8 @@
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Address 1</mat-placeholder>
-                <input type="text" matInput formControlName="billingAddress1">
+                <input type="text" matInput formControlName="billingAddress1"
+                       matGoogleMapsAutocomplete (onAutocompleteSelected)="fillBillingAddress($event)">
                 <mat-error *ngIf="checkoutFormGroup.get('billingAddress1').getError('required')">
                   Address1 cannot be empty
                 </mat-error>

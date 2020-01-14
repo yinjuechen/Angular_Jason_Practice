@@ -12,6 +12,7 @@ import {TimeslotService} from '../shared/services/timeslot.service';
 import {DateService} from '../shared/services/date.service';
 import {Insurance} from '../shared/models/insurance';
 import {InsuranceService} from '../shared/services/insurance.service';
+import {CreditCardValidator} from 'angular-cc-library';
 
 
 @Component({
@@ -75,13 +76,21 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.applicationFormGroup = this.fb.group({
       firstname: [, [Validators.required]],
       lastname: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
+      email: ['', [Validators.required,
+        Validators.pattern('^[a-zA-Z0-9]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      phone: ['', [Validators.required,
+        Validators.pattern('[0-9]+'),
+        Validators.minLength(10),
+        Validators.maxLength(10)]],
       address1: ['', [Validators.required]],
       address2: [''],
       city: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      zip: ['', [Validators.required]],
+      zip: ['', [Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(5),
+        Validators.pattern('[0-9]+')
+      ]],
       driver_license: ['', [Validators.required]],
       driver_license_state: ['', [Validators.required]],
       // TODO: validate date input
@@ -90,9 +99,11 @@ export class ApplicationComponent implements OnInit, OnChanges {
     // TODO: checkout form validation
     this.checkoutFormGroup = this.fb.group({
       creditCardName: ['', [Validators.required]],
-      creditCardNumber: ['', [Validators.required]],
-      creditCardExpiration: ['', [Validators.required]],
-      creditCardCvv: ['', [Validators.required]],
+      creditCardNumber: ['', [Validators.required, CreditCardValidator.validateCCNumber]],
+      creditCardExpiration: ['', [Validators.required, CreditCardValidator.validateExpDate]],
+      creditCardCvv: ['', [Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(4)]],
       billingFirstName: ['', [Validators.required]],
       billingLastName: ['', [Validators.required]],
       billingAddress1: ['', [Validators.required]],
@@ -242,4 +253,43 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.showProtectionForm = false;
   }
 
+  locationSelected($event) {
+    const addressDetail = $event.formatted_address.split(',');
+    const address1 = addressDetail[0];
+    const city = addressDetail[1];
+    const stateShort = $event.address_components.filter(e => {
+      return e.types[0] === 'administrative_area_level_1';
+    })[0].short_name;
+    const stateLong = $event.address_components.filter(e => {
+      return e.types[0] === 'administrative_area_level_1';
+    })[0].long_name;
+    const state = stateShort + ' - ' + stateLong;
+    const zip = $event.address_components.filter(e => {
+      return e.types[0] === 'postal_code';
+    })[0].long_name;
+    this.applicationFormGroup.controls.address1.setValue(address1);
+    this.applicationFormGroup.controls.city.setValue(city);
+    this.applicationFormGroup.controls.state.setValue(state);
+    this.applicationFormGroup.controls.zip.setValue(zip);
+  }
+
+  fillBillingAddress($event: google.maps.places.PlaceResult) {
+    const addressDetail = $event.formatted_address.split(',');
+    const address1 = addressDetail[0];
+    const city = addressDetail[1];
+    const stateShort = $event.address_components.filter(e => {
+      return e.types[0] === 'administrative_area_level_1';
+    })[0].short_name;
+    const stateLong = $event.address_components.filter(e => {
+      return e.types[0] === 'administrative_area_level_1';
+    })[0].long_name;
+    const state = stateShort + ' - ' + stateLong;
+    const zip = $event.address_components.filter(e => {
+      return e.types[0] === 'postal_code';
+    })[0].long_name;
+    this.checkoutFormGroup.controls.billingAddress1.setValue(address1);
+    this.checkoutFormGroup.controls.billingCity.setValue(city);
+    this.checkoutFormGroup.controls.billingState.setValue(state);
+    this.checkoutFormGroup.controls.billingZip.setValue(zip);
+  }
 }

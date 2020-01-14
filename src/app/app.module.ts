@@ -44,6 +44,9 @@ import {GoogleChartsModule} from 'angular-google-charts';
 import { DailyDataComponent } from './admin/data-admin/daily-data/daily-data.component';
 import { DailyModelComponent } from './admin/data-admin/daily-model/daily-model.component';
 import { DataIncomeComponent } from './admin/data-admin/data-income/data-income.component';
+import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
+import {AgmCoreModule} from '@agm/core';
+import {CreditCardDirectivesModule} from 'angular-cc-library';
 
 
 @NgModule({
@@ -104,7 +107,13 @@ import { DataIncomeComponent } from './admin/data-admin/data-income/data-income.
     MatRippleModule,
     FileUploadModule,
     CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
-    GoogleChartsModule
+    GoogleChartsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
+      libraries: ['places']
+    }),
+    MatGoogleMapsAutocompleteModule,
+    CreditCardDirectivesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
