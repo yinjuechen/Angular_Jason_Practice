@@ -16,140 +16,12 @@ export class ProductsComponent implements OnInit {
   productsFromGroup: FormGroup;
   minPickUpDate: Date;
   minReturnDate: Date;
-  images = [
-    'https://firebasestorage.googleapis.com/v0/b/truck-rental-265020.appspot.com/o/2.png?alt=media&token=5d27ce18-bb69-4bff-9318-d3e83d1cf737',
-    'https://static.carsdn.co/cldstatic/wp-content/uploads/ford-f-150-limited-2019-01-angle--exterior--front--silver.jpg',
-    'https://imagescdn.dealercarsearch.com/dealerimages/1235/25358/fxslide1.jpg',
-    'https://thirdauto.com/wp-content/uploads/2018/05/2018-Ford-Transit-exterior.png'
-  ];
-  latitude = 40.3625998;
-  longitude = -74.5974522;
-  zoomLevel = 12;
-  mapTypeControlOptions = [
-    {
-      'featureType': 'administrative',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'saturation': '-100'
-        }
-      ]
-    },
-    {
-      'featureType': 'administrative.province',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'visibility': 'off'
-        }
-      ]
-    },
-    {
-      'featureType': 'landscape',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'saturation': -100
-        },
-        {
-          'lightness': 65
-        },
-        {
-          'visibility': 'on'
-        }
-      ]
-    },
-    {
-      'featureType': 'poi',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'saturation': -100
-        },
-        {
-          'lightness': '50'
-        },
-        {
-          'visibility': 'simplified'
-        }
-      ]
-    },
-    {
-      'featureType': 'road',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'saturation': '-100'
-        }
-      ]
-    },
-    {
-      'featureType': 'road.highway',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'visibility': 'simplified'
-        }
-      ]
-    },
-    {
-      'featureType': 'road.arterial',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'lightness': '30'
-        }
-      ]
-    },
-    {
-      'featureType': 'road.local',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'lightness': '40'
-        }
-      ]
-    },
-    {
-      'featureType': 'transit',
-      'elementType': 'all',
-      'stylers': [
-        {
-          'saturation': -100
-        },
-        {
-          'visibility': 'simplified'
-        }
-      ]
-    },
-    {
-      'featureType': 'water',
-      'elementType': 'geometry',
-      'stylers': [
-        {
-          'hue': '#ffff00'
-        },
-        {
-          'lightness': -25
-        },
-        {
-          'saturation': -97
-        }
-      ]
-    },
-    {
-      'featureType': 'water',
-      'elementType': 'labels',
-      'stylers': [
-        {
-          'lightness': -25
-        },
-        {
-          'saturation': -100
-        }
-      ]
-    }
-  ];
+  minPrice: number;
+  maxPrice: number;
+  minMPG: number;
+  maxMPG: number;
+  currentFilterType = '';
+  currentPrice;
 
   constructor(public ps: ProductService,
               private fb: FormBuilder,
@@ -161,7 +33,13 @@ export class ProductsComponent implements OnInit {
     this.ps.getAllProduct().subscribe((value) => {
       this.ps.products = value;
       this.products = value;
-      console.log(value);
+      this.minPrice = this.products.sort((p1, p2) => {
+        return p1.price - p2.price;
+      })[0].price;
+      this.maxPrice = this.products.sort((p1, p2) => p2.price - p1.price)[0].price;
+      this.currentPrice = this.maxPrice;
+      this.minMPG = this.products.sort((p1, p2) => p1.mpg - p2.mpg)[0].mpg;
+      this.maxMPG = this.products.sort((p1, p2) => p2.mpg - p1.mpg)[0].mpg;
     });
     this.productsFromGroup = this.fb.group({
       pickUpDate: [''],
@@ -217,21 +95,51 @@ export class ProductsComponent implements OnInit {
   }
 
   filterProducts($event) {
+    this.products = this.ps.products;
     switch ($event.value) {
       case '1':
         this.products.sort((p1, p2) => p1.price - p2.price);
+        this.currentFilterType = '1';
         break;
       case '2':
         this.products.sort((p1, p2) => p2.price - p1.price);
+        this.currentFilterType = '2';
         break;
       case '3':
         this.products.sort((p1, p2) => p1.mpg - p2.mpg);
+        this.currentFilterType = '3';
         break;
       case '4':
         this.products.sort((p1, p2) => p2.mpg - p1.mpg);
+        this.currentFilterType = '4';
         break;
       case '5':
-        this.products.sort((p1, p2) => p1.brand.localeCompare(p2.brand));
+        this.products = this.products.filter((p) => {
+          return p.category.id === 1;
+        });
+        this.currentFilterType = '5';
+        break;
+      case '6':
+        this.products = this.products.filter(p => {
+          // console.log(p);
+          return p.category.id === 2;
+        });
+        this.currentFilterType = '6';
+        break;
+      case '7':
+        this.products = this.ps.products;
+        return this.currentFilterType = '7';
     }
+  }
+
+  sliderPriceChange($event) {
+    this.currentPrice = $event.value;
+    this.filterProducts({value: this.currentFilterType});
+    this.products = this.products.filter(p => p.price <= $event.value);
+  }
+
+  sliderMPGChange($event) {
+    this.sliderPriceChange({value: this.currentPrice});
+    this.products = this.products.filter(p => p.mpg <= $event.value);
   }
 }

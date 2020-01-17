@@ -9,8 +9,8 @@ import {
   MatCardModule, MatCheckboxModule, MatDatepickerModule, MatExpansionModule,
   MatFormFieldModule, MatGridListModule,
   MatInputModule,
-  MatListModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatRippleModule, MatSelectModule,
-  MatSidenavModule, MatSortModule, MatTableModule,
+  MatListModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatRadioModule, MatRippleModule, MatSelectModule,
+  MatSidenavModule, MatSliderModule, MatSortModule, MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {ProfileComponent} from './profile/profile.component';
@@ -133,7 +133,9 @@ import { HomeComponent } from './home/home.component';
     AngularFireStorageModule,
     MatProgressBarModule,
     SlideshowModule,
-    NgbCarouselModule
+    NgbCarouselModule,
+    MatRadioModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
