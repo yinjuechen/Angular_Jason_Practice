@@ -16,9 +16,14 @@ import {TruckAdminComponent} from './admin/truck-admin/truck-admin.component';
 import {TruckdetailAdminComponent} from './admin/truck-admin/truckdetail-admin/truckdetail-admin.component';
 import {TruckmodelAdminComponent} from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
 import {DataAdminComponent} from './admin/data-admin/data-admin.component';
+import {HomeComponent} from './home/home.component';
 
 
 const routes: Routes = [
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   {
     path: 'profile',
     component: ProfileComponent
@@ -82,6 +87,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    // match everything, always put this in the end
+    path: '**',
+    redirectTo: 'home'
   }
 ];
 

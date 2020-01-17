@@ -19,6 +19,7 @@ export class OrderAgentComponent implements OnInit {
 
   ngOnInit() {
     this.as.getAllApplication().subscribe(value => {
+      console.log(value);
       this.orders = new MatTableDataSource(value);
       this.orders.paginator = this.paginator;
       this.orders.sort = this.sort;

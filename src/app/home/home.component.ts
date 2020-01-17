@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ProductService} from '../shared/services/product.service';
+import { Component, OnInit } from '@angular/core';
 import {Product} from '../shared/models/product';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ProductService} from '../shared/services/product.service';
 import {DateService} from '../shared/services/date.service';
-import {AuthService} from '../shared/services/auth.service';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
+export class HomeComponent implements OnInit {
 
-export class ProductsComponent implements OnInit {
   products: Product[] = null;
   productsFromGroup: FormGroup;
   minPickUpDate: Date;

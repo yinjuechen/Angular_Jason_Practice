@@ -17,14 +17,14 @@ export class ApplicationService {
   }
 
   getAllApplication(): Observable<Application[]> {
-    return this.httpClient.get<Application[]>(`${environment.API_URL}/applications`);
+    return this.httpClient.get<Application[]>(`${environment.API_URL}/applications`, {withCredentials: true});
   }
 
   getApplicationById(id): Observable<Application> {
-    return this.httpClient.get<Application>(`${environment.API_URL}/applications/${id}`);
+    return this.httpClient.get<Application>(`${environment.API_URL}/applications/${id}`, {withCredentials: true});
   }
 
-  updateApplicaction(application): Observable<Application>{
-    return this.httpClient.put<Application>(`${environment.API_URL}/applications/${application.id}`, application);
+  updateApplicaction(application): Observable<Application> {
+    return this.httpClient.put<Application>(`${environment.API_URL}/applications/${application.id}`, application, {withCredentials: true});
   }
 }

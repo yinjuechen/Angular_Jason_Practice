@@ -14,10 +14,10 @@ export class InsuranceService {
   }
 
   getAllInsurances(): Observable<Insurance[]> {
-    return this.httpClient.get<Insurance[]>(`${environment.API_URL}/insurances`);
+    return this.httpClient.get<Insurance[]>(`${environment.API_URL}/insurances`, {withCredentials: true});
   }
 
   getInsuranceById(id: number): Observable<Insurance> {
-    return this.httpClient.get<Insurance>(`${environment.API_URL}/insurances/${id}`);
+    return this.httpClient.get<Insurance>(`${environment.API_URL}/insurances/${id}`, {withCredentials: true});
   }
 }

@@ -13,6 +13,6 @@ export class RegisterService {
   }
 
   register(user): Observable<{ success: boolean }> {
-    return this.httpClient.post<{ success: boolean }>(`${environment.API_URL}/myusers`, user);
+    return this.httpClient.post<{ success: boolean }>(`${environment.API_URL}/myusers`, user, {withCredentials: true});
   }
 }

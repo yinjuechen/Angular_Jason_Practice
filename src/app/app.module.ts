@@ -49,6 +49,9 @@ import {AgmCoreModule} from '@agm/core';
 import {CreditCardDirectivesModule} from 'angular-cc-library';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
+import {SlideshowModule} from 'ng-simple-slideshow';
+import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -76,7 +79,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     DataAdminComponent,
     DailyDataComponent,
     DailyModelComponent,
-    DataIncomeComponent
+    DataIncomeComponent,
+    HomeComponent
   ],
   entryComponents: [
     TruckreservationAdminComponent
@@ -111,7 +115,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
     CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
     GoogleChartsModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
+      apiKey: 'AIzaSyA50uVAg7msL9SEGydWHoRmEGyQpDzxXyw',
       libraries: ['places']
     }),
     MatGoogleMapsAutocompleteModule,
@@ -127,7 +131,9 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
       measurementId: 'G-335KZJZ0JP'
     }),
     AngularFireStorageModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    SlideshowModule,
+    NgbCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

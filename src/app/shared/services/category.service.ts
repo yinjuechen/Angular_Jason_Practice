@@ -15,6 +15,6 @@ export class CategoryService {
   }
 
   getAllCategory(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${environment.API_URL}/categories`);
+    return this.httpClient.get<Category[]>(`${environment.API_URL}/categories`, {withCredentials: true});
   }
 }

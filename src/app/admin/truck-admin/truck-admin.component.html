@@ -1,7 +1,13 @@
 <div class="p-3" style="width: 100%">
-  <mat-form-field>
-    <input type="text" matInput placeholder="Filter" (keyup)="applyFilter($event)">
-  </mat-form-field>
+  <form class="form-inline justify-content-center align-content-end">
+    <mat-form-field class="w-25">
+      <mat-placeholder><i class="fas fa-search"></i> Search</mat-placeholder>
+      <input type="text" matInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+    <a routerLink="/add-truck" class="ml-3">
+      <button mat-raised-button color="primary">Add new trucks</button>
+    </a>
+  </form>
   <table mat-table [dataSource]="trucks" matSort>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -32,12 +38,14 @@
     <ng-container matColumnDef="model">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Model</th>
       <td mat-cell *matCellDef="let element" (click)="openModelDialog(element)" style="color: dodgerblue">
-          {{element.truckModel.brand + '/' + element.truckModel.model + '/' + element.truckModel.year}}
+        {{element.truckModel.brand + '/' + element.truckModel.model + '/' + element.truckModel.year}}
       </td>
     </ng-container>
     <ng-container matColumnDef="reservations">
       <th mat-header-cell *matHeaderCellDef>Reservation</th>
-      <td mat-cell *matCellDef="let element" (click)="openReservationDialog(element)" style="color: dodgerblue">Schedules</td>
+      <td mat-cell *matCellDef="let element" (click)="openReservationDialog(element)" style="color: dodgerblue">
+        Schedules
+      </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
