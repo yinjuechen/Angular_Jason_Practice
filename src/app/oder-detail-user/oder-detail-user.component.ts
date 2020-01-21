@@ -1,20 +1,20 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApplicationService} from '../shared/services/application.service';
 import {TimeslotService} from '../shared/services/timeslot.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UsStatesService} from '../shared/services/us-states.service';
+import {InsuranceService} from '../shared/services/insurance.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProductService} from '../shared/services/product.service';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jsPDF';
-import {InsuranceService} from '../shared/services/insurance.service';
-import {ProductService} from '../shared/services/product.service';
 
 @Component({
-  selector: 'app-order-detail',
-  templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.scss']
+  selector: 'app-oder-detail-user',
+  templateUrl: './oder-detail-user.component.html',
+  styleUrls: ['./oder-detail-user.component.scss']
 })
-export class OrderDetailComponent implements OnInit {
+export class OderDetailUserComponent implements OnInit {
 
   application;
   timeSlot;
@@ -60,7 +60,8 @@ export class OrderDetailComponent implements OnInit {
       ldw: [''],
       sli: ['']
     });
-    this.id = this.ar.snapshot.params.id;
+    this.orderSummaryInfoForm.disable();
+    this.id = this.ar.snapshot.params.orderid;
     this.is.getAllInsurances().subscribe(value => {
       this.is.insurances = value;
     });
@@ -100,72 +101,20 @@ export class OrderDetailComponent implements OnInit {
   }
 
   generatePDF() {
-    // html2canvas(document.getElementById('orderSummary')).then((canvas) => {
+    // html2canvas(document.getElementById('orderSummary'), {
+    //   windowWidth: 600,
+    //   windowHeight: 900
+    // }).then((canvas) => {
     //   const doc = new jsPDF();
     //   const formImg = canvas.toDataURL('image/png');
     //   const width = doc.internal.pageSize.getWidth();
     //   const height = doc.internal.pageSize.getHeight();
-    //   doc.addImage(formImg, 'JPEG', 5, 10, width - 10, height - 20);
+    //   doc.addImage(formImg, 'JPEG', 0, -100);
     //   // doc.autoPrint();
     //   // doc.output('pdfobjectnewwindow', 'order_summary.pdf');
-    //   doc.addPage();
     //   doc.save('order_summary.pdf');
     // });
     window.print();
   }
 
-  selectSLI() {
-    if (this.orderSummaryInfoForm.value.sli) {
-      this.application.insuranceprice += this.is.insurances[1].price * this.days;
-      this.application.totalprice += this.is.insurances[1].price * this.days;
-      this.application.insurance2 = this.is.insurances[1];
-    } else {
-      this.application.insuranceprice -= this.is.insurances[1].price * this.days;
-      this.application.totalprice -= this.is.insurances[1].price * this.days;
-      this.application.insurance2 = null;
-    }
-  }
-
-  selectLDW() {
-    if (this.orderSummaryInfoForm.value.ldw) {
-      this.application.insuranceprice += this.is.insurances[0].price * this.days;
-      this.application.totalprice += this.is.insurances[0].price * this.days;
-      this.application.insurance1 = this.is.insurances[0];
-    } else {
-      this.application.insuranceprice -= this.is.insurances[0].price * this.days;
-      this.application.totalprice -= this.is.insurances[0].price * this.days;
-      this.application.insurance2 = null;
-    }
-  }
-
-  saveOrder() {
-    for (const key in this.orderSummaryInfoForm.value) {
-      if (this.application.hasOwnProperty(key)) {
-        this.application[key] = this.orderSummaryInfoForm.value[key];
-      }
-    }
-    this.application.odometerin = this.truckInfo.mileage;
-    this.application.odometerout = this.orderSummaryInfoForm.value.odometerout ? this.orderSummaryInfoForm.value.odometerout : 0;
-    console.log(this.application);
-    if (this.orderSummaryInfoForm.value.odometerout) {
-      this.truckInfo.mileage = this.orderSummaryInfoForm.value.odometerout;
-    }
-    console.log(this.truckInfo);
-    this.aps.updateApplicaction(this.application).subscribe(value => {
-      this.ps.updateTruckDetail(this.truckInfo).subscribe(value1 => {
-        console.log(value1);
-        this.router.navigate(['/orders']);
-      });
-    });
-  }
-
-  calculateMilePrice() {
-    const miles = this.orderSummaryInfoForm.value.odometerout - this.truckInfo.mileage;
-    this.application.totalprice = this.application.insuranceprice + this.application.truckprice;
-    console.log(miles);
-    if (miles > 0) {
-      this.application.mileageprice = this.mileprice * miles;
-      this.application.totalprice += this.application.mileageprice;
-    }
-  }
 }

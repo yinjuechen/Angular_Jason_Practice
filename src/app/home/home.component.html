@@ -1,10 +1,10 @@
 <div class="row">
-  <div class="col-6">
+  <div class="col-xl-6 col-lg-12">
     <img
       src="https://firebasestorage.googleapis.com/v0/b/truck-rental-265020.appspot.com/o/Brand%20image.png?alt=media&token=b66e3a7b-3b31-4426-8466-06abc5406451"
       style="width: 120%"/>
   </div>
-  <div class="container align-items-center col-6">
+  <div class="container align-items-center col-xl-6 col-lg-12">
     <form class="form-inline justify-content-center mt-4 " [formGroup]="productsFromGroup" (ngSubmit)="getAvailableTruckModelsByDate()">
       <mat-form-field class="col-3" style="max-width: fit-content">
         <mat-placeholder>Pick Up Date</mat-placeholder>
@@ -36,7 +36,7 @@
             This content is a little bit longer.</p>
         </div>
         <div class="card-footer" style="background: inherit">
-          <a mat-raised-button color="primary">Reserve Now</a>
+          <a mat-raised-button color="primary" (click)="toPickUpOnly()">Reserve Now</a>
         </div>
       </div>
       <div class="card">
@@ -48,7 +48,7 @@
           <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
         </div>
         <div class="card-footer" style="background: inherit">
-          <a mat-raised-button color="primary">Reserve Now</a>
+          <a mat-raised-button color="primary" (click)="toVanOnly()">Reserve Now</a>
         </div>
       </div>
       <div class="card">
@@ -76,9 +76,8 @@
     </div>
   </div>
 </div>
-
-<footer class="py-4 bg-primary text-black-50 fixed-bottom">
-  <div class="container text-center">
-    <h5>Copyright &copy; 2020</h5>
-  </div>
-</footer>
+<!--<footer class="py-4 bg-primary justify-content-center text-black-50 fixed-bottom">-->
+<!--  <div class="container text-center">-->
+<!--    <h5>Copyright &copy; 2020</h5>-->
+<!--  </div>-->
+<!--</footer>-->

@@ -28,7 +28,8 @@ export class AuthService {
   checkLogin() {
     return this.httpclient.get(`${environment.API_URL}/checklogin`, {withCredentials: true});
   }
+
   getAll(): Observable<User[]> {
-    return this.httpclient.get<User[]>(`${environment.API_URL}/myusers`);
+    return this.httpclient.get<User[]>(`${environment.API_URL}/myusers`, {withCredentials: true});
   }
 }

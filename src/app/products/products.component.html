@@ -1,65 +1,77 @@
-<div class="row">
-  <!--  <section class="col-2 w-100" style="border-right: 1px solid gray">-->
-  <!--    <h6>Sort By: </h6>-->
-  <!--    <mat-select style="max-width: 100%" (selectionChange)="filterProducts($event)" class="border border-dark">-->
-  <!--      &lt;!&ndash;    <mat-option value="0" class="justify-content-center align-items-center">Brand</mat-option>&ndash;&gt;-->
-  <!--      <mat-option value="1">Price: low to high</mat-option>-->
-  <!--      <mat-option value="2">Price: high to low</mat-option>-->
-  <!--      <mat-option value="3">MPG: low to high</mat-option>-->
-  <!--      <mat-option value="4">MPG: high to low</mat-option>-->
-  <!--      <mat-option value="5">Brand</mat-option>-->
-  <!--    </mat-select>-->
-  <!--  </section>-->
-  <div class="col-2 border-right">
-    <div style="margin-left: 25%; margin-top: 10%">
-      <mat-radio-group fxLayout="column" (change)="filterProducts($event)">
-        <mat-radio-button value="1">
-          Price: low to high
-        </mat-radio-button>
-        <mat-radio-button value="2">
-          Price: high to low
-        </mat-radio-button>
-        <mat-radio-button value="3">
-          MPG: low to high
-        </mat-radio-button>
-        <mat-radio-button value="4">
-          MPG: high to low
-        </mat-radio-button>
-        <mat-radio-button value="5">
-          Pick up trucks only
-        </mat-radio-button>
-        <mat-radio-button value="6">
-          Van trucks only
-        </mat-radio-button>
-        <mat-radio-button value="7">
-          All
-        </mat-radio-button>
-      </mat-radio-group>
-      <div class="mt-2 border-top">
+<div>
+  <div class="row">
+    <div class="col-2 border-right">
+      <div style="margin-left: 25%; margin-top: 10%">
+        <mat-radio-group fxLayout="column"(change)="filterProducts($event)">
+          <mat-radio-button value="1">
+            Price: low to high
+          </mat-radio-button>
+          <mat-radio-button value="2">
+            Price: high to low
+          </mat-radio-button>
+          <mat-radio-button value="3">
+            MPG: low to high
+          </mat-radio-button>
+          <mat-radio-button value="4">
+            MPG: high to low
+          </mat-radio-button>
+          <mat-radio-button value="5">
+            Pick up trucks only
+          </mat-radio-button>
+          <mat-radio-button value="6">
+            Van trucks only
+          </mat-radio-button>
+          <mat-radio-button value="7">
+            All
+          </mat-radio-button>
+        </mat-radio-group>
+        <div class="mt-2 border-top">
           <label> <i class="fas fa-dollar-sign"></i> Max Price: </label>
           <mat-slider [min]="minPrice" [max]="maxPrice" class="w-100" thumbLabel color="primary" (change)="sliderPriceChange($event)"></mat-slider>
-      </div>
-      <div class="border-top">
-        <label><i class="fas fa-gas-pump"></i> Max MPG: </label>
-        <mat-slider [min]="minMPG" [max]="maxMPG" class="w-100" thumbLabel color="primary" (change)="sliderMPGChange($event)"></mat-slider>
+        </div>
+        <div class="border-top">
+          <label><i class="fas fa-gas-pump"></i> Max MPG: </label>
+          <mat-slider [min]="minMPG" [max]="maxMPG" class="w-100" thumbLabel color="primary"  (change)="sliderMPGChange($event)"></mat-slider>
+        </div>
       </div>
     </div>
+    <ng-container *ngIf="ps.products">
+      <div class="col-10">
+        <form style="margin-left: 18%" class="form-inline justify-content-center mt-3" [formGroup]="productsFromGroup" (ngSubmit)="getAvailableTruckModelsByDate()">
+          <mat-form-field class="col-3" style="max-width: fit-content">
+            <mat-placeholder>Pick Up Date</mat-placeholder>
+            <input type="text" matInput [matDatepicker]="pickUpPicker" formControlName="pickUpDate" [min]="minPickUpDate"
+                   (dateInput)="setMinDate()">
+            <mat-datepicker-toggle matSuffix [for]="pickUpPicker"></mat-datepicker-toggle>
+            <mat-datepicker #pickUpPicker disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="col-3" style="max-width: fit-content">
+            <mat-placeholder>Return Date</mat-placeholder>
+            <input type="text" matInput [matDatepicker]="returnPikcer" formControlName="returnDate" [min]="minReturnDate"
+                   (dateInput)="setReturnDate()"
+            >
+            <mat-datepicker-toggle matSuffix [for]="returnPikcer"></mat-datepicker-toggle>
+            <mat-datepicker #returnPikcer disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <div class="d-flex justify-content-end float-right">
+            <button mat-raised-button color="primary">Find your trucks</button>
+          </div>
+        </form>
+        <ul class="list-group" style="margin-left: 12%; margin-right: 12%">
+          <li class="list-group-item h-75" *ngFor="let product of products">
+            <app-product-overview  [product]="product"></app-product-overview>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <!--  <ng-container *ngIf="ps.products">-->
+    <!--    <div class="card-deck col-10" style="margin-top: 1%">-->
+    <!--      <app-product-overview *ngFor="let product of products" [product]="product"></app-product-overview>-->
+    <!--    </div>-->
+    <!--  </ng-container>-->
   </div>
-  <ng-container *ngIf="ps.products">
-    <div class="col-10">
-      <ul class="list-group" style="margin-left: 12%; margin-right: 12%">
-        <li class="list-group-item h-75" *ngFor="let product of products">
-          <app-product-overview  [product]="product"></app-product-overview>
-        </li>
-      </ul>
-    </div>
-  </ng-container>
-<!--  <ng-container *ngIf="ps.products">-->
-<!--    <div class="card-deck col-10" style="margin-top: 1%">-->
-<!--      <app-product-overview *ngFor="let product of products" [product]="product"></app-product-overview>-->
-<!--    </div>-->
-<!--  </ng-container>-->
 </div>
+
 
 
 

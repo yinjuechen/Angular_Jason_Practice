@@ -7,24 +7,26 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li>
+      <li *ngIf="auth.user === null || auth.user.profile.id === 2">
         <a routerLink="/trucks" [routerLinkActive]="'active'" class="nav-link">
           <i class="fas fa-truck"></i>
           Trucks
         </a>
       </li>
-      <li>
-        <a routerLink="/orders" [routerLinkActive]="'active'" class="nav-link">Orders</a>
+      <li *ngIf="auth.user !== null && auth.user.profile.id !== 2">
+        <a routerLink="/orders" [routerLinkActive]="'active'" class="nav-link"><i class="fas fa-table"></i> Orders
+          Management</a>
       </li>
-<!--      <li>-->
-<!--        <a routerLink="/admin" [routerLinkActive]="'active'" class="nav-link">Admin</a>-->
-<!--      </li>-->
-      <li>
-        <a routerLink="/admin/trucks" [routerLinkActive]="'active'" class="nav-link">Admin Trucks</a>
-      </li>
-      <li>
-        <a routerLink="/admin/data" [routerLinkActive]="'active'" class="nav-link"><i class="fas fa-chart-line"></i> Admin Data</a>
-      </li>
+      <ng-container *ngIf="auth.user !== null && auth.user.profile.id === 1">
+        <li>
+          <a routerLink="/admin/trucks" [routerLinkActive]="'active'" class="nav-link"><i
+            class="fas fa-truck-monster"></i> Trucks Management</a>
+        </li>
+        <li>
+          <a routerLink="/admin/data" [routerLinkActive]="'active'" class="nav-link"><i class="fas fa-chart-line"></i>
+            Charts</a>
+        </li>
+      </ng-container>
     </ul>
     <ul class="navbar-nav ml-auto">
       <ng-container *ngIf="!auth.user">
@@ -34,6 +36,13 @@
         </li>
       </ng-container>
       <ng-container *ngIf="auth.user">
+        <li class="float-right">
+          <a class="nav-link">Welcome, {{auth.user.firstname + ' ' + auth.user.lastname }} </a>
+        </li>
+        <li class="float-right" *ngIf="auth.user.profile.id === 2">
+          <a class="nav-link" routerLink="/user/{{auth.user.id}}/orders" [routerLinkActive]="'active'"><i
+            class="fas fa-th-list"></i> My Orders</a>
+        </li>
         <li class="float-right">
           <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i>
             Sign out</a>

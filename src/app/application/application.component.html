@@ -1,350 +1,712 @@
-<div class="container" style="margin-top: 8%">
-  <mat-card class="m-1" *ngIf="showApplicationForm">
-    <mat-card-title>Application</mat-card-title>
+<!--<div class="container" style="margin-top: 8%">-->
+<!--  <mat-card class="m-1" *ngIf="showApplicationForm">-->
+<!--    <mat-card-title>Application</mat-card-title>-->
+<!--    <form fxLayout="column" [formGroup]="applicationFormGroup" (ngSubmit)="goToProtection()">-->
+<!--      <div id="applicationForm">-->
+<!--        <h6 class="card-subtitle text-muted mt-1">Personal Info</h6>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Firstname</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="firstname">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('firstname').getError('required')">-->
+<!--              FirstName can't be empty-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Last Name</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="lastname">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('lastname').getError('required')">-->
+<!--              LastName can't be empty-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Email</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="email">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('email').getError('required')">-->
+<!--              Email can't be empty-->
+<!--            </mat-error>-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('email').getError('pattern')">-->
+<!--              Email format is not valid-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Phone</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="phone">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('phone').getError('required')">-->
+<!--              Phone number can't be empty-->
+<!--            </mat-error>-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('phone').getError('pattern')">-->
+<!--              Phone format is not valid-->
+<!--            </mat-error>-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('phone').getError('minlength')">-->
+<!--              Phone length must be 10 digits.-->
+<!--            </mat-error>-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('phone').getError('maxlength')">-->
+<!--              Phone length must be 10 digits-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Address 1</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="address1"-->
+<!--                   matGoogleMapsAutocomplete-->
+<!--                   (onAutocompleteSelected)="locationSelected($event)">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('address1').getError('required')">-->
+<!--              Address 1 can't be empty-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Address 2</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="address2">-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>City</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="city">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('city').getError('required')">-->
+<!--              City can't be empty-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>State</mat-placeholder>-->
+<!--            <mat-select formControlName="state">-->
+<!--              <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">-->
+<!--                {{state}}-->
+<!--              </mat-option>-->
+<!--              <mat-error *ngIf="applicationFormGroup.get('state').getError('required')">-->
+<!--                State can't be empty-->
+<!--              </mat-error>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Zip</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="zip">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('zip').getError('required')">-->
+<!--              Zip can't be empty-->
+<!--            </mat-error>-->
+<!--            <mat-error-->
+<!--              *ngIf="applicationFormGroup.get('zip').getError('minlength') || applicationFormGroup.get('zip').getError('pattern')">-->
+<!--              Zip must be 5 digits-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+<!--        <h6 class="card-subtitle text-muted mt-1">Driver License Info</h6>-->
+<!--        <div class="form-row">-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>Driver License No.</mat-placeholder>-->
+<!--            <input type="text" matInput formControlName="driver_license">-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">-->
+<!--              Driver license can't be empty-->
+<!--            </mat-error>-->
+<!--            <mat-hint class="text-warning" *ngIf="applicationFormGroup.get('driver_license').touched">-->
+<!--              You must has the same driver license when you pick up the truck.-->
+<!--            </mat-hint>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col">-->
+<!--            <mat-placeholder>State</mat-placeholder>-->
+<!--            <mat-select formControlName="driver_license_state">-->
+<!--              <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">-->
+<!--                {{state}}-->
+<!--              </mat-option>-->
+<!--              <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">-->
+<!--                State can't be empty-->
+<!--              </mat-error>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--          <mat-form-field class="col" color="accent">-->
+<!--            <mat-placeholder>Expired Date</mat-placeholder>-->
+<!--            &lt;!&ndash;          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">&ndash;&gt;-->
+<!--            <input matInput type="text" [matDatepicker]="picker" [min]="returnedDate"-->
+<!--                   formControlName="driver_license_expired_date">-->
+<!--            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--            <mat-datepicker #picker disabled="false"></mat-datepicker>-->
+<!--            <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">-->
+<!--              Expired date format is not right. (MM/DD/YYYY)-->
+<!--            </mat-error>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--      <div class="d-flex justify-content-end">-->
+<!--        <button mat-raised-button color="primary" style="width: 20%" [disabled]="!applicationFormGroup.valid">Next-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </mat-card>-->
+<!--  <div *ngIf="insurances && showProtectionForm">-->
+<!--    <mat-card>-->
+<!--      <mat-card-title>Protection Package</mat-card-title>-->
+<!--      <form fxLayout="column" [formGroup]="insuranceForm">-->
+<!--        <div id="insuranceForm">-->
+<!--          <div class="mb-1" style="margin-top: 1.9rem">-->
+<!--            <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{insurances[0].price}}/day </span></h6>-->
+<!--            <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck-->
+<!--              or towing equipment except if the vehicle or equipment is used in any manner that violates the-->
+<!--              terms of the rental agreement.-->
+<!--            </p>-->
+<!--            <mat-checkbox class="float-right" formControlName="ldw"> Add to Rental</mat-checkbox>-->
+<!--          </div>-->
+<!--          <div class="mb-1" style="margin-top: 3.9rem">-->
+<!--            <h6>Supplemental Liability Insurance (SLI)*<span class="float-right mr-4"> ${{insurances[1].price}}-->
+<!--              /day </span>-->
+<!--            </h6>-->
+<!--            <p>SLI protects the renter and any listed authorized drivers against claims made by a-->
+<!--              third party for bodily and/or property damage sustained as a result of an accident while-->
+<!--              you are operating your Penske truck. This coverage is excess over-->
+<!--              the underlying insurance specified within your signed rental agreement up to $1,000,000.-->
+<!--            </p>-->
+<!--            <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>-->
+<!--            <mat-checkbox class="float-right" formControlName="sli"> Add to Rental</mat-checkbox>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="d-flex justify-content-end">-->
+<!--          <button mat-raised-button color="primary" style="width: 15%" (click)="backToPersonInfo()">Personal Info-->
+<!--          </button>-->
+<!--          <button mat-raised-button color="primary" class="mr-3 ml-3" style="width: 15%" (click)="goToPayment()">-->
+<!--            Payment-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </mat-card>-->
+<!--  </div>-->
+<!--  <div class="container" *ngIf="showCheckoutForm">-->
+<!--    <div class="row">-->
+<!--      <mat-card class="col-8">-->
+<!--        <mat-card-title>Payment</mat-card-title>-->
+<!--        <form fxLayout="column" [formGroup]="checkoutFormGroup" (ngSubmit)="submitOrder()">-->
+<!--          <div id="checkoutForm">-->
+<!--            <h6 class="card-subtitle text-muted mt-1">Credit Card Info</h6>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Name On Card</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="creditCardName">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardName').getError('required')">-->
+<!--                  Name on card cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Card Number</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="creditCardNumber" autocomplete="cc-number" ccNumber>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('required')">-->
+<!--                  Credit card number cannot be empty-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('ccNumber')">-->
+<!--                  Credit card is invalid.-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Expiration</mat-placeholder>-->
+<!--                <input matInput type="text" formControlName="creditCardExpiration" ccExp>-->
+<!--                &lt;!&ndash;                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>&ndash;&gt;-->
+<!--                &lt;!&ndash;                <mat-datepicker #picker disabled="false" startView="year"></mat-datepicker>&ndash;&gt;-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('required')">-->
+<!--                  Credit card expiration cannot be empty-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('expDate')">-->
+<!--                  Expiration format is invalid.-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>CVV</mat-placeholder>-->
+<!--                <input type="type" matInput formControlName="creditCardCvv" ccCVC>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('required')">-->
+<!--                  Credit card CVV cannot be empty-->
+<!--                </mat-error>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('minlength') || checkoutFormGroup.get('creditCardCvv').getError('maxlength')">-->
+<!--                  Credit card cvv should be 3 or 4 digits-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <h6 class="card-subtitle text-muted mt-1">Billing Address</h6>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>First Name</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingFirstName">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingFirstName').getError('required')">-->
+<!--                  FirstName cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Last Name</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingLastName">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingLastName').getError('required')">-->
+<!--                  LastName cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Address 1</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingAddress1"-->
+<!--                       matGoogleMapsAutocomplete (onAutocompleteSelected)="fillBillingAddress($event)">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingAddress1').getError('required')">-->
+<!--                  Address1 cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Address2</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingAddress2">-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--            <div class="form-row">-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>City</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingCity">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingCity').getError('required')">-->
+<!--                  City cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>State</mat-placeholder>-->
+<!--                <mat-select formControlName="billingState">-->
+<!--                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">-->
+<!--                    {{state}}-->
+<!--                  </mat-option>-->
+<!--                </mat-select>-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingState').getError('required')">-->
+<!--                  State cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--              <mat-form-field class="col">-->
+<!--                <mat-placeholder>Zip</mat-placeholder>-->
+<!--                <input type="text" matInput formControlName="billingZip">-->
+<!--                <mat-error *ngIf="checkoutFormGroup.get('billingZip').getError('required')">-->
+<!--                  Zip cannot be empty-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="d-flex justify-content-end">-->
+<!--            <button mat-raised-button color="primary" class="mr-3" (click)="backToProtection()" style="width: 15%">-->
+<!--              Protection-->
+<!--            </button>-->
+<!--            <button mat-raised-button color="primary" style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </form>-->
+<!--      </mat-card>-->
+<!--      <mat-card class="col-4">-->
+<!--        <mat-card-title>Order Summary</mat-card-title>-->
+<!--        <ul class="list-group" id="orderSummary">-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Truck Model:</h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">-->
+<!--              {{selectedTruck.brand + ' ' + selectedTruck.model + ' ' + selectedTruck.year}}-->
+<!--            </span>-->
+<!--          </li>-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Pick Up Date:</h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">-->
+<!--              {{pickUpDate.getMonth() + 1}}/-->
+<!--              {{pickUpDate.getDate()}}/-->
+<!--              {{pickUpDate.getFullYear()}}-->
+<!--            </span>-->
+<!--          </li>-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Return Date:</h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">-->
+<!--              {{returnedDate.getMonth() + 1}}/-->
+<!--              {{returnedDate.getDate()}}/-->
+<!--              {{returnedDate.getFullYear()}}-->
+<!--            </span>-->
+<!--          </li>-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Trucks: </h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">${{truckTotalPrice}}</span>-->
+<!--          </li>-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Protection Coverage: </h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">${{coverageTotalPrice}}</span>-->
+<!--          </li>-->
+<!--          <li class="list-group-item d-flex justify-content-between">-->
+<!--            <div>-->
+<!--              <h6 class="my-0">Today's Due:</h6>-->
+<!--            </div>-->
+<!--            <span class="text-muted">${{coverageTotalPrice + truckTotalPrice}}</span>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </mat-card>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <button (click)="generateApplicationFormPdf()">Open PDF</button>-->
+<!--</div>-->
+
+<mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper style="margin-left: 5%; margin-right: 5%">
+  <mat-step [stepControl]="applicationFormGroup">
     <form fxLayout="column" [formGroup]="applicationFormGroup" (ngSubmit)="goToProtection()">
-      <div id="applicationForm">
-        <h6 class="card-subtitle text-muted mt-1">Personal Info</h6>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>Firstname</mat-placeholder>
-            <input type="text" matInput formControlName="firstname">
-            <mat-error *ngIf="applicationFormGroup.get('firstname').getError('required')">
-              FirstName can't be empty
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="col">
-            <mat-placeholder>Last Name</mat-placeholder>
-            <input type="text" matInput formControlName="lastname">
-            <mat-error *ngIf="applicationFormGroup.get('lastname').getError('required')">
-              LastName can't be empty
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>Email</mat-placeholder>
-            <input type="text" matInput formControlName="email">
-            <mat-error *ngIf="applicationFormGroup.get('email').getError('required')">
-              Email can't be empty
-            </mat-error>
-            <mat-error *ngIf="applicationFormGroup.get('email').getError('pattern')">
-              Email format is not valid
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="col">
-            <mat-placeholder>Phone</mat-placeholder>
-            <input type="text" matInput formControlName="phone">
-            <mat-error *ngIf="applicationFormGroup.get('phone').getError('required')">
-              Phone number can't be empty
-            </mat-error>
-            <mat-error *ngIf="applicationFormGroup.get('phone').getError('pattern')">
-              Phone format is not valid
-            </mat-error>
-            <mat-error *ngIf="applicationFormGroup.get('phone').getError('minlength')">
-              Phone length must be 10 digits.
-            </mat-error>
-            <mat-error *ngIf="applicationFormGroup.get('phone').getError('maxlength')">
-              Phone length must be 10 digits
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>Address 1</mat-placeholder>
-            <input type="text" matInput formControlName="address1"
-                   matGoogleMapsAutocomplete
-                   (onAutocompleteSelected)="locationSelected($event)">
-            <mat-error *ngIf="applicationFormGroup.get('address1').getError('required')">
-              Address 1 can't be empty
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>Address 2</mat-placeholder>
-            <input type="text" matInput formControlName="address2">
-          </mat-form-field>
-        </div>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>City</mat-placeholder>
-            <input type="text" matInput formControlName="city">
-            <mat-error *ngIf="applicationFormGroup.get('city').getError('required')">
-              City can't be empty
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="col">
-            <mat-placeholder>State</mat-placeholder>
-            <mat-select formControlName="state">
-              <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
-                {{state}}
-              </mat-option>
-              <mat-error *ngIf="applicationFormGroup.get('state').getError('required')">
-                State can't be empty
-              </mat-error>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="col">
-            <mat-placeholder>Zip</mat-placeholder>
-            <input type="text" matInput formControlName="zip">
-            <mat-error *ngIf="applicationFormGroup.get('zip').getError('required')">
-              Zip can't be empty
-            </mat-error>
-            <mat-error
-              *ngIf="applicationFormGroup.get('zip').getError('minlength') || applicationFormGroup.get('zip').getError('pattern')">
-              Zip must be 5 digits
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <h6 class="card-subtitle text-muted mt-1">Driver License Info</h6>
-        <div class="form-row">
-          <mat-form-field class="col">
-            <mat-placeholder>Driver License No.</mat-placeholder>
-            <input type="text" matInput formControlName="driver_license">
-            <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">
-              Driver license can't be empty
-            </mat-error>
-            <mat-hint class="text-warning" *ngIf="applicationFormGroup.get('driver_license').touched">
-              You must has the same driver license when you pick up the truck.
-            </mat-hint>
-          </mat-form-field>
-          <mat-form-field class="col">
-            <mat-placeholder>State</mat-placeholder>
-            <mat-select formControlName="driver_license_state">
-              <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
-                {{state}}
-              </mat-option>
-              <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">
-                State can't be empty
-              </mat-error>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field class="col" color="accent">
-            <mat-placeholder>Expired Date</mat-placeholder>
-            <!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
-            <input matInput type="text" [matDatepicker]="picker" [min]="returnedDate"
-                   formControlName="driver_license_expired_date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker disabled="false"></mat-datepicker>
-            <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">
-              Expired date format is not right. (MM/DD/YYYY)
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <ng-template matStepLabel>Personal Information</ng-template>
+            <div id="applicationForm">
+              <h6 class="card-subtitle text-muted mt-1">Personal Info</h6>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>Firstname</mat-placeholder>
+                  <input type="text" matInput formControlName="firstname">
+                  <mat-error *ngIf="applicationFormGroup.get('firstname').getError('required')">
+                    FirstName can't be empty
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col">
+                  <mat-placeholder>Last Name</mat-placeholder>
+                  <input type="text" matInput formControlName="lastname">
+                  <mat-error *ngIf="applicationFormGroup.get('lastname').getError('required')">
+                    LastName can't be empty
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>Email</mat-placeholder>
+                  <input type="text" matInput formControlName="email">
+                  <mat-error *ngIf="applicationFormGroup.get('email').getError('required')">
+                    Email can't be empty
+                  </mat-error>
+                  <mat-error *ngIf="applicationFormGroup.get('email').getError('pattern')">
+                    Email format is not valid
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col">
+                  <mat-placeholder>Phone</mat-placeholder>
+                  <input type="text" matInput formControlName="phone">
+                  <mat-error *ngIf="applicationFormGroup.get('phone').getError('required')">
+                    Phone number can't be empty
+                  </mat-error>
+                  <mat-error *ngIf="applicationFormGroup.get('phone').getError('pattern')">
+                    Phone format is not valid
+                  </mat-error>
+                  <mat-error *ngIf="applicationFormGroup.get('phone').getError('minlength')">
+                    Phone length must be 10 digits.
+                  </mat-error>
+                  <mat-error *ngIf="applicationFormGroup.get('phone').getError('maxlength')">
+                    Phone length must be 10 digits
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>Address 1</mat-placeholder>
+                  <input type="text" matInput formControlName="address1"
+                         matGoogleMapsAutocomplete
+                         (onAutocompleteSelected)="locationSelected($event)">
+                  <mat-error *ngIf="applicationFormGroup.get('address1').getError('required')">
+                    Address 1 can't be empty
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>Address 2</mat-placeholder>
+                  <input type="text" matInput formControlName="address2">
+                </mat-form-field>
+              </div>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>City</mat-placeholder>
+                  <input type="text" matInput formControlName="city">
+                  <mat-error *ngIf="applicationFormGroup.get('city').getError('required')">
+                    City can't be empty
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col">
+                  <mat-placeholder>State</mat-placeholder>
+                  <mat-select formControlName="state">
+                    <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                      {{state}}
+                    </mat-option>
+                    <mat-error *ngIf="applicationFormGroup.get('state').getError('required')">
+                      State can't be empty
+                    </mat-error>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col">
+                  <mat-placeholder>Zip</mat-placeholder>
+                  <input type="text" matInput formControlName="zip">
+                  <mat-error *ngIf="applicationFormGroup.get('zip').getError('required')">
+                    Zip can't be empty
+                  </mat-error>
+                  <mat-error
+                    *ngIf="applicationFormGroup.get('zip').getError('minlength') || applicationFormGroup.get('zip').getError('pattern')">
+                    Zip must be 5 digits
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <h6 class="card-subtitle text-muted mt-1">Driver License Info</h6>
+              <div class="form-row">
+                <mat-form-field class="col">
+                  <mat-placeholder>Driver License No.</mat-placeholder>
+                  <input type="text" matInput formControlName="driver_license">
+                  <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">
+                    Driver license can't be empty
+                  </mat-error>
+                  <mat-hint class="text-warning" *ngIf="applicationFormGroup.get('driver_license').touched">
+                    You must has the same driver license when you pick up the truck.
+                  </mat-hint>
+                </mat-form-field>
+                <mat-form-field class="col">
+                  <mat-placeholder>State</mat-placeholder>
+                  <mat-select formControlName="driver_license_state">
+                    <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                      {{state}}
+                    </mat-option>
+                    <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">
+                      State can't be empty
+                    </mat-error>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col" color="accent">
+                  <mat-placeholder>Expired Date</mat-placeholder>
+                  <!--          <input type="date" matInput formControlName="driverExpiredDate" [min]="mindate">-->
+                  <input matInput type="text" [matDatepicker]="picker" [min]="returnedDate"
+                         formControlName="driver_license_expired_date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  <mat-error *ngIf="applicationFormGroup.get('driver_license_expired_date').getError('required')">
+                    Expired date format is not right. (MM/DD/YYYY)
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-      </div>
-      <div class="d-flex justify-content-end">
-        <button mat-raised-button color="primary" style="width: 20%" [disabled]="!applicationFormGroup.valid">Next
-        </button>
-      </div>
-    </form>
-  </mat-card>
-  <div *ngIf="insurances && showProtectionForm">
-    <mat-card>
-      <mat-card-title>Protection Package</mat-card-title>
-      <form fxLayout="column" [formGroup]="insuranceForm">
-        <div id="insuranceForm">
-          <div class="mb-1" style="margin-top: 1.9rem">
-            <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{insurances[0].price}}/day </span></h6>
-            <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck
-              or towing equipment except if the vehicle or equipment is used in any manner that violates the
-              terms of the rental agreement.
-            </p>
-            <mat-checkbox class="float-right" formControlName="ldw"> Add to Rental</mat-checkbox>
-          </div>
-          <div class="mb-1" style="margin-top: 3.9rem">
-            <h6>Supplemental Liability Insurance (SLI)*<span class="float-right mr-4"> ${{insurances[1].price}}
-              /day </span>
-            </h6>
-            <p>SLI protects the renter and any listed authorized drivers against claims made by a
-              third party for bodily and/or property damage sustained as a result of an accident while
-              you are operating your Penske truck. This coverage is excess over
-              the underlying insurance specified within your signed rental agreement up to $1,000,000.
-            </p>
-            <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
-            <mat-checkbox class="float-right" formControlName="sli"> Add to Rental</mat-checkbox>
-          </div>
-        </div>
-        <div class="d-flex justify-content-end">
-          <button mat-raised-button color="primary" style="width: 15%" (click)="backToPersonInfo()">Personal Info
-          </button>
-          <button mat-raised-button color="primary" class="mr-3 ml-3" style="width: 15%" (click)="goToPayment()">
-            Payment
-          </button>
-        </div>
-      </form>
-    </mat-card>
-  </div>
-  <div class="container" *ngIf="showCheckoutForm">
+            </div>
+            <div class="d-flex justify-content-end">
+              <button mat-raised-button color="primary" matStepperNext style="width: 20%" [disabled]="!applicationFormGroup.valid">Next
+              </button>
+            </div>
+          </form>
+  </mat-step>
+  <mat-step [stepControl]="insuranceForm">
+          <form fxLayout="column" [formGroup]="insuranceForm">
+            <ng-template matStepLabel>Protection Package</ng-template>
+            <div id="insuranceForm">
+              <div class="mb-1" style="margin-top: 1.9rem">
+                <h6>Limited Damage Waiver (LDW) <span class="float-right mr-4"> ${{insurances[0].price}}/day </span></h6>
+                <p>LDW coverage relieves you of financial responsibility should any loss or damage occur to the truck
+                  or towing equipment except if the vehicle or equipment is used in any manner that violates the
+                  terms of the rental agreement.
+                </p>
+                <mat-checkbox class="float-right" formControlName="ldw" (change)="ldwChecked($event)" > Add to Rental</mat-checkbox>
+              </div>
+              <div class="mb-1" style="margin-top: 3.9rem">
+                <h6>Supplemental Liability Insurance (SLI)*<span class="float-right mr-4"> ${{insurances[1].price}}
+                  /day </span>
+                </h6>
+                <p>SLI protects the renter and any listed authorized drivers against claims made by a
+                  third party for bodily and/or property damage sustained as a result of an accident while
+                  you are operating your Penske truck. This coverage is excess over
+                  the underlying insurance specified within your signed rental agreement up to $1,000,000.
+                </p>
+                <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
+                <mat-checkbox class="float-right" formControlName="sli" (change)="sliChecked($event)"> Add to Rental</mat-checkbox>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button mat-raised-button matStepperPrevious color="primary" style="width: 15%" (click)="backToPersonInfo()">Personal Info
+              </button>
+              <button mat-raised-button matStepperNext color="primary" class="mr-3 ml-3" style="width: 15%">
+                Payment
+              </button>
+            </div>
+          </form>
+  </mat-step>
+  <mat-step [stepControl]="checkoutFormGroup">
     <div class="row">
-      <mat-card class="col-8">
-        <mat-card-title>Payment</mat-card-title>
-        <form fxLayout="column" [formGroup]="checkoutFormGroup" (ngSubmit)="submitOrder()">
-          <div id="checkoutForm">
-            <h6 class="card-subtitle text-muted mt-1">Credit Card Info</h6>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>Name On Card</mat-placeholder>
-                <input type="text" matInput formControlName="creditCardName">
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardName').getError('required')">
-                  Name on card cannot be empty
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="col">
-                <mat-placeholder>Card Number</mat-placeholder>
-                <input type="text" matInput formControlName="creditCardNumber" autocomplete="cc-number" ccNumber>
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('required')">
-                  Credit card number cannot be empty
-                </mat-error>
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('ccNumber')">
-                  Credit card is invalid.
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>Expiration</mat-placeholder>
-                <input matInput type="text" formControlName="creditCardExpiration" ccExp >
-                <!--                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-                <!--                <mat-datepicker #picker disabled="false" startView="year"></mat-datepicker>-->
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('required')">
-                  Credit card expiration cannot be empty
-                </mat-error>
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('expDate')">
-                  Expiration format is invalid.
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="col">
-                <mat-placeholder>CVV</mat-placeholder>
-                <input type="type" matInput formControlName="creditCardCvv" ccCVC>
-                <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('required')">
-                  Credit card CVV cannot be empty
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <h6 class="card-subtitle text-muted mt-1">Billing Address</h6>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>First Name</mat-placeholder>
-                <input type="text" matInput formControlName="billingFirstName">
-                <mat-error *ngIf="checkoutFormGroup.get('billingFirstName').getError('required')">
-                  FirstName cannot be empty
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="col">
-                <mat-placeholder>Last Name</mat-placeholder>
-                <input type="text" matInput formControlName="billingLastName">
-                <mat-error *ngIf="checkoutFormGroup.get('billingLastName').getError('required')">
-                  LastName cannot be empty
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>Address 1</mat-placeholder>
-                <input type="text" matInput formControlName="billingAddress1"
-                       matGoogleMapsAutocomplete (onAutocompleteSelected)="fillBillingAddress($event)">
-                <mat-error *ngIf="checkoutFormGroup.get('billingAddress1').getError('required')">
-                  Address1 cannot be empty
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>Address2</mat-placeholder>
-                <input type="text" matInput formControlName="billingAddress2">
-              </mat-form-field>
-            </div>
-            <div class="form-row">
-              <mat-form-field class="col">
-                <mat-placeholder>City</mat-placeholder>
-                <input type="text" matInput formControlName="billingCity">
-                <mat-error *ngIf="checkoutFormGroup.get('billingCity').getError('required')">
-                  City cannot be empty
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="col">
-                <mat-placeholder>State</mat-placeholder>
-                <mat-select formControlName="billingState">
-                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
-                    {{state}}
-                  </mat-option>
-                </mat-select>
-                <mat-error *ngIf="checkoutFormGroup.get('billingState').getError('required')">
-                  State cannot be empty
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field class="col">
-                <mat-placeholder>Zip</mat-placeholder>
-                <input type="text" matInput formControlName="billingZip">
-                <mat-error *ngIf="checkoutFormGroup.get('billingZip').getError('required')">
-                  Zip cannot be empty
-                </mat-error>
-              </mat-form-field>
-            </div>
+            <mat-card class="col-8">
+              <mat-card-title>Payment</mat-card-title>
+              <form fxLayout="column" [formGroup]="checkoutFormGroup" (ngSubmit)="submitOrder(stepper)">
+                <ng-template matStepLabel>Payment</ng-template>
+                <div id="checkoutForm">
+                  <h6 class="card-subtitle text-muted mt-1">Credit Card Info</h6>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>Name On Card</mat-placeholder>
+                      <input type="text" matInput formControlName="creditCardName">
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardName').getError('required')">
+                        Name on card cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <mat-placeholder>Card Number</mat-placeholder>
+                      <input type="text" matInput formControlName="creditCardNumber" autocomplete="cc-number" ccNumber>
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('required')">
+                        Credit card number cannot be empty
+                      </mat-error>
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardNumber').getError('ccNumber')">
+                        Credit card is invalid.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>Expiration</mat-placeholder>
+                      <input matInput type="text" formControlName="creditCardExpiration" ccExp>
+                      <!--                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+                      <!--                <mat-datepicker #picker disabled="false" startView="year"></mat-datepicker>-->
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('required')">
+                        Credit card expiration cannot be empty
+                      </mat-error>
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardExpiration').getError('expDate')">
+                        Expiration format is invalid.
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <mat-placeholder>CVV</mat-placeholder>
+                      <input type="type" matInput formControlName="creditCardCvv" ccCVC>
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('required')">
+                        Credit card CVV cannot be empty
+                      </mat-error>
+                      <mat-error *ngIf="checkoutFormGroup.get('creditCardCvv').getError('minlength') || checkoutFormGroup.get('creditCardCvv').getError('maxlength')">
+                        Credit card cvv should be 3 or 4 digits
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <h6 class="card-subtitle text-muted mt-1">Billing Address</h6>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>First Name</mat-placeholder>
+                      <input type="text" matInput formControlName="billingFirstName">
+                      <mat-error *ngIf="checkoutFormGroup.get('billingFirstName').getError('required')">
+                        FirstName cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <mat-placeholder>Last Name</mat-placeholder>
+                      <input type="text" matInput formControlName="billingLastName">
+                      <mat-error *ngIf="checkoutFormGroup.get('billingLastName').getError('required')">
+                        LastName cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>Address 1</mat-placeholder>
+                      <input type="text" matInput formControlName="billingAddress1"
+                             matGoogleMapsAutocomplete (onAutocompleteSelected)="fillBillingAddress($event)">
+                      <mat-error *ngIf="checkoutFormGroup.get('billingAddress1').getError('required')">
+                        Address1 cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>Address2</mat-placeholder>
+                      <input type="text" matInput formControlName="billingAddress2">
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="col">
+                      <mat-placeholder>City</mat-placeholder>
+                      <input type="text" matInput formControlName="billingCity">
+                      <mat-error *ngIf="checkoutFormGroup.get('billingCity').getError('required')">
+                        City cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <mat-placeholder>State</mat-placeholder>
+                      <mat-select formControlName="billingState">
+                        <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                          {{state}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="checkoutFormGroup.get('billingState').getError('required')">
+                        State cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <mat-placeholder>Zip</mat-placeholder>
+                      <input type="text" matInput formControlName="billingZip">
+                      <mat-error *ngIf="checkoutFormGroup.get('billingZip').getError('required')">
+                        Zip cannot be empty
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button mat-raised-button color="primary" matStepperPrevious class="mr-3" (click)="backToProtection()" style="width: 15%">
+                    Protection
+                  </button>
+                  <button mat-raised-button color="primary"  style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit
+                  </button>
+                </div>
+              </form>
+            </mat-card>
+            <mat-card class="col-4">
+              <mat-card-title>Order Summary</mat-card-title>
+              <ul class="list-group" id="orderSummary">
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Truck Model:</h6>
+                  </div>
+                  <span class="text-muted">
+                    {{selectedTruck.brand + ' ' + selectedTruck.model + ' ' + selectedTruck.year}}
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Pick Up Date:</h6>
+                  </div>
+                  <span class="text-muted">
+                    {{pickUpDate.getMonth() + 1}}/
+                    {{pickUpDate.getDate()}}/
+                    {{pickUpDate.getFullYear()}}
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Return Date:</h6>
+                  </div>
+                  <span class="text-muted">
+                    {{returnedDate.getMonth() + 1}}/
+                    {{returnedDate.getDate()}}/
+                    {{returnedDate.getFullYear()}}
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Trucks: </h6>
+                  </div>
+                  <span class="text-muted">${{truckTotalPrice}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Protection Coverage: </h6>
+                  </div>
+                  <span class="text-muted">${{coverageTotalPrice}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <h6 class="my-0">Today's Due:</h6>
+                  </div>
+                  <span class="text-muted">${{coverageTotalPrice + truckTotalPrice}}</span>
+                </li>
+              </ul>
+            </mat-card>
           </div>
-          <div class="d-flex justify-content-end">
-            <button mat-raised-button color="primary" class="mr-3" (click)="backToProtection()" style="width: 15%">
-              Protection
-            </button>
-            <button mat-raised-button color="primary" style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit
-            </button>
-          </div>
-        </form>
-      </mat-card>
-      <mat-card class="col-4">
-        <mat-card-title>Order Summary</mat-card-title>
-        <ul class="list-group" id="orderSummary">
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Truck Model:</h6>
-            </div>
-            <span class="text-muted">
-              {{selectedTruck.brand + ' ' + selectedTruck.model + ' ' + selectedTruck.year}}
-            </span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Pick Up Date:</h6>
-            </div>
-            <span class="text-muted">
-              {{pickUpDate.getMonth() + 1}}/
-              {{pickUpDate.getDate()}}/
-              {{pickUpDate.getFullYear()}}
-            </span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Return Date:</h6>
-            </div>
-            <span class="text-muted">
-              {{returnedDate.getMonth() + 1}}/
-              {{returnedDate.getDate()}}/
-              {{returnedDate.getFullYear()}}
-            </span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Trucks: </h6>
-            </div>
-            <span class="text-muted">${{truckTotalPrice}}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Protection Coverage: </h6>
-            </div>
-            <span class="text-muted">${{coverageTotalPrice}}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <div>
-              <h6 class="my-0">Today's Due:</h6>
-            </div>
-            <span class="text-muted">${{coverageTotalPrice + truckTotalPrice}}</span>
-          </li>
-        </ul>
-      </mat-card>
-    </div>
-  </div>
-  <button (click)="generateApplicationFormPdf()">Open PDF</button>
-</div>
-
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Success</ng-template>
+    <mat-card class="d-flex justify-content-center">
+      <div class="ml-auto mr-auto">
+        <mat-card-title class="text-success">Success!</mat-card-title>
+        <button mat-raised-button color="primary" (click)="goToUserOrders()"> See your orders</button>
+      </div>
+    </mat-card>
+  </mat-step>
+</mat-horizontal-stepper>

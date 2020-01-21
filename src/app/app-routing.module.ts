@@ -17,6 +17,8 @@ import {TruckdetailAdminComponent} from './admin/truck-admin/truckdetail-admin/t
 import {TruckmodelAdminComponent} from './admin/truck-admin/truckmodel-admin/truckmodel-admin.component';
 import {DataAdminComponent} from './admin/data-admin/data-admin.component';
 import {HomeComponent} from './home/home.component';
+import {OrderUserComponent} from './order-user/order-user.component';
+import {OderDetailUserComponent} from './oder-detail-user/oder-detail-user.component';
 
 
 const routes: Routes = [
@@ -87,6 +89,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'user/:userid/orders',
+    component: OrderUserComponent
+  },
+  {
+    path: 'user/:userid/orders/:orderid',
+    component: OderDetailUserComponent
   },
   {
     // match everything, always put this in the end

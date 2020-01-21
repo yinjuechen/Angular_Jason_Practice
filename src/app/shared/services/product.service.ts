@@ -12,6 +12,8 @@ import {TruckInfo} from '../models/truck-info';
 export class ProductService {
   products: Product[] = null;
   currentProduct: Product;
+  onlyPickUpTruck = false;
+  onlyVanTruck = false;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -56,7 +58,7 @@ export class ProductService {
     return this.httpClient.get<Product>(`${environment.API_URL}/trucks/${id}`, {withCredentials: true});
   }
 
-  updateTruckModel(truckModel): Observable<Product>{
+  updateTruckModel(truckModel): Observable<Product> {
     return this.httpClient.put<Product>(`${environment.API_URL}/trucks/${truckModel.id}`, truckModel, {withCredentials: true});
   }
 }

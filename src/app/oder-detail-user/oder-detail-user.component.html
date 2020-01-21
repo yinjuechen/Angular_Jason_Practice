@@ -1,57 +1,57 @@
 <div class="container" style="margin-top: 2%" *ngIf="application">
   <mat-card class="m-1">
     <mat-card-title>Order No: {{application.id}}</mat-card-title>
-    <form fxLayout="column" [formGroup]="orderSummaryInfoForm">
-      <div id="orderSummary" >
-        <div>
+    <form fxLayout="column" [formGroup]="orderSummaryInfoForm" class="text-black">
+      <div>
+        <div id="orderSummary" >
           <h6 class="card-subtitle mt-1 font-weight-bolder mb-2">Person Info</h6>
           <div style="border: 1px solid black" class="p-2">
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Firstname</mat-placeholder>
-                <input type="text" matInput formControlName="firstname">
+                <input type="text" matInput formControlName="firstname" class="text-black">
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Last Name</mat-placeholder>
-                <input type="text" matInput formControlName="lastname">
+                <input type="text" matInput formControlName="lastname" class="text-black">
               </mat-form-field>
             </div>
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Email</mat-placeholder>
-                <input type="text" matInput formControlName="email">
+                <input type="text" matInput formControlName="email" class="text-black">
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Phone</mat-placeholder>
-                <input type="tel" matInput formControlName="phone">
+                <input type="tel" matInput formControlName="phone" class="text-black">
               </mat-form-field>
             </div>
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Address 1</mat-placeholder>
-                <input type="text" matInput formControlName="address1">
+                <input type="text" matInput formControlName="address1" class="text-black">
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Address 2</mat-placeholder>
-                <input type="text" matInput formControlName="address2">
+                <input type="text" matInput formControlName="address2" class="text-black">
               </mat-form-field>
             </div>
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>City</mat-placeholder>
-                <input type="text" matInput formControlName="city">
+                <input type="text" matInput formControlName="city" class="text-black">
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>State</mat-placeholder>
-                <mat-select formControlName="state">
-                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                <mat-select formControlName="state" class="text-black">
+                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}" class="text-black">
                     {{state}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Zip</mat-placeholder>
-                <input type="text" matInput formControlName="zip">
+                <input type="text" matInput formControlName="zip" class="text-black">
               </mat-form-field>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <div class="form-row">
               <mat-form-field class="col">
                 <mat-placeholder>Driver License No.</mat-placeholder>
-                <input type="text" matInput formControlName="driver_license">
+                <input type="text" matInput formControlName="driver_license" class="text-black">
                 <!--          <mat-error *ngIf="applicationFormGroup.get('driver_license').getError('required')">-->
                 <!--            Driver license can't be empty-->
                 <!--          </mat-error>-->
@@ -69,7 +69,7 @@
               <mat-form-field class="col">
                 <mat-placeholder>State</mat-placeholder>
                 <mat-select formControlName="driver_license_state">
-                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}">
+                  <mat-option *ngFor="let state of usStatesService.usStates" value="{{state}}" class="text-black">
                     {{state}}
                   </mat-option>
                   <!--            <mat-error *ngIf="applicationFormGroup.get('driver_license_state').getError('required')">-->
@@ -135,7 +135,7 @@
               </mat-form-field>
               <mat-form-field class="col">
                 <mat-placeholder>Odometer Out:</mat-placeholder>
-                <input type="number" matInput formControlName="odometerout" (change)="calculateMilePrice()">
+                <input type="number" matInput formControlName="odometerout" class="text-black">
               </mat-form-field>
             </div>
           </div>
@@ -147,7 +147,7 @@
                 or towing equipment except if the vehicle or equipment is used in any manner that violates the
                 terms of the rental agreement.
               </p>
-              <mat-checkbox class="float-right" formControlName="ldw" (change)="selectLDW()"> Add to Rental</mat-checkbox>
+              <mat-checkbox class="float-right" formControlName="ldw"> Add to Rental</mat-checkbox>
             </div>
             <div class="mb-1" style="margin-top: 3.9rem">
               <h6>Supplemental Liability Insurance (SLI)*
@@ -161,11 +161,11 @@
                 the underlying insurance specified within your signed rental agreement up to $1,000,000.
               </p>
               <p>*Renter and all authorized drivers must be 21 years of age to purchase this coverage.</p>
-              <mat-checkbox class="float-right" formControlName="sli" (change)="selectSLI()"> Add to Rental</mat-checkbox>
+              <mat-checkbox class="float-right" formControlName="sli" > Add to Rental</mat-checkbox>
             </div>
           </div>
           <h6 class="card-subtitle font-weight-bolder mt-2 mb-2">Order Summary</h6>
-          <div style="border: 1px solid black" class="p-2 mat-background-accent">
+          <div style="border: 1px solid black" class="p-2 mat-background-accent ">
             <div class="row">
               <p class="col">Truck Total Price: <span>${{application.truckprice}}</span></p>
               <p class="col">Mileages Total Price: <span>${{application.mileageprice}}</span></p>
@@ -178,10 +178,11 @@
         </div>
       </div>
       <div class="mt-2">
-        <button mat-raised-button color="primary" class="float-right mr-3" (click)="saveOrder()"><i class="fas fa-save"></i> Save</button>
+<!--        <button mat-raised-button color="primary" class="float-right mr-3"><i class="fas fa-save"></i> Save</button>-->
         <button mat-raised-button color="primary" class="float-right mr-3" (click)="generatePDF()"><i class="fas fa-print"></i> Print</button>
       </div>
     </form>
   </mat-card>
 </div>
+
 

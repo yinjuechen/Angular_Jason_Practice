@@ -11,7 +11,7 @@
 
 <div class="row">
   <div class="col-5">
-    <img src="{{product.image}}" style="width:100%; height: 100%">
+    <img src="{{product.image}}" style="width: 300px; height: 200px">
   </div>
   <div class="col-4" style="margin-top: 3%">
     <h5 class="mat-card-title">{{product.brand}} {{product.model}} {{product.year}}</h5>
@@ -23,9 +23,9 @@
     </p>
   </div>
   <div class="col-3" style="margin-top: 3%">
-    <h4 style="color: dodgerblue">${{product.price}}.00<small style="font-size: small">/Day</small></h4>
+    <h4 style="color: dodgerblue">${{product.price.toFixed(2)}}<small style="font-size: small">/Day</small></h4>
     <p><small class="font-italic">+{{product.mileprice}}/mile</small></p>
-    <button mat-flat-button color="primary"> Reserve Now</button>
+    <button mat-flat-button color="primary" (click)="goToApplication()"> Reserve Now<i class="fas fa-heart ml-2"></i></button>
   </div>
 </div>
 

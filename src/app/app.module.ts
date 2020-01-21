@@ -5,13 +5,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule,
-  MatCardModule, MatCheckboxModule, MatDatepickerModule, MatExpansionModule,
-  MatFormFieldModule, MatGridListModule,
-  MatInputModule,
-  MatListModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatRadioModule, MatRippleModule, MatSelectModule,
-  MatSidenavModule, MatSliderModule, MatSortModule, MatTableModule,
-  MatToolbarModule
+    MatButtonModule,
+    MatCardModule, MatCheckboxModule, MatDatepickerModule, MatExpansionModule,
+    MatFormFieldModule, MatGridListModule,
+    MatInputModule,
+    MatListModule, MatNativeDateModule, MatPaginatorModule, MatProgressBarModule, MatRadioModule, MatRippleModule, MatSelectModule,
+    MatSidenavModule, MatSliderModule, MatSnackBar, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule,
+    MatToolbarModule
 } from '@angular/material';
 import {ProfileComponent} from './profile/profile.component';
 import {ApplicationComponent} from './application/application.component';
@@ -52,6 +52,8 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {SlideshowModule} from 'ng-simple-slideshow';
 import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
+import { OrderUserComponent } from './order-user/order-user.component';
+import { OderDetailUserComponent } from './oder-detail-user/oder-detail-user.component';
 
 
 @NgModule({
@@ -80,63 +82,67 @@ import { HomeComponent } from './home/home.component';
     DailyDataComponent,
     DailyModelComponent,
     DataIncomeComponent,
-    HomeComponent
+    HomeComponent,
+    OrderUserComponent,
+    OderDetailUserComponent
   ],
   entryComponents: [
     TruckreservationAdminComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    LayoutModule,
-    FormsModule,
-    MatCardModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatInputModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatGridListModule,
-    MatCheckboxModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatExpansionModule,
-    MatRippleModule,
-    FileUploadModule,
-    CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
-    GoogleChartsModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA50uVAg7msL9SEGydWHoRmEGyQpDzxXyw',
-      libraries: ['places']
-    }),
-    MatGoogleMapsAutocompleteModule,
-    CreditCardDirectivesModule,
-    AngularFireModule.initializeApp({
-      apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
-      authDomain: 'truck-rental-265020.firebaseapp.com',
-      databaseURL: 'https://truck-rental-265020.firebasseio.com',
-      projectId: 'truck-rental-265020',
-      storageBucket: 'truck-rental-265020.appspot.com',
-      messagingSenderId: '421015451291',
-      appId: '1:421015451291:web:9def1485583d8c7113783e',
-      measurementId: 'G-335KZJZ0JP'
-    }),
-    AngularFireStorageModule,
-    MatProgressBarModule,
-    SlideshowModule,
-    NgbCarouselModule,
-    MatRadioModule,
-    MatSliderModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        LayoutModule,
+        FormsModule,
+        MatCardModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatListModule,
+        MatInputModule,
+        MatButtonModule,
+        FlexLayoutModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatGridListModule,
+        MatCheckboxModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatExpansionModule,
+        MatRippleModule,
+        FileUploadModule,
+        CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
+        GoogleChartsModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyA50uVAg7msL9SEGydWHoRmEGyQpDzxXyw',
+            libraries: ['places']
+        }),
+        MatGoogleMapsAutocompleteModule,
+        CreditCardDirectivesModule,
+        AngularFireModule.initializeApp({
+            apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
+            authDomain: 'truck-rental-265020.firebaseapp.com',
+            databaseURL: 'https://truck-rental-265020.firebasseio.com',
+            projectId: 'truck-rental-265020',
+            storageBucket: 'truck-rental-265020.appspot.com',
+            messagingSenderId: '421015451291',
+            appId: '1:421015451291:web:9def1485583d8c7113783e',
+            measurementId: 'G-335KZJZ0JP'
+        }),
+        AngularFireStorageModule,
+        MatProgressBarModule,
+        SlideshowModule,
+        NgbCarouselModule,
+        MatRadioModule,
+        MatSliderModule,
+        MatSnackBarModule,
+        MatStepperModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

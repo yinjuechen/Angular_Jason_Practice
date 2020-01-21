@@ -59,6 +59,9 @@ export class ApplicationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    if ((!this.ds.pickUpDate) || (!this.ds.returnDate)) {
+      this.router.navigate(['/trucks']);
+    }
     // console.log(this.ps.currentProduct);
     this.pickUpDate = this.ds.pickUpDate;
     this.returnedDate = this.ds.returnDate;
@@ -141,14 +144,14 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
   goToProtection() {
     console.log(this.applicationFormGroup.value);
-    const applicationContent = document.getElementById('applicationForm');
-    html2canvas(applicationContent).then((canvas) => {
-      this.applicationFormImg = canvas.toDataURL('image/png');
-      this.showApplicationForm = false;
-      this.showProtectionForm = true;
-      this.showCheckoutForm = false;
-      // console.log(this.applicataionFormImg);
-    });
+    // const applicationContent = document.getElementById('applicationForm');
+    // html2canvas(applicationContent).then((canvas) => {
+    //   this.applicationFormImg = canvas.toDataURL('image/png');
+    //   this.showApplicationForm = false;
+    //   this.showProtectionForm = true;
+    //   this.showCheckoutForm = false;
+    //   // console.log(this.applicataionFormImg);
+    // });
   }
 
   generateApplicationFormPdf() {
@@ -180,16 +183,17 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.showProtectionForm = true;
   }
 
-  submitOrder() {
+  submitOrder(stepper) {
     console.log('submit Order');
-    const checkoutContent = document.getElementById('checkoutForm');
-    html2canvas(checkoutContent).then((canvas) => {
-      this.checkoutFormImg = canvas.toDataURL('image/png');
-    });
-    const orderSummaryContent = document.getElementById('orderSummary');
-    html2canvas(orderSummaryContent).then((canvas) => {
-      this.orderSummaryImg = canvas.toDataURL('image/png');
-    });
+    // console.log(stepper);
+    // const checkoutContent = document.getElementById('checkoutForm');
+    // html2canvas(checkoutContent).then((canvas) => {
+    //   this.checkoutFormImg = canvas.toDataURL('image/png');
+    // });
+    // const orderSummaryContent = document.getElementById('orderSummary');
+    // html2canvas(orderSummaryContent).then((canvas) => {
+    //   this.orderSummaryImg = canvas.toDataURL('image/png');
+    // });
     const application = this.applicationFormGroup.value;
     application.user = {id: this.auth.user.id};
     application.phone = '' + application.phone;
@@ -217,17 +221,19 @@ export class ApplicationComponent implements OnInit, OnChanges {
       truckmodelid: this.ps.currentProduct.id
     };
     this.ts.addATimeSlot(timeSlot).subscribe((value) => {
+      console.log(timeSlot);
       console.log(value);
       application.reservedid = value.id;
       this.applicationService.addApplication(application).subscribe((applicationValue) => {
         console.log(applicationValue);
-        this.router.navigate(['/trucks']);
+        // this.router.navigate(['/trucks']);
+        stepper.next();
       }, error => {
         // TODO: handle error (i.e. toast)
         console.log('add application failed');
       });
     });
-    this.generateApplicationFormPdf();
+    // this.generateApplicationFormPdf();
   }
 
   goToPayment() {
@@ -238,13 +244,13 @@ export class ApplicationComponent implements OnInit, OnChanges {
     if (this.insuranceForm.value.sli) {
       this.coverageTotalPrice = this.coverageTotalPrice + this.days * this.insurances[1].price;
     }
-    const insuranceFormContent = document.getElementById('insuranceForm');
-    html2canvas(insuranceFormContent).then((canvas) => {
-      this.insuranceFormImg = canvas.toDataURL('image/png');
-      this.showProtectionForm = false;
-      this.showCheckoutForm = true;
-      this.showApplicationForm = false;
-    });
+    // const insuranceFormContent = document.getElementById('insuranceForm');
+    // html2canvas(insuranceFormContent).then((canvas) => {
+    //   this.insuranceFormImg = canvas.toDataURL('image/png');
+    //   this.showProtectionForm = false;
+    //   this.showCheckoutForm = true;
+    //   this.showApplicationForm = false;
+    // });
   }
 
   backToPersonInfo() {
@@ -291,5 +297,27 @@ export class ApplicationComponent implements OnInit, OnChanges {
     this.checkoutFormGroup.controls.billingCity.setValue(city);
     this.checkoutFormGroup.controls.billingState.setValue(state);
     this.checkoutFormGroup.controls.billingZip.setValue(zip);
+  }
+
+  ldwChecked($event) {
+    // console.log($event);
+    if ($event.checked) {
+      this.coverageTotalPrice = this.coverageTotalPrice + this.days * this.insurances[0].price;
+    } else {
+      this.coverageTotalPrice = this.coverageTotalPrice - this.days * this.insurances[0].price;
+    }
+  }
+
+  sliChecked($event) {
+    // console.log($event);
+    if ($event.checked) {
+      this.coverageTotalPrice = this.coverageTotalPrice + this.days * this.insurances[1].price;
+    } else {
+      this.coverageTotalPrice = this.coverageTotalPrice - this.days * this.insurances[1].price;
+    }
+  }
+
+  goToUserOrders() {
+    this.router.navigate([`/user/${this.auth.user.id}/orders`]);
   }
 }
