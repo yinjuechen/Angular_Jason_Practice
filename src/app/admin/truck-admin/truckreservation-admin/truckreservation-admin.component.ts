@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatSort, MatTableDataSource} from '@angul
 export class TruckreservationAdminComponent implements OnInit {
   displayedColumns: string[] = ['id', 'truckid', 'startdate', 'enddate'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor(@Inject(MAT_DIALOG_DATA) private data,
+  constructor(@Inject(MAT_DIALOG_DATA) public data,
               private dialogRef: MatDialogRef<TruckreservationAdminComponent>
               ) { }
 

@@ -54,6 +54,7 @@ import {NgbCarouselModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { OrderUserComponent } from './order-user/order-user.component';
 import { OderDetailUserComponent } from './oder-detail-user/oder-detail-user.component';
+import { PolicyComponent } from './policy/policy.component';
 
 
 @NgModule({
@@ -84,10 +85,12 @@ import { OderDetailUserComponent } from './oder-detail-user/oder-detail-user.com
     DataIncomeComponent,
     HomeComponent,
     OrderUserComponent,
-    OderDetailUserComponent
+    OderDetailUserComponent,
+    PolicyComponent
   ],
   entryComponents: [
-    TruckreservationAdminComponent
+    TruckreservationAdminComponent,
+    PolicyComponent
   ],
     imports: [
         BrowserModule,

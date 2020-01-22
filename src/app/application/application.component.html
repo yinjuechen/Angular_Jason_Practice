@@ -637,12 +637,13 @@
                       </mat-error>
                     </mat-form-field>
                   </div>
+                  <mat-checkbox  (change)="agreePolicy()" [checked]="agree"><a (click)="openPolicyDialog()">I Agree Rental Policy</a></mat-checkbox>
                 </div>
                 <div class="d-flex justify-content-end">
                   <button mat-raised-button color="primary" matStepperPrevious class="mr-3" (click)="backToProtection()" style="width: 15%">
                     Protection
                   </button>
-                  <button mat-raised-button color="primary"  style="width: 15%" [disabled]="!checkoutFormGroup.valid">Submit
+                  <button mat-raised-button color="primary"  style="width: 15%" [disabled]="!checkoutFormGroup.valid || !agree">Submit
                   </button>
                 </div>
               </form>

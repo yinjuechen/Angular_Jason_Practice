@@ -131,13 +131,15 @@ export class AddProductComponent implements OnInit {
   }
 
   addProduct() {
+    console.log(this.addProductFormGroup.value);
+    console.log(this.addProductFormGroup.controls.image.value);
     const truck = {
         brand: this.addProductFormGroup.value.brand,
         model: this.addProductFormGroup.value.model,
         year: this.addProductFormGroup.value.year,
         category: this.categories[this.addProductFormGroup.value.category - 1],
         stock: this.addProductFormGroup.value.stock,
-        image: this.addProductFormGroup.value.image,
+        image: this.addProductFormGroup.controls.image.value,
         price: this.addProductFormGroup.value.price,
         minseat: this.addProductFormGroup.value.minseat,
         maxseat: this.addProductFormGroup.value.maxseat,

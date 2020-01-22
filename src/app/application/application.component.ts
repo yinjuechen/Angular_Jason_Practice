@@ -13,6 +13,9 @@ import {DateService} from '../shared/services/date.service';
 import {Insurance} from '../shared/models/insurance';
 import {InsuranceService} from '../shared/services/insurance.service';
 import {CreditCardValidator} from 'angular-cc-library';
+import {MatDialog} from '@angular/material';
+import {PolicyComponent} from '../policy/policy.component';
+import {BlockScrollStrategy} from '@angular/cdk/overlay';
 
 
 @Component({
@@ -41,6 +44,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
   insuranceForm: FormGroup;
   insuranceFormImg;
   days: number;
+  agree = false;
   // static validateDateFormat(dateInfo: FormControl): null | {} {
   //
   // }
@@ -54,6 +58,7 @@ export class ApplicationComponent implements OnInit, OnChanges {
               private ts: TimeslotService,
               private ds: DateService,
               private is: InsuranceService,
+              private dialog: MatDialog,
               private  auth: AuthService
   ) {
   }
@@ -220,10 +225,13 @@ export class ApplicationComponent implements OnInit, OnChanges {
       enddate: this.returnedDate,
       truckmodelid: this.ps.currentProduct.id
     };
+    console.log(timeSlot);
+    console.log(application);
     this.ts.addATimeSlot(timeSlot).subscribe((value) => {
       console.log(timeSlot);
       console.log(value);
       application.reservedid = value.id;
+      console.log(application);
       this.applicationService.addApplication(application).subscribe((applicationValue) => {
         console.log(applicationValue);
         // this.router.navigate(['/trucks']);
@@ -319,5 +327,17 @@ export class ApplicationComponent implements OnInit, OnChanges {
 
   goToUserOrders() {
     this.router.navigate([`/user/${this.auth.user.id}/orders`]);
+  }
+
+  agreePolicy() {
+    this.agree = !this.agree;
+  }
+
+  openPolicyDialog() {
+    this.dialog.open(PolicyComponent, {
+      width:'70%',
+      height: '90vh',
+      autoFocus: false
+    });
   }
 }

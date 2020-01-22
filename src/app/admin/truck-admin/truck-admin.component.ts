@@ -64,6 +64,7 @@ export class TruckAdminComponent implements OnInit {
   openReservationDialog(element) {
     const id = element.id;
     this.ts.getTimeSlotByTruckDetail(id).subscribe(value => {
-      this.dialog.open(TruckreservationAdminComponent, {width: '70%', data: value});    });
+      this.dialog.open(TruckreservationAdminComponent, {width: '70%', data: value});
+    });
   }
 }
