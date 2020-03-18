@@ -24,8 +24,10 @@ export class OrderAgentComponent implements OnInit {
       this.orders.paginator = this.paginator;
       this.orders.sort = this.sort;
       this.orders.filterPredicate = (data, filter) => {
-        const dataStr = JSON.stringify(data).toLowerCase();
-        return dataStr.indexOf(filter) > -1;
+        // const dataStr = JSON.stringify(data).toLowerCase();
+        // console.log(dataStr);
+        const datatStr2 = data.id + data.user.id + data.email + data.phone + data.pickupdate + data.returndate + data.order_date;
+        return datatStr2.indexOf(filter) > -1;
       };
       console.log(this.orders);
     });

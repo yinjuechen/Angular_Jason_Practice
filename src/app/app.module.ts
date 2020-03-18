@@ -122,13 +122,13 @@ import { PolicyComponent } from './policy/policy.component';
         CloudinaryModule.forRoot({Cloudinary}, {cloud_name: 'juechen'} as CloudinaryConfiguration),
         GoogleChartsModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyA50uVAg7msL9SEGydWHoRmEGyQpDzxXyw',
+            apiKey: '',
             libraries: ['places']
         }),
         MatGoogleMapsAutocompleteModule,
         CreditCardDirectivesModule,
         AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyDTG3Ckm59RxV2-C7wjDZndKY8SRZcnunM',
+            apiKey: '',
             authDomain: 'truck-rental-265020.firebaseapp.com',
             databaseURL: 'https://truck-rental-265020.firebasseio.com',
             projectId: 'truck-rental-265020',
